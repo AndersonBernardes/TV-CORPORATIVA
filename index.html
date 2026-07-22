@@ -20,6 +20,7 @@
   --accent:#4C8DF6;
   --accent-2:#8AB4FF;
   --on-accent:#FFFFFF;
+  --font-scale:1;
 
   --bg-base:#F4F6FB;
   --bg-panel:#FFFFFF;
@@ -99,12 +100,12 @@ button, select, input, textarea{font-family:'Inter',sans-serif;}
 }
 .slide.active{opacity:1;transform:scale(1);pointer-events:auto;}
 .slide-eyebrow{
-  font-family:'IBM Plex Mono',monospace;font-size:1.6vh;letter-spacing:0.16em;
+  font-family:'IBM Plex Mono',monospace;font-size:calc(1.6vh * var(--font-scale, 1));letter-spacing:0.16em;
   color:var(--accent);text-transform:uppercase;margin-bottom:1.4vh;display:inline-flex;align-items:center;gap:8px;
 }
 .slide-eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);}
-.slide-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:6.2vh;line-height:1.1;margin:0 0 2vh 0;max-width:70vw;}
-.slide-body{font-size:2.5vh;line-height:1.55;max-width:52vw;color:var(--text-muted);white-space:pre-line;}
+.slide-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:calc(6.2vh * var(--font-scale, 1));line-height:1.1;margin:0 0 2vh 0;max-width:70vw;}
+.slide-body{font-size:calc(2.5vh * var(--font-scale, 1));line-height:1.55;max-width:52vw;color:var(--text-muted);white-space:pre-line;}
 .slide-content{max-width:56vw;position:relative;z-index:2;}
 .slide-img{
   position:absolute;right:5vw;top:50%;transform:translateY(-50%);
@@ -118,7 +119,7 @@ button, select, input, textarea{font-family:'Inter',sans-serif;}
 
 .schedule-table{width:100%;max-width:60vw;border-collapse:collapse;margin-top:1vh;}
 .schedule-table tr{border-bottom:1px solid var(--line);}
-.schedule-table td{padding:1.3vh 0;font-size:2.3vh;}
+.schedule-table td{padding:1.3vh 0;font-size:calc(2.3vh * var(--font-scale, 1));}
 .schedule-table td:first-child{color:var(--text-muted);font-family:'IBM Plex Mono',monospace;}
 .schedule-table td:last-child{text-align:right;font-weight:600;font-family:'Poppins',sans-serif;}
 
@@ -282,6 +283,13 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:20px 0;}
         <button data-mode="dark" type="button">🌙 Escuro</button>
         <button data-mode="auto" type="button">📱 Automático</button>
       </div>
+      <div class="label-row" style="margin-top:14px;">Tamanho da fonte na TV</div>
+      <div class="segmented" id="fontSegmented">
+        <button data-scale="0.8" type="button">P</button>
+        <button data-scale="1" type="button">M</button>
+        <button data-scale="1.25" type="button">G</button>
+        <button data-scale="1.5" type="button">GG</button>
+      </div>
     </div>
 
     <div class="field" style="margin-bottom:18px;">
@@ -347,6 +355,7 @@ const DEFAULT_CONFIG = {
   logoLetter: "O",
   themeColor: "blue",
   themeMode: "auto",
+  fontScale: 1,
   intervalSeconds: 8,
   slides: [
     { type:"promo", eyebrow:"Promoção do mês", title:"Limpeza + avaliação com 20% off", body:"Agende esta semana e garanta sua vaga. Atendimento com hora marcada.", imageUrl:"" },
@@ -415,6 +424,7 @@ function applyTheme(){
   const theme = getThemeById(config.themeColor);
   document.documentElement.style.setProperty('--accent', theme.accent);
   document.documentElement.style.setProperty('--accent-2', theme.accent2);
+  document.documentElement.style.setProperty('--font-scale', config.fontScale || 1);
   document.documentElement.setAttribute('data-mode', resolveMode(config.themeMode));
   document.getElementById('themeColorMeta').setAttribute('content', theme.accent);
 }
@@ -541,6 +551,16 @@ function renderModeSegmented(){
     };
   });
 }
+function renderFontSegmented(){
+  document.querySelectorAll('#fontSegmented button').forEach(btn=>{
+    btn.classList.toggle('active', parseFloat(btn.dataset.scale) === (config.fontScale || 1));
+    btn.onclick = ()=>{
+      config.fontScale = parseFloat(btn.dataset.scale);
+      applyTheme();
+      renderFontSegmented();
+    };
+  });
+}
 
 // ---------- Edit panel ----------
 function openEditPanel(){
@@ -549,6 +569,7 @@ function openEditPanel(){
   document.getElementById('f-interval').value = config.intervalSeconds;
   renderColorSwatches();
   renderModeSegmented();
+  renderFontSegmented();
   renderSlidesList();
   document.getElementById('editOverlay').classList.add('open');
 }
