@@ -85,7 +85,7 @@ button, select, input, textarea{font-family:'Inter',sans-serif;}
 #logoCircle{
   width:5.2vh;height:5.2vh;border-radius:16px;
   background:linear-gradient(150deg, var(--accent), var(--accent-2));color:var(--on-accent);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
   font-family:'Poppins',sans-serif;font-weight:700;font-size:2.4vh;flex-shrink:0;
   box-shadow:0 8px 18px -6px rgba(0,0,0,0.25);
 }
@@ -314,6 +314,14 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:20px 0;}
   transition:all 0.25s;z-index:200;box-shadow:var(--shadow);
 }
 #saveToast.show{opacity:1;transform:translateY(0);}
+.hint{font-size:12px;color:var(--text-muted);line-height:1.5;}
+#storageIndicator .bar{height:6px;border-radius:4px;background:var(--bg-panel);border:1px solid var(--line);overflow:hidden;margin-top:6px;}
+#storageIndicator .bar .fill{height:100%;background:var(--accent);transition:width 0.3s ease;}
+#storageIndicator.warn .fill{background:#E5484D;}
+
+/* Oculta os botões de canto quando em tela cheia real (F11 ou botão) */
+html:fullscreen #cornerBtns, html.is-fullscreen #cornerBtns{opacity:0;pointer-events:none;transition:opacity 0.3s;}
+html:fullscreen:hover #cornerBtns, html.is-fullscreen:hover #cornerBtns{opacity:1;pointer-events:auto;}
 ::-webkit-scrollbar{width:8px;}
 ::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
 
@@ -417,6 +425,19 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:20px 0;}
         <input id="f-interval" type="number" min="4" max="60" value="8" />
       </div>
     </div>
+
+    <div class="field" style="margin-bottom:18px;">
+      <label>Logo da empresa (opcional — substitui a letra no topo da tela)</label>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <label class="btn btn-ghost" style="cursor:pointer;">📷 Enviar logo
+          <input type="file" accept="image/*" id="f-logoFile" style="display:none;" />
+        </label>
+        <button class="btn btn-ghost" id="removeLogoBtn" type="button">Remover logo</button>
+        <img id="logoPreview" style="max-height:44px;max-width:120px;border-radius:8px;display:none;border:1px solid var(--line);" />
+      </div>
+    </div>
+
+    <div id="storageIndicator" class="hint" style="margin-bottom:6px;"></div>
 
     <hr class="sep" />
     <div id="slidesList"></div>
@@ -531,7 +552,12 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=
 // ---------- Rendering ----------
 function applyBrand(){
   document.getElementById('bizName').textContent = config.bizName;
-  document.getElementById('logoCircle').textContent = (config.logoLetter || config.bizName[0] || 'A').toUpperCase();
+  const logoEl = document.getElementById('logoCircle');
+  if(config.logoUrl){
+    logoEl.innerHTML = `<img src="${escapeAttr(config.logoUrl)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" onerror="this.parentElement.textContent='${escapeAttr((config.logoLetter||config.bizName[0]||'A').toUpperCase())}'" />`;
+  }else{
+    logoEl.textContent = (config.logoLetter || config.bizName[0] || 'A').toUpperCase();
+  }
 }
 
 function escapeHTML(str){
@@ -811,6 +837,8 @@ function openEditPanel(){
   document.getElementById('f-bizName').value = config.bizName;
   document.getElementById('f-logoLetter').value = config.logoLetter;
   document.getElementById('f-interval').value = config.intervalSeconds;
+  updateLogoPreview();
+  updateStorageIndicator();
   renderColorSwatches();
   renderModeSegmented();
   renderFontSegmented();
@@ -818,6 +846,29 @@ function openEditPanel(){
   document.getElementById('editOverlay').classList.add('open');
 }
 function closeEditPanel(){ document.getElementById('editOverlay').classList.remove('open'); }
+
+function updateLogoPreview(){
+  const img = document.getElementById('logoPreview');
+  if(config.logoUrl){ img.src = config.logoUrl; img.style.display = 'inline-block'; }
+  else{ img.style.display = 'none'; }
+}
+
+function updateStorageIndicator(){
+  const el = document.getElementById('storageIndicator');
+  let bytes = 0;
+  try{
+    bytes = new Blob([JSON.stringify(config)]).size;
+  }catch(e){
+    bytes = JSON.stringify(config).length;
+  }
+  const limitKB = 5000; // estimativa conservadora do limite do navegador (~5MB)
+  const usedKB = Math.round(bytes / 1024);
+  const pct = Math.min(100, Math.round((usedKB / limitKB) * 100));
+  el.classList.toggle('warn', pct > 75);
+  el.innerHTML = `Espaço usado neste aparelho: <b>${usedKB} KB</b> de ~${limitKB} KB (${pct}%)
+    <div class="bar"><div class="fill" style="width:${pct}%;"></div></div>
+    ${pct > 75 ? 'Está ficando cheio — prefira "colar link (URL)" em vez de enviar arquivo para novas fotos.' : ''}`;
+}
 
 const TYPE_META = {
   promo:        { label:'Promoção',                bodyLabel:'Texto', hasImage:true },
@@ -967,7 +1018,7 @@ function renderSlidesList(){
         return;
       }
       const reader = new FileReader();
-      reader.onload = ()=>{ config.slides[idx].imageUrl = reader.result; renderSlidesList(); };
+      reader.onload = ()=>{ config.slides[idx].imageUrl = reader.result; renderSlidesList(); updateStorageIndicator(); };
       reader.readAsDataURL(file);
     });
   });
@@ -1027,6 +1078,7 @@ async function handleSave(){
   renderSignalBars();
   goToSlide(0);
   startRotation();
+  updateStorageIndicator();
   showToast(ok ? 'Salvo com sucesso.' : 'Não foi possível salvar — tente novamente.');
   closeEditPanel();
 }
@@ -1077,6 +1129,26 @@ async function init(){
   document.getElementById('saveBtn').addEventListener('click', handleSave);
   document.getElementById('addSlideBtn').addEventListener('click', addSlide);
   document.getElementById('loadTemplateBtn').addEventListener('click', loadTemplate);
+
+  document.getElementById('f-logoFile').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    if(file.size > 500*1024){
+      alert('Prefira uma imagem de logo mais leve (menos de 500KB) — ela fica sempre visível na tela, então não precisa ser grande.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      config.logoUrl = reader.result;
+      updateLogoPreview();
+      updateStorageIndicator();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('removeLogoBtn').addEventListener('click', ()=>{
+    config.logoUrl = '';
+    updateLogoPreview();
+  });
 
   setTimeout(()=> document.getElementById('splash').classList.add('hide'), 900);
 }
