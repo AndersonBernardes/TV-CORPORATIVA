@@ -128,7 +128,7 @@ button, select, input, textarea{font-family:'Inter',sans-serif;}
   from{ transform:scale(1) translate(0,0); }
   to{ transform:scale(1.12) translate(-1%, -1%); }
 }
-.photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.82) 100%);z-index:1;}
+.photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.85) 100%);z-index:1;}
 .photo-caption{position:absolute;left:6vw;bottom:12vh;z-index:2;max-width:60vw;}
 
 /* Ad / publicidade badge */
@@ -222,7 +222,9 @@ button, select, input, textarea{font-family:'Inter',sans-serif;}
 }
 
 
-.photo-caption .slide-title, .photo-caption .slide-body{color:#fff;}
+.photo-caption .slide-title, .photo-caption .slide-body{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.7);}
+.photo-caption .slide-eyebrow{text-shadow:0 1px 6px rgba(0,0,0,0.6);}
+.video-caption .slide-title, .video-caption .slide-body{text-shadow:0 2px 12px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.7);}
 
 .schedule-table{width:100%;max-width:60vw;border-collapse:collapse;margin-top:1vh;}
 .schedule-table tr{border-bottom:1px solid var(--line);}
@@ -805,6 +807,11 @@ function weatherDesc(code){
   return 'Tempo variável';
 }
 
+async function geocodeCity(query){
+  const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=pt&format=json`).then(r=>r.json());
+  return (geo.results && geo.results.length) ? geo.results[0] : null;
+}
+
 async function loadWeather(idx, city){
   const cacheKey = 'weather-cache-' + city.toLowerCase().trim();
   try{
@@ -816,15 +823,24 @@ async function loadWeather(idx, city){
   }catch(e){}
 
   try{
-    const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=pt&format=json`).then(r=>r.json());
-    if(!geo.results || !geo.results.length) throw new Error('cidade não encontrada');
-    const { latitude, longitude } = geo.results[0];
+    // A busca de geolocalização funciona melhor só com o nome da cidade (sem ", BR", ", SP" etc.)
+    const cityOnly = city.split(',')[0].trim();
+    let place = await geocodeCity(cityOnly);
+    if(!place) place = await geocodeCity(city); // tenta a string completa como alternativa
+    if(!place) throw new Error('cidade não encontrada: ' + city);
+
+    const { latitude, longitude } = place;
     const wx = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`).then(r=>r.json());
+    if(!wx.current_weather) throw new Error('resposta sem dados de clima');
     localStorage.setItem(cacheKey, JSON.stringify({ data: wx, ts: Date.now() }));
     renderWeather(idx, wx, city);
   }catch(e){
+    console.error('Erro ao carregar clima:', e);
     const el = document.getElementById('clima-'+idx);
-    if(el) el.querySelector('.weather-loading').textContent = 'Não foi possível carregar a previsão agora.';
+    if(el){
+      const loadingEl = el.querySelector('.weather-loading');
+      if(loadingEl) loadingEl.textContent = 'Não foi possível carregar a previsão (verifique a internet ou o nome da cidade).';
+    }
   }
 }
 
