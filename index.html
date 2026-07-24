@@ -208,6 +208,19 @@ button, select, input, textarea{font-family:'Inter',sans-serif;}
 /* ---- Boas-vindas ---- */
 .welcome-slide{width:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;}
 
+/* ---- Clima ---- */
+.weather-loading, .news-loading{color:var(--text-muted);font-size:calc(2.2vh * var(--font-scale,1));margin-top:1vh;}
+.weather-row{display:flex;align-items:center;gap:2vh;margin:1vh 0;}
+.weather-icon{font-size:calc(8vh * var(--font-scale,1) * var(--local-scale,1));}
+.weather-temp{font-family:'Poppins',sans-serif;font-weight:800;font-size:calc(9vh * var(--font-scale,1) * var(--local-scale,1));color:var(--text-primary);}
+
+/* ---- Notícias ---- */
+.news-list{display:flex;flex-direction:column;gap:1.6vh;margin-top:1.4vh;}
+.news-item{
+  font-size:calc(2.4vh * var(--font-scale,1) * var(--local-scale,1));line-height:1.4;font-weight:500;
+  padding-left:1.6vh;border-left:3px solid var(--accent);
+}
+
 
 .photo-caption .slide-title, .photo-caption .slide-body{color:#fff;}
 
@@ -579,7 +592,7 @@ function starsHTML(n){
 
 const SOCIAL_ICONS = { instagram:'📷', facebook:'📘', tiktok:'🎵', whatsapp:'💬', youtube:'▶️', google:'🔍', linkedin:'💼' };
 
-function slideHTML(slide){
+function slideHTML(slide, idx){
   const eyebrow = slide.eyebrow ? `<span class="slide-eyebrow">${escapeHTML(slide.eyebrow)}</span>` : '';
   const hasImg = slide.imageUrl && slide.imageUrl.trim().length > 0;
   const useBg = !!slide.useBgImage && hasImg;
@@ -590,6 +603,21 @@ function slideHTML(slide){
     : '';
 
   switch(slide.type){
+
+    case 'clima': {
+      return `<div class="slide-content" id="clima-${idx}">
+        ${eyebrow || '<span class="slide-eyebrow">Previsão do tempo</span>'}
+        <div class="weather-loading">Carregando previsão de ${escapeHTML(slide.city || 'sua cidade')}…</div>
+      </div>`;
+    }
+
+    case 'noticias': {
+      return `<div class="slide-content" id="noticias-${idx}" style="max-width:70vw;">
+        ${eyebrow || '<span class="slide-eyebrow">Notícias</span>'}
+        <div class="slide-title display-face" style="font-size:calc(3.6vh * var(--font-scale,1) * var(--local-scale,1));">${escapeHTML(slide.title || 'Últimas notícias')}</div>
+        <div class="news-loading">Carregando manchetes…</div>
+      </div>`;
+    }
 
     case 'horario': {
       const rows = (slide.body||'').split('\n').filter(l=>l.trim()).map(l=>{
@@ -748,9 +776,110 @@ function renderStage(){
     div.setAttribute('data-align', s.align || 'left');
     div.style.setProperty('--local-scale', TEXT_SIZE_SCALE[s.textSize] || 1);
     div.style.setProperty('--kb-duration', (Math.max(4, config.intervalSeconds||8) + 1) + 's');
-    div.innerHTML = slideHTML(s);
+    div.innerHTML = slideHTML(s, i);
     stage.appendChild(div);
   });
+  loadLiveDataSlides();
+}
+function loadLiveDataSlides(){
+  config.slides.forEach((s,i)=>{
+    if(s.type === 'clima') loadWeather(i, s.city || 'São Paulo, BR');
+    if(s.type === 'noticias') loadNews(i, s.newsQuery || '');
+  });
+}
+
+const WEATHER_ICONS = {
+  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',
+  51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',
+  71:'🌨️',73:'🌨️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',
+  95:'⛈️',96:'⛈️',99:'⛈️'
+};
+function weatherDesc(code){
+  if(code===0) return 'Céu limpo';
+  if([1,2].includes(code)) return 'Poucas nuvens';
+  if(code===3) return 'Nublado';
+  if([45,48].includes(code)) return 'Neblina';
+  if([51,53,55,61,63,65,80,81].includes(code)) return 'Chuva';
+  if([71,73,75].includes(code)) return 'Neve';
+  if([95,96,99].includes(code)) return 'Tempestade';
+  return 'Tempo variável';
+}
+
+async function loadWeather(idx, city){
+  const cacheKey = 'weather-cache-' + city.toLowerCase().trim();
+  try{
+    const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+    if(cached && (Date.now() - cached.ts) < 30*60*1000){
+      renderWeather(idx, cached.data, city);
+      return;
+    }
+  }catch(e){}
+
+  try{
+    const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=pt&format=json`).then(r=>r.json());
+    if(!geo.results || !geo.results.length) throw new Error('cidade não encontrada');
+    const { latitude, longitude } = geo.results[0];
+    const wx = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`).then(r=>r.json());
+    localStorage.setItem(cacheKey, JSON.stringify({ data: wx, ts: Date.now() }));
+    renderWeather(idx, wx, city);
+  }catch(e){
+    const el = document.getElementById('clima-'+idx);
+    if(el) el.querySelector('.weather-loading').textContent = 'Não foi possível carregar a previsão agora.';
+  }
+}
+
+function renderWeather(idx, wx, city){
+  const el = document.getElementById('clima-'+idx);
+  if(!el || !wx.current_weather) return;
+  const temp = Math.round(wx.current_weather.temperature);
+  const code = wx.current_weather.weathercode;
+  const icon = WEATHER_ICONS[code] || '🌡️';
+  const max = wx.daily ? Math.round(wx.daily.temperature_2m_max[0]) : null;
+  const min = wx.daily ? Math.round(wx.daily.temperature_2m_min[0]) : null;
+  el.innerHTML = `
+    <div class="slide-eyebrow">${escapeHTML(city)}</div>
+    <div class="weather-row">
+      <span class="weather-icon">${icon}</span>
+      <span class="weather-temp">${temp}°</span>
+    </div>
+    <div class="slide-body">${weatherDesc(code)}${(max!==null) ? ` · Máx ${max}° / Mín ${min}°` : ''}</div>
+  `;
+}
+
+async function loadNews(idx, query){
+  const cacheKey = 'news-cache-' + (query || 'geral').toLowerCase().trim();
+  try{
+    const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+    if(cached && (Date.now() - cached.ts) < 20*60*1000){
+      renderNews(idx, cached.data);
+      return;
+    }
+  }catch(e){}
+
+  try{
+    const rssUrl = query
+      ? `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=pt-BR&gl=BR&ceid=BR:pt-BR`
+      : `https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt-BR`;
+    const data = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`).then(r=>r.json());
+    const items = (data.items || []).slice(0,5).map(it => it.title);
+    localStorage.setItem(cacheKey, JSON.stringify({ data: items, ts: Date.now() }));
+    renderNews(idx, items);
+  }catch(e){
+    const el = document.getElementById('noticias-'+idx);
+    if(el) el.querySelector('.news-loading').textContent = 'Não foi possível carregar notícias agora.';
+  }
+}
+
+function renderNews(idx, items){
+  const el = document.getElementById('noticias-'+idx);
+  if(!el) return;
+  const loading = el.querySelector('.news-loading');
+  if(!items || !items.length){ if(loading) loading.textContent = 'Nenhuma notícia encontrada.'; return; }
+  if(loading) loading.remove();
+  const list = document.createElement('div');
+  list.className = 'news-list';
+  list.innerHTML = items.map(t => `<div class="news-item">${escapeHTML(t)}</div>`).join('');
+  el.appendChild(list);
 }
 function renderSignalBars(){
   const wrap = document.getElementById('signalBars');
@@ -895,14 +1024,17 @@ const TYPE_META = {
   anuncio:      { label:'Publicidade (outro cliente)', bodyLabel:'Texto', hasImage:true },
   anuncie_aqui: { label:'Anuncie aqui!!',            bodyLabel:'Texto', hasImage:false },
   depoimento:   { label:'Depoimento de cliente',     bodyLabel:'Citação', hasImage:true, titleLabel:'Nome do cliente' },
-  boasvindas:   { label:'Boas-vindas',               bodyLabel:'Mensagem', hasImage:false, titleLabel:'Nome (opcional)' }
+  boasvindas:   { label:'Boas-vindas',               bodyLabel:'Mensagem', hasImage:false, titleLabel:'Nome (opcional)' },
+  clima:        { label:'Previsão do tempo (online)', bodyLabel:null, hasImage:false, extra:['city'] },
+  noticias:     { label:'Notícias (online)',          bodyLabel:null, hasImage:false, extra:['newsQuery'] }
 };
 const TYPE_GROUPS = [
   { label:'Conteúdo', types:['promo','dica','foto','foto_tela','curiosidade'] },
   { label:'Institucional', types:['horario','redes','logo','hora','boasvindas'] },
   { label:'Prova social', types:['avaliacao','depoimento'] },
   { label:'Vendas', types:['preco','video','qrcode'] },
-  { label:'Publicidade', types:['anuncio','anuncie_aqui'] }
+  { label:'Publicidade', types:['anuncio','anuncie_aqui'] },
+  { label:'Online (precisa de internet)', types:['clima','noticias'] }
 ];
 
 function renderSlidesList(){
@@ -939,6 +1071,14 @@ function renderSlidesList(){
         <input data-field="oldPrice" data-idx="${idx}" type="text" placeholder="R$ 150" value="${escapeAttr(slide.oldPrice||'')}" /></div>
         <div class="field" style="max-width:140px;"><label>Preço novo</label>
         <input data-field="newPrice" data-idx="${idx}" type="text" placeholder="R$ 99" value="${escapeAttr(slide.newPrice||'')}" /></div>`;
+    }
+    if(meta.extra && meta.extra.includes('city')){
+      extraFieldsHTML += `<div class="field"><label>Cidade (ex: São Paulo, BR)</label>
+        <input data-field="city" data-idx="${idx}" type="text" placeholder="São Paulo, BR" value="${escapeAttr(slide.city||'')}" /></div>`;
+    }
+    if(meta.extra && meta.extra.includes('newsQuery')){
+      extraFieldsHTML += `<div class="field"><label>Assunto (opcional — em branco mostra manchetes gerais do Brasil)</label>
+        <input data-field="newsQuery" data-idx="${idx}" type="text" placeholder="Ex: saúde bucal, economia…" value="${escapeAttr(slide.newsQuery||'')}" /></div>`;
     }
 
     card.innerHTML = `
@@ -1130,6 +1270,7 @@ async function init(){
   startRotation();
   tickClock();
   setInterval(tickClock, 15000);
+  setInterval(loadLiveDataSlides, 15*60*1000);
 
   document.getElementById('gearBtn').addEventListener('click', openEditPanel);
   document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
