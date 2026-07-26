@@ -553,6 +553,7 @@ html:fullscreen:hover #cornerBtns, html.is-fullscreen:hover #cornerBtns{opacity:
       <button class="btn btn-ghost" id="closeGalleryBtn" type="button">Fechar</button>
     </div>
     <div class="sub">Imagens da pasta <code>/imagens</code> do repositório. Clique numa para usar neste slide.</div>
+    <div id="galleryStatus" class="hint" style="margin:4px 0 2px;">Verificando…</div>
     <div id="galleryGrid" class="gallery-grid"></div>
   </div>
 </div>
@@ -1422,15 +1423,38 @@ function closeGallery(){
 
 function renderGalleryGrid(){
   const grid = document.getElementById('galleryGrid');
+  const statusEl = document.getElementById('galleryStatus');
   grid.innerHTML = '';
+  let checked = 0, found = 0;
+  statusEl.textContent = `Verificando… 0 de ${GALLERY_COUNT} conferidas`;
+
+  const updateStatus = ()=>{
+    if(checked < GALLERY_COUNT){
+      statusEl.textContent = `Verificando… ${checked} de ${GALLERY_COUNT} conferidas (${found} encontrada${found===1?'':'s'} até agora)`;
+    }else{
+      statusEl.textContent = found === GALLERY_COUNT
+        ? `✅ ${found} de ${GALLERY_COUNT} imagens encontradas — banco completo!`
+        : `${found} de ${GALLERY_COUNT} imagens encontradas. Faltam ${GALLERY_COUNT - found} — confira os nomes na pasta /imagens.`;
+    }
+  };
+
   for(let n=1; n<=GALLERY_COUNT; n++){
     const num = String(n).padStart(2,'0');
     const thumb = document.createElement('div');
     thumb.className = 'gallery-thumb';
     const img = document.createElement('img');
     let extIdx = 0;
+    let resolved = false;
+    img.onload = ()=>{
+      if(resolved) return;
+      resolved = true; checked++; found++; updateStatus();
+    };
     const tryNextExt = ()=>{
-      if(extIdx >= GALLERY_EXTENSIONS.length){ thumb.remove(); return; }
+      if(extIdx >= GALLERY_EXTENSIONS.length){
+        if(!resolved){ resolved = true; checked++; updateStatus(); }
+        thumb.remove();
+        return;
+      }
       img.src = `imagens/imagem-${num}.${GALLERY_EXTENSIONS[extIdx]}`;
       extIdx++;
     };
@@ -1448,7 +1472,7 @@ function renderGalleryGrid(){
     if(!grid.querySelector('.gallery-thumb')){
       grid.innerHTML = '<div class="gallery-empty">Nenhuma imagem encontrada na pasta /imagens ainda.<br>Suba arquivos chamados imagem-01, imagem-02… até imagem-20 (jpg ou png) na raiz do repositório, dentro de uma pasta chamada "imagens".</div>';
     }
-  }, 700);
+  }, 2500);
 }
 
 function pickGalleryImage(url){
