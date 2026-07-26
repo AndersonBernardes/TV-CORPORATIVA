@@ -221,6 +221,45 @@ button, select, input, textarea{font-family:'Inter',sans-serif;}
   padding-left:1.6vh;border-left:3px solid var(--accent);
 }
 
+/* ---- Código incorporado (iframe) ---- */
+.embed-wrap{position:absolute;inset:0;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;}
+.embed-wrap iframe, .embed-wrap embed, .embed-wrap object{width:100% !important;height:100% !important;border:none !important;}
+
+/* ---- Quiz ---- */
+.quiz-wrap{position:relative;width:100%;max-width:70vw;}
+.quiz-question{transition:opacity 0.5s ease, transform 0.5s ease;}
+.quiz-q-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:calc(5vh * var(--font-scale,1) * var(--local-scale,1));line-height:1.15;margin-bottom:2.4vh;}
+.quiz-options{display:flex;flex-direction:column;gap:1.4vh;}
+.quiz-opt{
+  display:flex;align-items:center;gap:1.6vh;
+  background:var(--bg-panel);border:1px solid var(--line);border-radius:16px;
+  padding:1.6vh 2vh;font-size:calc(2.6vh * var(--font-scale,1) * var(--local-scale,1));font-weight:500;
+  box-shadow:var(--shadow);
+}
+.quiz-letter{
+  width:4vh;height:4vh;border-radius:50%;background:var(--accent);color:var(--on-accent);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:'Poppins',sans-serif;font-weight:700;font-size:2vh;
+}
+.quiz-answer{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  opacity:0;transform:scale(0.85);pointer-events:none;
+  transition:opacity 0.5s ease, transform 0.5s cubic-bezier(.34,1.56,.64,1);
+}
+.quiz-answer-icon{
+  width:9vh;height:9vh;border-radius:50%;background:var(--accent-2);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:5vh;margin-bottom:1.6vh;
+  box-shadow:0 14px 30px -10px var(--accent);
+}
+.quiz-answer-label{font-family:'IBM Plex Mono',monospace;font-size:calc(1.6vh * var(--font-scale,1));letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1vh;}
+.quiz-answer-text{font-family:'Poppins',sans-serif;font-weight:700;font-size:calc(4.6vh * var(--font-scale,1) * var(--local-scale,1));max-width:60vw;}
+
+.quiz-wrap.revealed .quiz-question{opacity:0;transform:scale(0.92) translateY(-10px);pointer-events:none;}
+.quiz-wrap.revealed .quiz-answer{opacity:1;transform:scale(1);pointer-events:auto;}
+
+/* ---- Texto livre ---- */
+.free-text{font-weight:700;line-height:1.25;white-space:pre-line;max-width:80vw;color:var(--text-primary);}
+
 
 .photo-caption .slide-title, .photo-caption .slide-body{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.7);}
 .photo-caption .slide-eyebrow{text-shadow:0 1px 6px rgba(0,0,0,0.6);}
@@ -314,6 +353,7 @@ button, select, input, textarea{font-family:'Inter',sans-serif;}
   padding:10px 13px;color:var(--text-primary);font-size:14px;resize:vertical;width:100%;
 }
 .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--accent);outline-offset:0;}
+.field input[type="range"]{background:transparent;border:none;padding:8px 0;accent-color:var(--accent);}
 hr.sep{border:none;border-top:1px solid var(--line);margin:20px 0;}
 .slide-card{border:1px solid var(--line);border-radius:20px;padding:15px 16px;margin-bottom:12px;background:var(--bg-panel);}
 .slide-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
@@ -621,6 +661,39 @@ function slideHTML(slide, idx){
       </div>`;
     }
 
+    case 'codigo': {
+      return `<div class="embed-wrap" id="embed-${idx}">${slide.embedCode || ''}</div>`;
+    }
+
+    case 'quiz': {
+      const letters = ['A','B','C'];
+      const opts = [slide.option1, slide.option2, slide.option3].filter(o=>o && o.trim());
+      const correctIdx = Math.max(0, Math.min(opts.length-1, (parseInt(slide.correctOption)||1)-1));
+      const optsHTML = opts.map((o,i)=>`<div class="quiz-opt">
+          <span class="quiz-letter">${letters[i]}</span>${escapeHTML(o)}
+        </div>`).join('');
+      return `<div class="quiz-wrap" id="quiz-${idx}">
+        <div class="quiz-question">
+          ${eyebrow || '<span class="slide-eyebrow">Quiz</span>'}
+          <div class="quiz-q-title display-face">${escapeHTML(slide.title||'')}</div>
+          <div class="quiz-options">${optsHTML}</div>
+        </div>
+        <div class="quiz-answer">
+          <div class="quiz-answer-icon">✓</div>
+          <div class="quiz-answer-label">Resposta certa</div>
+          <div class="quiz-answer-text display-face">${letters[correctIdx]}) ${escapeHTML(opts[correctIdx]||'')}</div>
+        </div>
+      </div>`;
+    }
+
+    case 'texto': {
+      const size = parseFloat(slide.fontSizeVh) || 8;
+      return `<div class="slide-content">
+        ${eyebrow}
+        <div class="free-text display-face" style="font-size:calc(${size}vh * var(--font-scale,1));">${escapeHTML(slide.body||'')}</div>
+      </div>`;
+    }
+
     case 'horario': {
       const rows = (slide.body||'').split('\n').filter(l=>l.trim()).map(l=>{
         const parts = l.split(':'); const day = parts.shift(); const rest = parts.join(':').trim();
@@ -780,8 +853,17 @@ function renderStage(){
     div.style.setProperty('--kb-duration', (Math.max(4, config.intervalSeconds||8) + 1) + 's');
     div.innerHTML = slideHTML(s, i);
     stage.appendChild(div);
+    if(s.type === 'codigo') activateEmbedScripts(div);
   });
   loadLiveDataSlides();
+}
+function activateEmbedScripts(container){
+  container.querySelectorAll('script').forEach(oldScript=>{
+    const newScript = document.createElement('script');
+    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+    newScript.text = oldScript.textContent;
+    oldScript.parentNode.replaceChild(newScript, oldScript);
+  });
 }
 function loadLiveDataSlides(){
   config.slides.forEach((s,i)=>{
@@ -919,11 +1001,37 @@ function goToSlide(index){
     else if(i > index) fill.style.width = '0%';
   });
   segmentElapsedMs = 0;
+
+  const activeSlideData = config.slides[index];
+  if(activeSlideData && activeSlideData.type === 'quiz') resetAndScheduleQuiz(index, activeSlideData);
 }
+
+let quizTimers = {};
+function resetAndScheduleQuiz(idx, slide){
+  const wrap = document.getElementById('quiz-'+idx);
+  if(!wrap) return;
+  wrap.classList.remove('revealed');
+  if(quizTimers[idx]) clearTimeout(quizTimers[idx]);
+  const revealMs = Math.max(2, slide.revealSeconds || 5) * 1000;
+  quizTimers[idx] = setTimeout(()=>{ wrap.classList.add('revealed'); }, revealMs);
+}
+function slideDurationMs(slide){
+  const base = Math.max(4, config.intervalSeconds || 8) * 1000;
+  if(slide && slide.type === 'quiz'){
+    const reveal = Math.max(2, slide.revealSeconds || 5);
+    return Math.max(base, (reveal + 3) * 1000); // dá pelo menos 3s pra mostrar a resposta antes de avançar
+  }
+  return base;
+}
+
 function startRotation(){
-  clearInterval(rotationTimer); clearInterval(segmentTimer);
+  clearTimeout(rotationTimer); clearInterval(segmentTimer);
   if(config.slides.length <= 1) return;
-  const totalMs = Math.max(4, config.intervalSeconds || 8) * 1000;
+  scheduleSlideAdvance();
+}
+function scheduleSlideAdvance(){
+  clearTimeout(rotationTimer); clearInterval(segmentTimer);
+  const totalMs = slideDurationMs(config.slides[currentSlide]);
   segmentElapsedMs = 0;
   segmentTimer = setInterval(()=>{
     segmentElapsedMs += 100;
@@ -931,7 +1039,10 @@ function startRotation(){
     const segs = document.querySelectorAll('.signal-seg');
     if(segs[currentSlide]) segs[currentSlide].querySelector('.fill').style.width = pct+'%';
   }, 100);
-  rotationTimer = setInterval(()=> goToSlide((currentSlide+1) % config.slides.length), totalMs);
+  rotationTimer = setTimeout(()=>{
+    goToSlide((currentSlide+1) % config.slides.length);
+    scheduleSlideAdvance();
+  }, totalMs);
 }
 function tickClock(){
   const now = new Date();
@@ -1042,15 +1153,20 @@ const TYPE_META = {
   depoimento:   { label:'Depoimento de cliente',     bodyLabel:'Citação', hasImage:true, titleLabel:'Nome do cliente' },
   boasvindas:   { label:'Boas-vindas',               bodyLabel:'Mensagem', hasImage:false, titleLabel:'Nome (opcional)' },
   clima:        { label:'Previsão do tempo (online)', bodyLabel:null, hasImage:false, extra:['city'] },
-  noticias:     { label:'Notícias (online)',          bodyLabel:null, hasImage:false, extra:['newsQuery'] }
+  noticias:     { label:'Notícias (online)',          bodyLabel:null, hasImage:false, extra:['newsQuery'] },
+  codigo:       { label:'Incorporar código (iframe)', bodyLabel:null, hasImage:false, extra:['embedCode'] },
+  quiz:         { label:'Quiz',                       bodyLabel:null, hasImage:false, titleLabel:'Pergunta', extra:['quizOptions'] },
+  texto:        { label:'Texto livre',                 bodyLabel:'Texto', hasImage:false, extra:['fontSizeVh'] }
 };
 const TYPE_GROUPS = [
-  { label:'Conteúdo', types:['promo','dica','foto','foto_tela','curiosidade'] },
+  { label:'Conteúdo', types:['promo','dica','foto','foto_tela','curiosidade','texto'] },
   { label:'Institucional', types:['horario','redes','logo','hora','boasvindas'] },
   { label:'Prova social', types:['avaliacao','depoimento'] },
   { label:'Vendas', types:['preco','video','qrcode'] },
   { label:'Publicidade', types:['anuncio','anuncie_aqui'] },
-  { label:'Online (precisa de internet)', types:['clima','noticias'] }
+  { label:'Online (precisa de internet)', types:['clima','noticias'] },
+  { label:'Avançado', types:['codigo'] },
+  { label:'Interativo', types:['quiz'] }
 ];
 
 function renderSlidesList(){
@@ -1095,6 +1211,42 @@ function renderSlidesList(){
     if(meta.extra && meta.extra.includes('newsQuery')){
       extraFieldsHTML += `<div class="field"><label>Assunto (opcional — em branco mostra manchetes gerais do Brasil)</label>
         <input data-field="newsQuery" data-idx="${idx}" type="text" placeholder="Ex: saúde bucal, economia…" value="${escapeAttr(slide.newsQuery||'')}" /></div>`;
+    }
+    if(meta.extra && meta.extra.includes('embedCode')){
+      extraFieldsHTML += `<div class="field" style="flex:1 1 100%;">
+        <label>Código de incorporar (copie do "Compartilhar → Incorporar" do site — Google Maps, YouTube, Spotify, etc.)</label>
+        <textarea data-field="embedCode" data-idx="${idx}" rows="4" placeholder='&lt;iframe src="..."&gt;&lt;/iframe&gt;'>${escapeHTML(slide.embedCode||'')}</textarea>
+        <div class="hint" style="margin-top:6px;">Funciona melhor com códigos de "iframe" (Google Maps, YouTube, Spotify, Google Agenda). Widgets que dependem de outro script (como alguns do Instagram) podem não funcionar.</div>
+      </div>`;
+    }
+    if(meta.extra && meta.extra.includes('quizOptions')){
+      extraFieldsHTML += `
+        <div class="field" style="flex:1 1 100%;"><label>Alternativa A</label>
+          <input data-field="option1" data-idx="${idx}" type="text" value="${escapeAttr(slide.option1||'')}" /></div>
+        <div class="field" style="flex:1 1 100%;"><label>Alternativa B</label>
+          <input data-field="option2" data-idx="${idx}" type="text" value="${escapeAttr(slide.option2||'')}" /></div>
+        <div class="field" style="flex:1 1 100%;"><label>Alternativa C (opcional)</label>
+          <input data-field="option3" data-idx="${idx}" type="text" value="${escapeAttr(slide.option3||'')}" /></div>
+        <div class="field" style="max-width:150px;"><label>Resposta certa</label>
+          <select data-field="correctOption" data-idx="${idx}">
+            <option value="1" ${(!slide.correctOption||slide.correctOption=='1')?'selected':''}>A</option>
+            <option value="2" ${slide.correctOption=='2'?'selected':''}>B</option>
+            <option value="3" ${slide.correctOption=='3'?'selected':''}>C</option>
+          </select></div>
+        <div class="field" style="max-width:180px;"><label>Revelar após (segundos)</label>
+          <input data-field="revealSeconds" data-idx="${idx}" type="number" min="2" max="30" value="${slide.revealSeconds||5}" /></div>
+        <div class="field" style="flex:1 1 100%;">
+          <div class="hint">Deixe um tempo menor que o "Tempo por slide" (lá em cima) — assim dá tempo de mostrar a resposta antes de passar pro próximo slide.</div>
+        </div>
+      `;
+    }
+    if(meta.extra && meta.extra.includes('fontSizeVh')){
+      extraFieldsHTML += `<div class="field" style="flex:1 1 100%;">
+        <label>Tamanho da fonte: <span id="fsz-${idx}">${slide.fontSizeVh||8}</span> (escala livre)</label>
+        <input data-field="fontSizeVh" data-idx="${idx}" type="range" min="2" max="20" step="0.5"
+          value="${slide.fontSizeVh||8}" oninput="document.getElementById('fsz-${idx}').textContent=this.value" />
+        <div class="hint" style="margin-top:6px;">Arraste pra ajustar bem pequeno ou bem grande — sem limite fixo. Bom pra frases de impacto ou avisos curtos.</div>
+      </div>`;
     }
 
     card.innerHTML = `
