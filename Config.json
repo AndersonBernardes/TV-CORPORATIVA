@@ -1,0 +1,43 @@
+{
+  "slides": [
+    {
+      "type": "text",
+      "title": "Bem-vindo!",
+      "body": "Confira as novidades da semana.",
+      "color": "#4FD1C5",
+      "fontSize": "90px",
+      "bodyColor": "#8B92A0",
+      "bodySize": "32px",
+      "background": "#1E2128",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Promoção do mês",
+      "captionColor": "#F2A65A",
+      "captionSize": "44px",
+      "animation": "zoom",
+      "duration": 10
+    },
+    {
+      "type": "clock",
+      "duration": 8
+    },
+    {
+      "type": "news",
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Reunião geral sexta-feira às 9h",
+        "Nova política de reembolso já disponível",
+        "Parabéns aos aniversariantes do mês!"
+      ],
+      "duration": 12
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-02.jpg",
+      "duration": 9
+    }
+  ]
+}
