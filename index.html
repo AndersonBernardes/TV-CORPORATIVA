@@ -488,6 +488,17 @@ html:fullscreen:hover #cornerBtns, html.is-fullscreen:hover #cornerBtns{opacity:
     </div>
 
     <div class="field" style="margin-bottom:18px;">
+      <label>Transferir configuração entre aparelhos</label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-ghost" id="exportConfigBtn" type="button">⬇️ Exportar configuração</button>
+        <label class="btn btn-ghost" style="cursor:pointer;">⬆️ Importar configuração
+          <input type="file" accept="application/json,.json" id="importConfigFile" style="display:none;" />
+        </label>
+      </div>
+      <div class="hint" style="margin-top:6px;">Baixa/carrega um arquivo com tudo que está configurado aqui — use pra levar de um aparelho pra outro, ou como backup.</div>
+    </div>
+
+    <div class="field" style="margin-bottom:18px;">
       <label>Carregar modelo pronto (substitui os slides atuais)</label>
       <div style="display:flex;gap:10px;">
         <select id="f-template" style="flex:1;">
@@ -1140,7 +1151,7 @@ function renderFontSegmented(){
 }
 
 // ---------- Edit panel ----------
-function openEditPanel(){
+function refreshFormFromConfig(){
   document.getElementById('f-bizName').value = config.bizName;
   document.getElementById('f-logoLetter').value = config.logoLetter;
   document.getElementById('f-interval').value = config.intervalSeconds;
@@ -1150,6 +1161,9 @@ function openEditPanel(){
   renderModeSegmented();
   renderFontSegmented();
   renderSlidesList();
+}
+function openEditPanel(){
+  refreshFormFromConfig();
   document.getElementById('editOverlay').classList.add('open');
 }
 function closeEditPanel(){ document.getElementById('editOverlay').classList.remove('open'); }
@@ -1487,6 +1501,42 @@ function addSlide(){
   renderSlidesList();
 }
 
+function exportConfig(){
+  try{
+    const blob = new Blob([JSON.stringify(config, null, 2)], { type:'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const slug = (config.bizName || 'negocio').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+    a.href = url;
+    a.download = `tv-config-${slug || 'negocio'}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showToast('Arquivo de configuração baixado.');
+  }catch(e){
+    console.error(e);
+    showToast('Não foi possível exportar agora.');
+  }
+}
+
+function importConfig(file){
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const parsed = JSON.parse(reader.result);
+      if(!parsed || !Array.isArray(parsed.slides)) throw new Error('formato inválido');
+      config = parsed;
+      refreshFormFromConfig();
+      showToast('Configuração importada — revise e clique em "Salvar alterações" para aplicar na tela.');
+    }catch(e){
+      console.error(e);
+      alert('Esse arquivo não parece ser um arquivo de configuração válido desta TV.');
+    }
+  };
+  reader.readAsText(file);
+}
+
 function loadTemplate(){
   const key = document.getElementById('f-template').value;
   if(!key || !TEMPLATES[key]) return;
@@ -1577,6 +1627,12 @@ async function init(){
   document.getElementById('saveBtn').addEventListener('click', handleSave);
   document.getElementById('addSlideBtn').addEventListener('click', addSlide);
   document.getElementById('loadTemplateBtn').addEventListener('click', loadTemplate);
+  document.getElementById('exportConfigBtn').addEventListener('click', exportConfig);
+  document.getElementById('importConfigFile').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(file) importConfig(file);
+    e.target.value = '';
+  });
 
   document.getElementById('f-logoFile').addEventListener('change', (e)=>{
     const file = e.target.files[0];
