@@ -1,1660 +1,318 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>TV Corporativa — Anca Soluções</title>
-<meta name="theme-color" id="themeColorMeta" content="#4C8DF6" />
-<meta name="mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="TV Anca" />
-<link rel="manifest" href="manifest.json" />
-<link rel="apple-touch-icon" href="icons/icon-180.png" />
-<link rel="icon" href="icons/icon-192.png" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TV Corporativa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+  :root{
+    --bg:#14161A;
+    --surface:#1E2128;
+    --accent:#4FD1C5;
+    --accent-2:#F2A65A;
+    --text:#F5F5F0;
+    --muted:#8B92A0;
+    --rail-h: 64px;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; width:100%; height:100%;
+    background:var(--bg); color:var(--text);
+    font-family:'Inter',sans-serif;
+    overflow:hidden;
+  }
+  #stage{
+    position:absolute; top:0; left:0; right:0; bottom:var(--rail-h);
+    overflow:hidden;
+  }
+  .slide{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    opacity:0;
+    transition:opacity 0.9s ease;
+    padding:60px;
+    text-align:center;
+  }
+  .slide.active{ opacity:1; z-index:2; }
+  .slide.zoom img{ animation:kenburns 10s ease-in-out forwards; }
+  @keyframes kenburns{
+    from{ transform:scale(1); }
+    to{ transform:scale(1.08); }
+  }
+  .slide img.fit-cover{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  }
+  .caption-box{
+    position:absolute; left:0; right:0; bottom:70px;
+    padding:24px 60px;
+    background:linear-gradient(0deg, rgba(0,0,0,0.65), rgba(0,0,0,0));
+  }
+  .caption-box .caption{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    text-shadow:0 2px 12px rgba(0,0,0,0.6);
+  }
+  .text-slide .title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    line-height:1.05;
+    margin:0 0 20px 0;
+  }
+  .text-slide .body{
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    color:var(--muted);
+    max-width:1100px;
+    line-height:1.4;
+  }
+  .clock-slide{
+    background:var(--surface);
+  }
+  .clock-slide .time{
+    font-family:'JetBrains Mono',monospace;
+    font-size:min(22vw, 260px);
+    font-weight:500;
+    letter-spacing:4px;
+    color:var(--accent);
+    line-height:1;
+  }
+  .clock-slide .date{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:42px;
+    text-transform:capitalize;
+    color:var(--text);
+    margin-top:18px;
+  }
+  .news-slide{
+    background:var(--surface);
+    align-items:flex-start;
+    text-align:left;
+    justify-content:center;
+    padding:80px 100px;
+  }
+  .news-slide .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--accent-2);
+    letter-spacing:3px;
+    font-size:20px;
+    margin-bottom:24px;
+  }
+  .news-slide ul{
+    list-style:none; margin:0; padding:0;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:44px;
+    line-height:1.5;
+  }
+  .news-slide li{
+    display:flex; align-items:baseline; gap:20px;
+    margin-bottom:14px;
+  }
+  .news-slide li::before{
+    content:"—";
+    color:var(--accent);
+    flex-shrink:0;
+  }
 
-/* ===== Design tokens — Material Design 3 inspired ===== */
-:root{
-  --accent:#4C8DF6;
-  --accent-2:#8AB4FF;
-  --on-accent:#FFFFFF;
-  --font-scale:1;
-
-  --bg-base:#F4F6FB;
-  --bg-panel:#FFFFFF;
-  --bg-panel-2:#EEF1F8;
-  --glass: rgba(255,255,255,0.55);
-  --glass-border: rgba(255,255,255,0.6);
-  --text-primary:#1B1F24;
-  --text-muted:#5C6470;
-  --line: rgba(20,25,35,0.09);
-  --shadow: 0 10px 30px -12px rgba(20,25,45,0.18);
-}
-html[data-mode="dark"]{
-  --bg-base:#10131A;
-  --bg-panel:#181C25;
-  --bg-panel-2:#1F2430;
-  --glass: rgba(30,34,44,0.55);
-  --glass-border: rgba(255,255,255,0.08);
-  --text-primary:#F2F3F7;
-  --text-muted:#8B93A3;
-  --line: rgba(255,255,255,0.09);
-  --shadow: 0 10px 30px -12px rgba(0,0,0,0.5);
-}
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;height:100%;height:100dvh;background:var(--bg-base);}
-body{
-  font-family:'Inter',sans-serif;color:var(--text-primary);
-  width:100vw;width:100dvw;min-height:100vh;min-height:100dvh;height:100dvh;
-  position:relative;overflow:hidden;
-  transition:background 0.4s ease, color 0.4s ease;
-}
-.mono{font-family:'IBM Plex Mono',monospace;}
-.display-face{font-family:'Poppins',sans-serif;}
-button, select, input, textarea{font-family:'Inter',sans-serif;}
-
-/* ===== Splash screen ===== */
-#splash{
-  position:fixed;inset:0;z-index:999;
-  background:linear-gradient(160deg, var(--accent), var(--accent-2));
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
-  transition:opacity 0.5s ease, visibility 0.5s ease;
-}
-#splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
-#splashMark{
-  width:88px;height:88px;border-radius:26px;background:rgba(255,255,255,0.18);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Poppins',sans-serif;font-weight:800;font-size:42px;color:#fff;
-  box-shadow:0 20px 40px -10px rgba(0,0,0,0.35);
-  animation:splashPop 0.6s ease;
-}
-@keyframes splashPop{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
-#splash .splash-title{font-family:'Poppins',sans-serif;font-weight:700;color:#fff;font-size:20px;letter-spacing:0.01em;}
-#splash .splash-sub{font-family:'IBM Plex Mono',monospace;color:rgba(255,255,255,0.75);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;}
-
-/* ===== TOP BAR (display) ===== */
-#topbar{
-  position:absolute;top:0;left:0;right:0;height:9vh;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 4vw;z-index:5;
-  background:linear-gradient(180deg, var(--bg-panel) 0%, transparent 100%);
-}
-#brandWrap{display:flex;align-items:center;gap:1.2vw;}
-#logoCircle{
-  width:5.2vh;height:5.2vh;border-radius:16px;
-  background:linear-gradient(150deg, var(--accent), var(--accent-2));color:var(--on-accent);
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-  font-family:'Poppins',sans-serif;font-weight:700;font-size:2.4vh;flex-shrink:0;
-  box-shadow:0 8px 18px -6px rgba(0,0,0,0.25);
-}
-#bizName{font-family:'Poppins',sans-serif;font-weight:600;font-size:2.6vh;letter-spacing:0.01em;}
-#clock{font-size:2vh;color:var(--text-muted);letter-spacing:0.05em;}
-
-/* ===== SLIDE STAGE ===== */
-#stage{position:absolute;top:9vh;left:0;right:0;bottom:8vh;overflow:hidden;}
-.slide{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;padding:0 6vw;
-  opacity:0;transform:scale(1.04);transition:opacity 1s cubic-bezier(.4,0,.2,1), transform 1.4s cubic-bezier(.4,0,.2,1);
-  pointer-events:none;--local-scale:1;
-}
-.slide.active{opacity:1;transform:scale(1);pointer-events:auto;}
-.slide[data-align="center"]{justify-content:center;}
-.slide[data-align="center"] .slide-content{align-items:center;text-align:center;display:flex;flex-direction:column;margin:0 auto;}
-.slide[data-align="center"] .slide-title, .slide[data-align="center"] .slide-body{margin-left:auto;margin-right:auto;}
-.slide[data-align="center"] .slide-img{display:none;}
-.slide[data-align="right"]{justify-content:flex-end;}
-.slide[data-align="right"] .slide-content{text-align:right;}
-.slide[data-align="right"] .slide-img{left:5vw;right:auto;}
-.slide-eyebrow{
-  font-family:'IBM Plex Mono',monospace;font-size:calc(1.6vh * var(--font-scale, 1) * var(--local-scale,1));letter-spacing:0.16em;
-  color:var(--accent);text-transform:uppercase;margin-bottom:1.4vh;display:inline-flex;align-items:center;gap:8px;
-}
-.slide-eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);}
-.slide-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:calc(6.2vh * var(--font-scale, 1) * var(--local-scale,1));line-height:1.1;margin:0 0 2vh 0;max-width:70vw;}
-.slide-body{font-size:calc(2.5vh * var(--font-scale, 1) * var(--local-scale,1));line-height:1.55;max-width:52vw;color:var(--text-muted);white-space:pre-line;}
-.slide-content{max-width:56vw;position:relative;z-index:2;}
-.slide-img{
-  position:absolute;right:5vw;top:50%;transform:translateY(-50%);
-  width:34vw;max-height:78vh;object-fit:cover;border-radius:24px;
-  box-shadow:var(--shadow);border:1px solid var(--line);
-}
-.slide-img.full{position:absolute;inset:0;width:100%;height:100%;border-radius:0;object-fit:cover;border:none;transform:none;}
-.slide.active .slide-img.full{
-  animation: kenburns var(--kb-duration, 9s) ease-out forwards;
-}
-@keyframes kenburns{
-  from{ transform:scale(1) translate(0,0); }
-  to{ transform:scale(1.12) translate(-1%, -1%); }
-}
-.photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.85) 100%);z-index:1;}
-.photo-caption{position:absolute;left:6vw;bottom:12vh;z-index:2;max-width:60vw;}
-
-/* Ad / publicidade badge */
-.ad-badge{
-  position:absolute;top:2.5vh;right:5vw;z-index:3;
-  background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.35);color:#fff;
-  font-family:'IBM Plex Mono',monospace;font-size:1.3vh;letter-spacing:0.14em;text-transform:uppercase;
-  padding:0.7vh 1.4vh;border-radius:100px;backdrop-filter:blur(6px);
-}
-.ad-hint{
-  position:absolute;bottom:2.5vh;right:5vw;z-index:3;
-  font-size:1.4vh;color:rgba(255,255,255,0.85);font-family:'Inter',sans-serif;
-}
-.ad-hint a{color:#fff;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.5);}
-
-/* ---- Redes sociais ---- */
-.social-list{display:flex;flex-direction:column;gap:1.6vh;margin-top:1vh;}
-.social-row{display:flex;align-items:center;gap:1.4vh;font-size:calc(2.6vh * var(--font-scale,1));font-weight:600;}
-.social-icon{
-  width:4.4vh;height:4.4vh;border-radius:50%;background:var(--accent);color:var(--on-accent);
-  display:flex;align-items:center;justify-content:center;font-size:2.2vh;flex-shrink:0;
-}
-
-/* ---- Avaliação Google ---- */
-.stars{color:#F5A623;font-size:calc(4vh * var(--font-scale,1));letter-spacing:0.1em;margin-bottom:1vh;}
-.review-quote{font-size:calc(2.8vh * var(--font-scale,1));line-height:1.5;font-style:italic;color:var(--text-primary);max-width:52vw;}
-
-/* ---- Vídeo ---- */
-.video-wrap{position:absolute;inset:0;background:#000;}
-.video-wrap video, .video-wrap iframe{width:100%;height:100%;object-fit:cover;border:none;}
-.video-caption{position:absolute;left:6vw;bottom:12vh;z-index:2;max-width:60vw;}
-.video-caption .slide-title, .video-caption .slide-body{color:#fff;}
-
-/* ---- Preço antigo/novo ---- */
-.price-row{display:flex;align-items:baseline;gap:2vh;margin:1vh 0 1.6vh;}
-.price-old{font-size:calc(3.4vh * var(--font-scale,1));color:var(--text-muted);text-decoration:line-through;font-family:'Poppins',sans-serif;}
-.price-new{font-size:calc(6.5vh * var(--font-scale,1));color:var(--accent);font-weight:800;font-family:'Poppins',sans-serif;}
-
-/* ---- QR code ---- */
-.qr-wrap{display:flex;align-items:center;gap:3vw;}
-.qr-box{background:#fff;padding:1.6vh;border-radius:20px;box-shadow:var(--shadow);flex-shrink:0;}
-.qr-box img{display:block;width:18vh;height:18vh;}
-
-/* ---- Logo da empresa ---- */
-.logo-slide{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vh;text-align:center;}
-.logo-slide .big-logo-img{max-height:32vh;max-width:60vw;object-fit:contain;}
-.logo-slide .big-logo-circle{
-  width:18vh;height:18vh;border-radius:32px;background:linear-gradient(150deg,var(--accent),var(--accent-2));
-  display:flex;align-items:center;justify-content:center;color:var(--on-accent);
-  font-family:'Poppins',sans-serif;font-weight:800;font-size:8vh;box-shadow:var(--shadow);
-}
-.logo-slide .logo-slide-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:calc(4vh * var(--font-scale,1));}
-
-/* ---- Hora certa ---- */
-.clock-slide{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1vh;text-align:center;}
-.clock-slide .big-clock{font-family:'Poppins',sans-serif;font-weight:800;font-size:14vh;letter-spacing:0.02em;}
-.clock-slide .big-date{font-family:'IBM Plex Mono',monospace;font-size:calc(2.4vh * var(--font-scale,1));color:var(--text-muted);text-transform:capitalize;letter-spacing:0.06em;}
-
-/* ---- Você sabia? / curiosidade ---- */
-.curio-icon{
-  width:5vh;height:5vh;border-radius:50%;background:var(--accent);color:var(--on-accent);
-  display:flex;align-items:center;justify-content:center;font-size:2.6vh;margin-bottom:1.4vh;
-}
-
-/* ---- Anuncie aqui (CTA institucional) ---- */
-.ctaslide{
-  position:absolute;inset:0;background:linear-gradient(150deg,var(--accent),var(--accent-2));
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.6vh;padding:0 8vw;
-}
-.ctaslide .slide-title, .ctaslide .slide-body{color:var(--on-accent);max-width:70vw;}
-.ctaslide .cta-btn{
-  margin-top:1vh;background:rgba(255,255,255,0.18);color:var(--on-accent);border:1px solid rgba(255,255,255,0.4);
-  padding:1.4vh 3vh;border-radius:100px;font-family:'Poppins',sans-serif;font-weight:700;
-  font-size:calc(2.2vh * var(--font-scale,1));text-decoration:none;
-}
-
-/* ---- Boas-vindas ---- */
-.welcome-slide{width:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;}
-
-/* ---- Clima ---- */
-.weather-loading, .news-loading{color:var(--text-muted);font-size:calc(2.2vh * var(--font-scale,1));margin-top:1vh;}
-.weather-row{display:flex;align-items:center;gap:2vh;margin:1vh 0;}
-.weather-icon{font-size:calc(8vh * var(--font-scale,1) * var(--local-scale,1));}
-.weather-temp{font-family:'Poppins',sans-serif;font-weight:800;font-size:calc(9vh * var(--font-scale,1) * var(--local-scale,1));color:var(--text-primary);}
-
-/* ---- Notícias ---- */
-.news-list{display:flex;flex-direction:column;gap:1.6vh;margin-top:1.4vh;}
-.news-item{
-  font-size:calc(2.4vh * var(--font-scale,1) * var(--local-scale,1));line-height:1.4;font-weight:500;
-  padding-left:1.6vh;border-left:3px solid var(--accent);
-}
-
-/* ---- Código incorporado (iframe) ---- */
-.embed-wrap{position:absolute;inset:0;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;}
-.embed-wrap iframe, .embed-wrap embed, .embed-wrap object{width:100% !important;height:100% !important;border:none !important;}
-
-/* ---- Quiz ---- */
-.quiz-wrap{position:relative;width:100%;max-width:70vw;}
-.quiz-question{transition:opacity 0.5s ease, transform 0.5s ease;}
-.quiz-q-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:calc(5vh * var(--font-scale,1) * var(--local-scale,1));line-height:1.15;margin-bottom:2.4vh;}
-.quiz-options{display:flex;flex-direction:column;gap:1.4vh;}
-.quiz-opt{
-  display:flex;align-items:center;gap:1.6vh;
-  background:var(--bg-panel);border:1px solid var(--line);border-radius:16px;
-  padding:1.6vh 2vh;font-size:calc(2.6vh * var(--font-scale,1) * var(--local-scale,1));font-weight:500;
-  box-shadow:var(--shadow);
-}
-.quiz-letter{
-  width:4vh;height:4vh;border-radius:50%;background:var(--accent);color:var(--on-accent);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  font-family:'Poppins',sans-serif;font-weight:700;font-size:2vh;
-}
-.quiz-answer{
-  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  opacity:0;transform:scale(0.85);pointer-events:none;
-  transition:opacity 0.5s ease, transform 0.5s cubic-bezier(.34,1.56,.64,1);
-}
-.quiz-answer-icon{
-  width:9vh;height:9vh;border-radius:50%;background:var(--accent-2);color:#fff;
-  display:flex;align-items:center;justify-content:center;font-size:5vh;margin-bottom:1.6vh;
-  box-shadow:0 14px 30px -10px var(--accent);
-}
-.quiz-answer-label{font-family:'IBM Plex Mono',monospace;font-size:calc(1.6vh * var(--font-scale,1));letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1vh;}
-.quiz-answer-text{font-family:'Poppins',sans-serif;font-weight:700;font-size:calc(4.6vh * var(--font-scale,1) * var(--local-scale,1));max-width:60vw;}
-
-.quiz-wrap.revealed .quiz-question{opacity:0;transform:scale(0.92) translateY(-10px);pointer-events:none;}
-.quiz-wrap.revealed .quiz-answer{opacity:1;transform:scale(1);pointer-events:auto;}
-
-/* ---- Texto livre ---- */
-.free-text{font-weight:700;line-height:1.25;white-space:pre-line;max-width:80vw;color:var(--text-primary);}
-
-
-.photo-caption .slide-title, .photo-caption .slide-body{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.7);}
-.photo-caption .slide-eyebrow{text-shadow:0 1px 6px rgba(0,0,0,0.6);}
-.video-caption .slide-title, .video-caption .slide-body{text-shadow:0 2px 12px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.7);}
-
-.schedule-table{width:100%;max-width:60vw;border-collapse:collapse;margin-top:1vh;}
-.schedule-table tr{border-bottom:1px solid var(--line);}
-.schedule-table td{padding:1.3vh 0;font-size:calc(2.3vh * var(--font-scale, 1));}
-.schedule-table td:first-child{color:var(--text-muted);font-family:'IBM Plex Mono',monospace;}
-.schedule-table td:last-child{text-align:right;font-weight:600;font-family:'Poppins',sans-serif;}
-
-/* ===== BOTTOM BAR ===== */
-#bottombar{
-  position:absolute;bottom:0;left:0;right:0;height:8vh;
-  display:flex;align-items:center;justify-content:space-between;padding:0 4vw;
-  background:var(--bg-panel);border-top:1px solid var(--line);z-index:5;
-}
-#liveWrap{display:flex;align-items:center;gap:1vw;}
-#liveDot{width:1.1vh;height:1.1vh;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite;}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(76,141,246,0.5);}70%{box-shadow:0 0 0 1.4vh rgba(76,141,246,0);}100%{box-shadow:0 0 0 0 rgba(76,141,246,0);}}
-#liveLabel{font-family:'IBM Plex Mono',monospace;font-size:1.5vh;letter-spacing:0.15em;color:var(--text-muted);}
-#signalBars{display:flex;align-items:center;gap:0.5vh;}
-.signal-seg{width:2.2vw;height:0.7vh;border-radius:4px;background:var(--line);overflow:hidden;position:relative;}
-.signal-seg .fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:var(--accent);transition:width 0.1s linear;border-radius:4px;}
-.signal-seg.done .fill{width:100% !important;background:var(--accent-2);}
-#brandFooter{display:flex;align-items:center;gap:0.9vw;font-family:'IBM Plex Mono',monospace;font-size:1.5vh;color:var(--text-muted);}
-#brandFooter b{color:var(--text-primary);font-weight:500;}
-#waLink{
-  display:flex;align-items:center;gap:0.5vw;color:var(--text-primary);text-decoration:none;
-  border:1px solid var(--line);padding:0.6vh 1.1vh;border-radius:100px;transition:transform 0.15s ease, background 0.2s ease;
-}
-#waLink:hover{transform:translateY(-1px);background:var(--bg-panel-2);}
-#waLink svg{width:1.6vh;height:1.6vh;fill:#25D366;}
-
-/* ===== CORNER BUTTONS ===== */
-#cornerBtns{position:absolute;bottom:1.4vh;left:1vw;z-index:20;display:flex;gap:0.8vh;}
-#cornerBtns button{
-  width:3.6vh;height:3.6vh;border-radius:50%;padding:0;border:none;cursor:pointer;
-  background:var(--bg-panel-2);border:1px solid var(--line);color:var(--text-muted);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0.35;transition:opacity 0.2s, transform 0.2s;
-}
-#cornerBtns button:hover{opacity:1;}
-#gearBtn:hover{transform:rotate(25deg) scale(1.05);}
-#fullscreenBtn:hover{transform:scale(1.08);}
-#cornerBtns button svg{width:1.8vh;height:1.8vh;fill:currentColor;}
-
-/* ===== EDIT PANEL — glassmorphism / M3 ===== */
-#editOverlay{
-  position:fixed;inset:0;background:rgba(10,12,18,0.45);backdrop-filter:blur(6px);
-  display:none;align-items:flex-start;justify-content:center;z-index:100;
-  overflow-y:auto;padding:5vh 16px 40px;
-}
-#editOverlay.open{display:flex;}
-#editPanel{
-  width:min(720px, 94vw);
-  background:var(--glass);backdrop-filter:blur(20px) saturate(160%);
-  border:1px solid var(--glass-border);border-radius:28px;
-  padding:26px 26px 28px;color:var(--text-primary);box-shadow:var(--shadow);
-  animation:panelIn 0.35s cubic-bezier(.2,.8,.2,1);
-}
-@keyframes panelIn{from{opacity:0;transform:translateY(14px) scale(0.98);}to{opacity:1;transform:translateY(0) scale(1);}}
-#editPanel h2{font-family:'Poppins',sans-serif;font-weight:700;font-size:21px;margin:0 0 4px;}
-#editPanel .sub{color:var(--text-muted);font-size:13px;margin-bottom:20px;}
-
-/* Theme picker */
-.theme-block{background:var(--bg-panel-2);border-radius:20px;padding:16px;margin-bottom:18px;border:1px solid var(--line);}
-.theme-block .label-row{font-size:12px;color:var(--text-muted);letter-spacing:0.03em;margin-bottom:10px;font-weight:600;text-transform:uppercase;}
-.swatches{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
-.swatch{
-  width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;
-  display:flex;align-items:center;justify-content:center;transition:transform 0.15s ease;
-  box-shadow:0 4px 10px -4px rgba(0,0,0,0.3);
-}
-.swatch:hover{transform:scale(1.12);}
-.swatch.active{border-color:var(--text-primary);}
-.swatch svg{width:14px;height:14px;fill:#fff;opacity:0;}
-.swatch.active svg{opacity:1;}
-.segmented{display:flex;background:var(--bg-panel);border-radius:100px;padding:4px;gap:2px;border:1px solid var(--line);}
-.segmented button{
-  flex:1;border:none;background:transparent;padding:8px 10px;border-radius:100px;font-size:12.5px;font-weight:600;
-  color:var(--text-muted);cursor:pointer;transition:all 0.2s ease;
-}
-.segmented button.active{background:var(--accent);color:var(--on-accent);}
-
-.field-row{display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
-.field{flex:1;min-width:110px;display:flex;flex-direction:column;gap:6px;}
-.field label{font-size:12px;color:var(--text-muted);letter-spacing:0.02em;font-weight:500;}
-.field input, .field select, .field textarea{
-  background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;
-  padding:10px 13px;color:var(--text-primary);font-size:14px;resize:vertical;width:100%;
-}
-.field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--accent);outline-offset:0;}
-.field input[type="range"]{background:transparent;border:none;padding:8px 0;accent-color:var(--accent);}
-hr.sep{border:none;border-top:1px solid var(--line);margin:20px 0;}
-.slide-card{border:1px solid var(--line);border-radius:20px;padding:15px 16px;margin-bottom:12px;background:var(--bg-panel);}
-.slide-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.slide-card-head span{font-size:12.5px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;}
-
-.btn{
-  border:none;border-radius:100px;padding:11px 20px;font-size:13.5px;font-weight:600;cursor:pointer;
-  transition:transform 0.12s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-}
-.btn:active{transform:scale(0.96);}
-.btn-primary{background:var(--accent);color:var(--on-accent);box-shadow:0 8px 18px -8px var(--accent);}
-.btn-ghost{background:var(--bg-panel-2);color:var(--text-primary);border:1px solid var(--line);}
-.btn-danger{background:transparent;color:#E5484D;border:1px solid rgba(229,72,77,0.35);}
-.btn-row{display:flex;gap:10px;margin-top:22px;justify-content:space-between;align-items:center;}
-.btn-row .right{display:flex;gap:10px;}
-
-#saveToast{
-  position:fixed;bottom:24px;right:24px;background:var(--text-primary);color:var(--bg-base);
-  padding:11px 18px;border-radius:100px;font-size:13px;opacity:0;transform:translateY(10px);
-  transition:all 0.25s;z-index:200;box-shadow:var(--shadow);
-}
-#saveToast.show{opacity:1;transform:translateY(0);}
-
-/* ---- Galeria de imagens ---- */
-#galleryOverlay{
-  position:fixed;inset:0;background:rgba(10,12,18,0.55);backdrop-filter:blur(6px);
-  display:none;align-items:center;justify-content:center;z-index:110;padding:5vh 16px;
-}
-#galleryOverlay.open{display:flex;}
-#galleryPanel{
-  width:min(720px,94vw);max-height:88vh;overflow-y:auto;
-  background:var(--glass);backdrop-filter:blur(20px) saturate(160%);
-  border:1px solid var(--glass-border);border-radius:28px;padding:24px 26px 28px;box-shadow:var(--shadow);
-}
-.gallery-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-.gallery-head h2{font-family:'Poppins',sans-serif;font-weight:700;font-size:19px;margin:0;color:var(--text-primary);}
-.gallery-grid{
-  display:grid;grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:10px;margin-top:16px;
-}
-.gallery-thumb{
-  aspect-ratio:1;border-radius:14px;overflow:hidden;cursor:pointer;border:2px solid var(--line);
-  background:var(--bg-panel-2);position:relative;transition:transform 0.15s ease, border-color 0.15s ease;
-}
-.gallery-thumb:hover{transform:scale(1.04);border-color:var(--accent);}
-.gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-.gallery-thumb .gallery-label{
-  position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.55);color:#fff;
-  font-size:11px;text-align:center;padding:3px 0;font-family:'IBM Plex Mono',monospace;
-}
-.gallery-empty{
-  grid-column:1/-1;text-align:center;color:var(--text-muted);font-size:13px;padding:24px 0;
-}
-.hint{font-size:12px;color:var(--text-muted);line-height:1.5;}
-#storageIndicator .bar{height:6px;border-radius:4px;background:var(--bg-panel);border:1px solid var(--line);overflow:hidden;margin-top:6px;}
-#storageIndicator .bar .fill{height:100%;background:var(--accent);transition:width 0.3s ease;}
-#storageIndicator.warn .fill{background:#E5484D;}
-
-/* Oculta os botões de canto quando em tela cheia real (F11 ou botão) */
-html:fullscreen #cornerBtns, html.is-fullscreen #cornerBtns{opacity:0;pointer-events:none;transition:opacity 0.3s;}
-html:fullscreen:hover #cornerBtns, html.is-fullscreen:hover #cornerBtns{opacity:1;pointer-events:auto;}
-::-webkit-scrollbar{width:8px;}
-::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
-
-@media (max-width:480px){
-  .field-row{flex-direction:column;}
-  #editPanel{border-radius:22px;padding:20px 18px 22px;}
-}
+  /* Rail inferior: relógio ao vivo + progresso dos slides */
+  #rail{
+    position:absolute; left:0; right:0; bottom:0; height:var(--rail-h);
+    background:var(--surface);
+    border-top:1px solid rgba(255,255,255,0.06);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 40px;
+    font-family:'JetBrains Mono',monospace;
+    z-index:5;
+  }
+  #rail-clock{ font-size:22px; color:var(--text); letter-spacing:1px; }
+  #rail-dots{ display:flex; gap:10px; }
+  #rail-dots span{
+    width:10px; height:10px; border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    transition:background 0.3s;
+  }
+  #rail-dots span.on{ background:var(--accent); }
+  #rail-brand{ font-size:16px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
 </style>
 </head>
 <body>
 
-<div id="splash">
-  <div id="splashMark">A</div>
-  <div class="splash-title">Anca Soluções</div>
-  <div class="splash-sub">TV Corporativa</div>
-</div>
-
-<div id="topbar">
-  <div id="brandWrap">
-    <div id="logoCircle">A</div>
-    <div id="bizName" class="display-face">Nome do negócio</div>
-  </div>
-  <div id="clock" class="mono">--:--</div>
-</div>
-
 <div id="stage"></div>
 
-<div id="bottombar">
-  <div id="liveWrap"><div id="liveDot"></div><div id="liveLabel">AO VIVO</div></div>
-  <div id="signalBars"></div>
-  <div id="brandFooter">
-    <span>Criado por <b>Anca Soluções</b></span>
-    <a id="waLink" href="https://wa.me/5511951394342" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.9-.4-1.9-1-2.7-1.9-.7-.7-1.2-1.6-1.5-2.1-.1-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.1-.5-.1-.2-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.3 0 1.4 1 2.7 1.1 2.9.1.2 1.9 3 4.7 4.1 2.7 1.1 2.7.7 3.2.7.5 0 1.6-.6 1.8-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.4c1.4.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3.1.8.8-3-.2-.3C4 14.9 3.6 13.5 3.6 12c0-4.6 3.8-8.4 8.4-8.4s8.4 3.8 8.4 8.4-3.8 8.4-8.4 8.4z"/></svg>
-      <span>(11) 95139-4342</span>
-    </a>
-  </div>
-</div>
-
-<div id="cornerBtns">
-  <button id="gearBtn" title="Editar conteúdo" aria-label="Editar conteúdo">
-    <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.65l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.3 7.3 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22L2.72 8.83a.5.5 0 0 0 .12.65l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.65l1.92 3.32c.14.24.42.32.66.22l2.39-.96c.49.38 1.03.7 1.62.94l.36 2.54a.5.5 0 0 0 .5.42h3.84a.5.5 0 0 0 .5-.42l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.24.1.52.02.66-.22l1.92-3.32a.5.5 0 0 0-.12-.65l-2.03-1.58zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>
-  </button>
-  <button id="fullscreenBtn" title="Tela cheia" aria-label="Tela cheia">
-    <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-  </button>
-</div>
-
-
-<!-- ============ EDIT OVERLAY ============ -->
-<div id="editOverlay">
-  <div id="editPanel">
-    <h2>Editar TV</h2>
-    <div class="sub">As alterações ficam salvas neste aparelho e aparecem direto na tela.</div>
-
-    <div class="theme-block">
-      <div class="label-row">Cor do tema</div>
-      <div class="swatches" id="colorSwatches"></div>
-      <div class="label-row">Modo</div>
-      <div class="segmented" id="modeSegmented">
-        <button data-mode="light" type="button">☀️ Claro</button>
-        <button data-mode="dark" type="button">🌙 Escuro</button>
-        <button data-mode="auto" type="button">📱 Automático</button>
-      </div>
-      <div class="label-row" style="margin-top:14px;">Tamanho da fonte na TV</div>
-      <div class="segmented" id="fontSegmented">
-        <button data-scale="0.8" type="button">P</button>
-        <button data-scale="1" type="button">M</button>
-        <button data-scale="1.25" type="button">G</button>
-        <button data-scale="1.5" type="button">GG</button>
-      </div>
-    </div>
-
-    <div class="field" style="margin-bottom:18px;">
-      <label>Transferir configuração entre aparelhos</label>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button class="btn btn-ghost" id="exportConfigBtn" type="button">⬇️ Exportar configuração</button>
-        <label class="btn btn-ghost" style="cursor:pointer;">⬆️ Importar configuração
-          <input type="file" accept="application/json,.json" id="importConfigFile" style="display:none;" />
-        </label>
-      </div>
-      <div class="hint" style="margin-top:6px;">Baixa/carrega um arquivo com tudo que está configurado aqui — use pra levar de um aparelho pra outro, ou como backup.</div>
-    </div>
-
-    <div class="field" style="margin-bottom:18px;">
-      <label>Carregar modelo pronto (substitui os slides atuais)</label>
-      <div style="display:flex;gap:10px;">
-        <select id="f-template" style="flex:1;">
-          <option value="">Escolha um modelo…</option>
-          <option value="dentista">Dentista / Consultório</option>
-          <option value="mecanica">Mecânica / Auto center</option>
-          <option value="salao">Salão de beleza / Barbearia</option>
-          <option value="restaurante">Restaurante / Lanchonete</option>
-        </select>
-        <button class="btn btn-ghost" id="loadTemplateBtn" type="button">Carregar</button>
-      </div>
-    </div>
-
-    <hr class="sep" />
-
-    <div class="field-row">
-      <div class="field">
-        <label>Nome do negócio</label>
-        <input id="f-bizName" type="text" placeholder="Ex: Consultório Dr. Fulano" />
-      </div>
-      <div class="field" style="max-width:110px;">
-        <label>Letra do logo</label>
-        <input id="f-logoLetter" type="text" maxlength="2" placeholder="A" />
-      </div>
-      <div class="field" style="max-width:180px;">
-        <label>Tempo por slide (s)</label>
-        <input id="f-interval" type="number" min="4" max="60" value="8" />
-      </div>
-    </div>
-
-    <div class="field" style="margin-bottom:18px;">
-      <label>Logo da empresa (opcional — substitui a letra no topo da tela)</label>
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-        <label class="btn btn-ghost" style="cursor:pointer;">📷 Enviar logo
-          <input type="file" accept="image/*" id="f-logoFile" style="display:none;" />
-        </label>
-        <button class="btn btn-ghost" id="removeLogoBtn" type="button">Remover logo</button>
-        <img id="logoPreview" style="max-height:44px;max-width:120px;border-radius:8px;display:none;border:1px solid var(--line);" />
-      </div>
-    </div>
-
-    <div id="storageIndicator" class="hint" style="margin-bottom:6px;"></div>
-
-    <hr class="sep" />
-    <div id="slidesList"></div>
-    <button class="btn btn-ghost" id="addSlideBtn" type="button" style="width:100%;">+ Adicionar slide</button>
-
-    <div class="btn-row">
-      <button class="btn btn-ghost" id="closeEditBtn" type="button">Fechar</button>
-      <div class="right">
-        <button class="btn btn-primary" id="saveBtn" type="button">Salvar alterações</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="saveToast">Salvo com sucesso.</div>
-
-<div id="galleryOverlay">
-  <div id="galleryPanel">
-    <div class="gallery-head">
-      <h2>Escolher da galeria</h2>
-      <button class="btn btn-ghost" id="closeGalleryBtn" type="button">Fechar</button>
-    </div>
-    <div class="sub">Imagens da pasta <code>/imagens</code> do repositório. Clique numa para usar neste slide.</div>
-    <div id="galleryStatus" class="hint" style="margin:4px 0 2px;">Verificando…</div>
-    <div id="galleryGrid" class="gallery-grid"></div>
-  </div>
+<div id="rail">
+  <div id="rail-clock">--:--:--</div>
+  <div id="rail-dots"></div>
+  <div id="rail-brand">Ao vivo</div>
 </div>
 
 <script>
-const STORAGE_KEY = 'tv-config';
+/* =========================================================
+   CONFIGURAÇÃO
+   Edite apenas o arquivo config.json no GitHub — este HTML
+   não precisa ser tocado no dia a dia.
+========================================================= */
+const CONFIG_URL = 'config.json';
+const CONFIG_POLL_SECONDS = 60;   // de quanto em quanto tempo verifica atualização
+const HARD_RELOAD_MINUTES = 120;  // recarrega a página inteira de tempos em tempos (evita travar a TV)
 
-const COLOR_THEMES = [
-  { id:'blue',   name:'Azul Profissional', accent:'#4C8DF6', accent2:'#8AB4FF' },
-  { id:'green',  name:'Verde',             accent:'#34A853', accent2:'#7FD99A' },
-  { id:'purple', name:'Roxo',              accent:'#8B5CF6', accent2:'#C4B0FF' },
-  { id:'orange', name:'Laranja',           accent:'#F5A623', accent2:'#FFCB7A' },
-  { id:'red',    name:'Vermelho',          accent:'#E5484D', accent2:'#FF9B9E' },
-  { id:'black',  name:'Preto Premium',     accent:'#D4AF37', accent2:'#F0D97A' }
-];
+let slides = [];
+let currentIndex = 0;
+let slideTimer = null;
+let stageEl = document.getElementById('stage');
+let dotsEl = document.getElementById('rail-dots');
 
-const DEFAULT_CONFIG = {
-  bizName: "Odonto Sorriso",
-  logoLetter: "O",
-  themeColor: "blue",
-  themeMode: "auto",
-  fontScale: 1,
-  intervalSeconds: 8,
-  slides: [
-    { type:"promo", eyebrow:"Promoção do mês", title:"Limpeza + avaliação com 20% off", body:"Agende esta semana e garanta sua vaga. Atendimento com hora marcada.", imageUrl:"" },
-    { type:"dica", eyebrow:"Dica de saúde", title:"Troque a escova a cada 3 meses", body:"Cerdas desgastadas limpam menos e podem machucar a gengiva. Fique de olho.", imageUrl:"" },
-    { type:"horario", eyebrow:"Funcionamento", title:"Horários de atendimento", body:"Segunda a Sexta: 08:00 – 18:00\nSábado: 08:00 – 12:00\nDomingo: Fechado", imageUrl:"" }
-  ]
-};
+function cacheBust(url){
+  const sep = url.includes('?') ? '&' : '?';
+  return url + sep + 't=' + Date.now();
+}
 
-const TEMPLATES = {
-  dentista: { bizName:"Odonto Sorriso", logoLetter:"O", themeColor:"blue", slides:[
-    { type:"promo", eyebrow:"Promoção do mês", title:"Limpeza + avaliação com 20% off", body:"Agende esta semana e garanta sua vaga.", imageUrl:"" },
-    { type:"dica", eyebrow:"Dica de saúde", title:"Troque a escova a cada 3 meses", body:"Cerdas desgastadas limpam menos e podem machucar a gengiva.", imageUrl:"" },
-    { type:"dica", eyebrow:"Dica de saúde", title:"Fio dental também é diário", body:"Escovar não alcança tudo — o fio remove o que fica entre os dentes.", imageUrl:"" },
-    { type:"horario", eyebrow:"Funcionamento", title:"Horários de atendimento", body:"Segunda a Sexta: 08:00 – 18:00\nSábado: 08:00 – 12:00\nDomingo: Fechado", imageUrl:"" }
-  ]},
-  mecanica: { bizName:"Auto Center Silva", logoLetter:"A", themeColor:"blue", slides:[
-    { type:"promo", eyebrow:"Oferta da semana", title:"Revisão completa com 15% off", body:"Freios, óleo e alinhamento — agende e garanta o desconto.", imageUrl:"" },
-    { type:"dica", eyebrow:"Dica de manutenção", title:"Calibre os pneus todo mês", body:"Pneu murcho gasta mais combustível e desgasta mais rápido.", imageUrl:"" },
-    { type:"dica", eyebrow:"Dica de manutenção", title:"Troque o óleo no prazo certo", body:"Consulte o manual do seu carro — atraso reduz a vida do motor.", imageUrl:"" },
-    { type:"horario", eyebrow:"Funcionamento", title:"Horários de atendimento", body:"Segunda a Sexta: 08:00 – 18:00\nSábado: 08:00 – 13:00\nDomingo: Fechado", imageUrl:"" }
-  ]},
-  salao: { bizName:"Studio Bella", logoLetter:"S", themeColor:"red", slides:[
-    { type:"promo", eyebrow:"Promoção do mês", title:"Corte + escova com 20% off", body:"Válido de segunda a quinta. Agende pelo WhatsApp.", imageUrl:"" },
-    { type:"dica", eyebrow:"Dica de cuidado", title:"Hidrate o cabelo semanalmente", body:"Cabelos ressecados quebram mais — inclua a hidratação na rotina.", imageUrl:"" },
-    { type:"foto", eyebrow:"Nosso trabalho", title:"Resultados que a gente ama", body:"Confira alguns dos nossos atendimentos recentes.", imageUrl:"" },
-    { type:"horario", eyebrow:"Funcionamento", title:"Horários de atendimento", body:"Terça a Sábado: 09:00 – 19:00\nDomingo e Segunda: Fechado", imageUrl:"" }
-  ]},
-  restaurante: { bizName:"Sabor da Casa", logoLetter:"S", themeColor:"green", slides:[
-    { type:"promo", eyebrow:"Prato do dia", title:"Combo executivo por R$ 29,90", body:"Serve de segunda a sexta, das 11h às 15h.", imageUrl:"" },
-    { type:"dica", eyebrow:"Novidade", title:"Agora com delivery", body:"Peça pelo WhatsApp ou pelos apps de entrega.", imageUrl:"" },
-    { type:"foto", eyebrow:"Cardápio", title:"Feito com carinho, todo dia", body:"Ingredientes frescos e receita da casa.", imageUrl:"" },
-    { type:"horario", eyebrow:"Funcionamento", title:"Horários de atendimento", body:"Segunda a Sábado: 11:00 – 22:00\nDomingo: 11:00 – 16:00", imageUrl:"" }
-  ]}
-};
-
-let config = null;
-let currentSlide = 0;
-let rotationTimer = null;
-let segmentTimer = null;
-let segmentElapsedMs = 0;
-
-// ---------- Storage ----------
 async function loadConfig(){
   try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) return JSON.parse(raw);
-  }catch(e){ console.log('Sem configuração salva ainda.', e); }
-  return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-}
-async function saveConfig(cfg){
-  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg)); return true; }
-  catch(e){ console.error(e); return false; }
-}
-
-// ---------- Theme ----------
-function getThemeById(id){ return COLOR_THEMES.find(t=>t.id===id) || COLOR_THEMES[0]; }
-
-function resolveMode(mode){
-  if(mode === 'auto'){
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-  return mode;
-}
-
-function applyTheme(){
-  const theme = getThemeById(config.themeColor);
-  document.documentElement.style.setProperty('--accent', theme.accent);
-  document.documentElement.style.setProperty('--accent-2', theme.accent2);
-  document.documentElement.style.setProperty('--font-scale', config.fontScale || 1);
-  document.documentElement.setAttribute('data-mode', resolveMode(config.themeMode));
-  document.getElementById('themeColorMeta').setAttribute('content', theme.accent);
-}
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>{
-  if(config && config.themeMode === 'auto') applyTheme();
-});
-
-// ---------- Rendering ----------
-function applyBrand(){
-  document.getElementById('bizName').textContent = config.bizName;
-  const logoEl = document.getElementById('logoCircle');
-  if(config.logoUrl){
-    logoEl.innerHTML = `<img src="${escapeAttr(config.logoUrl)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" onerror="this.parentElement.textContent='${escapeAttr((config.logoLetter||config.bizName[0]||'A').toUpperCase())}'" />`;
-  }else{
-    logoEl.textContent = (config.logoLetter || config.bizName[0] || 'A').toUpperCase();
+    const res = await fetch(cacheBust(CONFIG_URL), {cache:'no-store'});
+    const data = await res.json();
+    slides = data.slides || [];
+    renderDots();
+  }catch(e){
+    console.error('Falha ao carregar config.json', e);
   }
 }
 
-function escapeHTML(str){
-  return String(str||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function renderDots(){
+  dotsEl.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('span');
+    if(i === currentIndex) d.classList.add('on');
+    dotsEl.appendChild(d);
+  });
 }
-function escapeAttr(str){ return escapeHTML(str); }
 
-function starsHTML(n){
-  const full = Math.max(0, Math.min(5, parseInt(n)||5));
-  return '★'.repeat(full) + '☆'.repeat(5-full);
-}
+function buildSlideEl(slide){
+  const el = document.createElement('div');
+  el.className = 'slide';
 
-const SOCIAL_ICONS = { instagram:'📷', facebook:'📘', tiktok:'🎵', whatsapp:'💬', youtube:'▶️', google:'🔍', linkedin:'💼' };
-
-function slideHTML(slide, idx){
-  const eyebrow = slide.eyebrow ? `<span class="slide-eyebrow">${escapeHTML(slide.eyebrow)}</span>` : '';
-  const hasImg = slide.imageUrl && slide.imageUrl.trim().length > 0;
-  const useBg = !!slide.useBgImage && hasImg;
-  const qrData = (url)=> `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(url||'')}`;
-
-  const adBadge = slide.type === 'anuncio'
-    ? `<div class="ad-badge">Publicidade</div><div class="ad-hint">Quer anunciar aqui? <a href="https://wa.me/5511951394342" target="_blank" rel="noopener">Fale com a Anca Soluções</a></div>`
-    : '';
+  const bg = slide.background || null;
+  if(bg) el.style.background = bg;
 
   switch(slide.type){
-
-    case 'clima': {
-      return `<div class="slide-content" id="clima-${idx}">
-        ${eyebrow || '<span class="slide-eyebrow">Previsão do tempo</span>'}
-        <div class="weather-loading">Carregando previsão de ${escapeHTML(slide.city || 'sua cidade')}…</div>
-      </div>`;
-    }
-
-    case 'noticias': {
-      return `<div class="slide-content" id="noticias-${idx}" style="max-width:70vw;">
-        ${eyebrow || '<span class="slide-eyebrow">Notícias</span>'}
-        <div class="slide-title display-face" style="font-size:calc(3.6vh * var(--font-scale,1) * var(--local-scale,1));">${escapeHTML(slide.title || 'Últimas notícias')}</div>
-        <div class="news-loading">Carregando manchetes…</div>
-      </div>`;
-    }
-
-    case 'codigo': {
-      return `<div class="embed-wrap" id="embed-${idx}">${slide.embedCode || ''}</div>`;
-    }
-
-    case 'quiz': {
-      const letters = ['A','B','C'];
-      const opts = [slide.option1, slide.option2, slide.option3].filter(o=>o && o.trim());
-      const correctIdx = Math.max(0, Math.min(opts.length-1, (parseInt(slide.correctOption)||1)-1));
-      const optsHTML = opts.map((o,i)=>`<div class="quiz-opt">
-          <span class="quiz-letter">${letters[i]}</span>${escapeHTML(o)}
-        </div>`).join('');
-      return `<div class="quiz-wrap" id="quiz-${idx}">
-        <div class="quiz-question">
-          ${eyebrow || '<span class="slide-eyebrow">Quiz</span>'}
-          <div class="quiz-q-title display-face">${escapeHTML(slide.title||'')}</div>
-          <div class="quiz-options">${optsHTML}</div>
-        </div>
-        <div class="quiz-answer">
-          <div class="quiz-answer-icon">✓</div>
-          <div class="quiz-answer-label">Resposta certa</div>
-          <div class="quiz-answer-text display-face">${letters[correctIdx]}) ${escapeHTML(opts[correctIdx]||'')}</div>
-        </div>
-      </div>`;
-    }
-
-    case 'texto': {
-      const size = parseFloat(slide.fontSizeVh) || 8;
-      return `<div class="slide-content">
-        ${eyebrow}
-        <div class="free-text display-face" style="font-size:calc(${size}vh * var(--font-scale,1));">${escapeHTML(slide.body||'')}</div>
-      </div>`;
-    }
-
-    case 'horario': {
-      const rows = (slide.body||'').split('\n').filter(l=>l.trim()).map(l=>{
-        const parts = l.split(':'); const day = parts.shift(); const rest = parts.join(':').trim();
-        return `<tr><td>${escapeHTML((day||'').trim())}</td><td>${escapeHTML(rest)}</td></tr>`;
-      }).join('');
-      return `<div class="slide-content">${eyebrow}
-        <div class="slide-title display-face">${escapeHTML(slide.title||'')}</div>
-        <table class="schedule-table mono">${rows}</table></div>`;
-    }
-
-    case 'redes': {
-      const rows = (slide.body||'').split('\n').filter(l=>l.trim()).map(l=>{
-        const parts = l.split(':'); const platform = (parts.shift()||'').trim(); const handle = parts.join(':').trim();
-        const key = platform.toLowerCase().replace(/[^a-z]/g,'');
-        const icon = SOCIAL_ICONS[key] || '🔗';
-        return `<div class="social-row"><div class="social-icon">${icon}</div><span>${escapeHTML(handle)}</span></div>`;
-      }).join('');
-      return `<div class="slide-content">${eyebrow}
-        <div class="slide-title display-face">${escapeHTML(slide.title||'Nos siga')}</div>
-        <div class="social-list">${rows}</div></div>`;
-    }
-
-    case 'avaliacao': {
-      const qr = slide.linkUrl ? `<div class="qr-box"><img src="${qrData(slide.linkUrl)}" /></div>` : '';
-      return `<div class="slide-content">${eyebrow}
-        <div class="stars">${starsHTML(slide.rating)}</div>
-        <div class="slide-title display-face">${escapeHTML(slide.title||'Avalie nosso atendimento')}</div>
-        <div class="review-quote">${escapeHTML(slide.body||'')}</div></div>
-        ${qr ? `<div class="qr-wrap" style="position:absolute;right:5vw;top:50%;transform:translateY(-50%);">${qr}</div>` : ''}`;
-    }
-
-    case 'video': {
-      const url = slide.videoUrl || '';
-      const yt = url.match(/(?:youtube\.com.*(?:\?v=|\/embed\/)|youtu\.be\/)([\w-]{6,})/);
-      const inner = yt
-        ? `<iframe src="https://www.youtube.com/embed/${yt[1]}?autoplay=1&mute=1&loop=1&playlist=${yt[1]}&controls=0" allow="autoplay"></iframe>`
-        : (url ? `<video src="${escapeAttr(url)}" autoplay muted loop playsinline></video>` : '');
-      return `<div class="video-wrap">${inner}</div>
-        ${(slide.title||slide.body) ? `<div class="video-caption">${eyebrow}
-          <div class="slide-title display-face">${escapeHTML(slide.title||'')}</div>
-          <div class="slide-body">${escapeHTML(slide.body||'')}</div></div>` : ''}`;
-    }
-
-    case 'foto_tela': {
-      return `${hasImg ? `<img class="slide-img full" src="${escapeAttr(slide.imageUrl)}" onerror="this.style.display='none'" />` : ''}
-        ${(slide.title||slide.body) ? `<div class="photo-overlay"></div>
-        <div class="photo-caption">${eyebrow}
-          <div class="slide-title display-face">${escapeHTML(slide.title||'')}</div>
-          <div class="slide-body">${escapeHTML(slide.body||'')}</div></div>` : ''}`;
-    }
-
-    case 'preco': {
-      return `<div class="slide-content">${eyebrow}
-        <div class="slide-title display-face">${escapeHTML(slide.title||'')}</div>
-        <div class="price-row">
-          ${slide.oldPrice ? `<span class="price-old">${escapeHTML(slide.oldPrice)}</span>` : ''}
-          <span class="price-new">${escapeHTML(slide.newPrice||'')}</span>
-        </div>
-        <div class="slide-body">${escapeHTML(slide.body||'')}</div></div>
-        ${hasImg ? `<img class="slide-img" src="${escapeAttr(slide.imageUrl)}" onerror="this.style.display='none'" />` : ''}`;
-    }
-
-    case 'qrcode': {
-      return `<div class="slide-content">
-        <div class="qr-wrap">
-          <div class="qr-box"><img src="${qrData(slide.linkUrl)}" /></div>
-          <div>${eyebrow}
-            <div class="slide-title display-face">${escapeHTML(slide.title||'Aponte a câmera')}</div>
-            <div class="slide-body">${escapeHTML(slide.body||'')}</div>
-          </div>
-        </div></div>`;
-    }
-
-    case 'logo': {
-      return `<div class="logo-slide">
-        ${hasImg
-          ? `<img class="big-logo-img" src="${escapeAttr(slide.imageUrl)}" onerror="this.style.display='none'" />`
-          : `<div class="big-logo-circle">${escapeHTML((config.logoLetter||'A').toUpperCase())}</div>`}
-        <div class="logo-slide-name display-face">${escapeHTML(slide.title || config.bizName || '')}</div>
-        ${slide.body ? `<div class="slide-body">${escapeHTML(slide.body)}</div>` : ''}
-      </div>`;
-    }
-
-    case 'hora': {
-      const now = new Date();
-      const hh = String(now.getHours()).padStart(2,'0'), mm = String(now.getMinutes()).padStart(2,'0');
-      const dateStr = now.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long' });
-      return `<div class="clock-slide">
-        ${eyebrow}
-        <div class="big-clock mono" data-live-clock>${hh}:${mm}</div>
-        <div class="big-date" data-live-date>${escapeHTML(dateStr)}</div>
-      </div>`;
-    }
-
-    case 'curiosidade': {
-      return `<div class="slide-content">
-        <div class="curio-icon">💡</div>
-        ${eyebrow || '<span class="slide-eyebrow">Você sabia?</span>'}
-        <div class="slide-title display-face">${escapeHTML(slide.title||'')}</div>
-        <div class="slide-body">${escapeHTML(slide.body||'')}</div></div>
-        ${hasImg ? `<img class="slide-img" src="${escapeAttr(slide.imageUrl)}" onerror="this.style.display='none'" />` : ''}`;
-    }
-
-    case 'anuncie_aqui': {
-      return `<div class="ctaslide">
-        <div class="slide-eyebrow" style="color:#fff;">Espaço disponível</div>
-        <div class="slide-title display-face">${escapeHTML(slide.title||'Anuncie aqui!')}</div>
-        <div class="slide-body">${escapeHTML(slide.body||'Alcance os clientes deste estabelecimento todos os dias.')}</div>
-        <a class="cta-btn" href="https://wa.me/5511951394342" target="_blank" rel="noopener">Fale com a Anca Soluções</a>
-      </div>`;
-    }
-
-    case 'depoimento': {
-      return `<div class="slide-content">${eyebrow || '<span class="slide-eyebrow">Depoimento</span>'}
-        <div class="review-quote">"${escapeHTML(slide.body||'')}"</div>
-        <div class="slide-title display-face" style="font-size:calc(3vh * var(--font-scale,1));margin-top:1.6vh;">— ${escapeHTML(slide.title||'')}</div></div>
-        ${hasImg ? `<img class="slide-img" src="${escapeAttr(slide.imageUrl)}" onerror="this.style.display='none'" />` : ''}`;
-    }
-
-    case 'boasvindas': {
-      const now = new Date();
-      const h = now.getHours();
-      const saudacao = h < 12 ? 'Bom dia' : (h < 18 ? 'Boa tarde' : 'Boa noite');
-      return `<div class="welcome-slide">${eyebrow}
-        <div class="slide-title display-face">${escapeHTML(saudacao)}${slide.title ? ', ' + escapeHTML(slide.title) : ''}!</div>
-        <div class="slide-body">${escapeHTML(slide.body||'Seja bem-vindo(a).')}</div></div>`;
-    }
-
-    default: { // promo, dica, foto, anuncio
-      if(slide.type === 'foto' || useBg){
-        return `${hasImg ? `<img class="slide-img full" src="${escapeAttr(slide.imageUrl)}" onerror="this.style.display='none'" />` : ''}
-          <div class="photo-overlay"></div>
-          <div class="photo-caption">${eyebrow}
-            <div class="slide-title display-face">${escapeHTML(slide.title||'')}</div>
-            <div class="slide-body">${escapeHTML(slide.body||'')}</div>
-          </div>
-          ${adBadge}`;
+    case 'image': {
+      const img = document.createElement('img');
+      img.src = cacheBust(slide.src);
+      img.className = 'fit-cover';
+      el.appendChild(img);
+      if(slide.animation === 'zoom') el.classList.add('zoom');
+      if(slide.caption){
+        const box = document.createElement('div');
+        box.className = 'caption-box';
+        const cap = document.createElement('div');
+        cap.className = 'caption';
+        cap.textContent = slide.caption;
+        cap.style.color = slide.captionColor || '#F5F5F0';
+        cap.style.fontSize = slide.captionSize || '38px';
+        cap.style.textAlign = slide.captionAlign || 'left';
+        box.appendChild(cap);
+        el.appendChild(box);
       }
-      return `<div class="slide-content">${eyebrow}
-          <div class="slide-title display-face">${escapeHTML(slide.title||'')}</div>
-          <div class="slide-body">${escapeHTML(slide.body||'')}</div></div>
-          ${hasImg ? `<img class="slide-img" src="${escapeAttr(slide.imageUrl)}" onerror="this.style.display='none'" />` : ''}
-          ${adBadge}`;
+      break;
     }
-  }
-}
-
-const TEXT_SIZE_SCALE = { sm:0.8, md:1, lg:1.3 };
-function renderStage(){
-  const stage = document.getElementById('stage');
-  stage.innerHTML = '';
-  config.slides.forEach((s,i)=>{
-    const div = document.createElement('div');
-    div.className = 'slide' + (i===0?' active':'');
-    div.setAttribute('data-align', s.align || 'left');
-    div.style.setProperty('--local-scale', TEXT_SIZE_SCALE[s.textSize] || 1);
-    div.style.setProperty('--kb-duration', (Math.max(4, config.intervalSeconds||8) + 1) + 's');
-    div.innerHTML = slideHTML(s, i);
-    stage.appendChild(div);
-    if(s.type === 'codigo') activateEmbedScripts(div);
-  });
-  loadLiveDataSlides();
-}
-function activateEmbedScripts(container){
-  container.querySelectorAll('script').forEach(oldScript=>{
-    const newScript = document.createElement('script');
-    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-    newScript.text = oldScript.textContent;
-    oldScript.parentNode.replaceChild(newScript, oldScript);
-  });
-}
-function loadLiveDataSlides(){
-  config.slides.forEach((s,i)=>{
-    if(s.type === 'clima') loadWeather(i, s.city || 'São Paulo, BR');
-    if(s.type === 'noticias') loadNews(i, s.newsQuery || '');
-  });
-}
-
-const WEATHER_ICONS = {
-  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',
-  51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',
-  71:'🌨️',73:'🌨️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',
-  95:'⛈️',96:'⛈️',99:'⛈️'
-};
-function weatherDesc(code){
-  if(code===0) return 'Céu limpo';
-  if([1,2].includes(code)) return 'Poucas nuvens';
-  if(code===3) return 'Nublado';
-  if([45,48].includes(code)) return 'Neblina';
-  if([51,53,55,61,63,65,80,81].includes(code)) return 'Chuva';
-  if([71,73,75].includes(code)) return 'Neve';
-  if([95,96,99].includes(code)) return 'Tempestade';
-  return 'Tempo variável';
-}
-
-async function geocodeCity(query){
-  const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=pt&format=json`).then(r=>r.json());
-  return (geo.results && geo.results.length) ? geo.results[0] : null;
-}
-
-async function loadWeather(idx, city){
-  const cacheKey = 'weather-cache-' + city.toLowerCase().trim();
-  try{
-    const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
-    if(cached && (Date.now() - cached.ts) < 30*60*1000){
-      renderWeather(idx, cached.data, city);
-      return;
+    case 'text': {
+      el.classList.add('text-slide');
+      if(slide.title){
+        const t = document.createElement('div');
+        t.className = 'title';
+        t.textContent = slide.title;
+        t.style.color = slide.color || 'var(--accent)';
+        t.style.fontSize = slide.fontSize || '80px';
+        el.appendChild(t);
+      }
+      if(slide.body){
+        const b = document.createElement('div');
+        b.className = 'body';
+        b.textContent = slide.body;
+        if(slide.bodyColor) b.style.color = slide.bodyColor;
+        if(slide.bodySize) b.style.fontSize = slide.bodySize;
+        el.appendChild(b);
+      }
+      break;
     }
-  }catch(e){}
-
-  try{
-    // A busca de geolocalização funciona melhor só com o nome da cidade (sem ", BR", ", SP" etc.)
-    const cityOnly = city.split(',')[0].trim();
-    let place = await geocodeCity(cityOnly);
-    if(!place) place = await geocodeCity(city); // tenta a string completa como alternativa
-    if(!place) throw new Error('cidade não encontrada: ' + city);
-
-    const { latitude, longitude } = place;
-    const wx = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`).then(r=>r.json());
-    if(!wx.current_weather) throw new Error('resposta sem dados de clima');
-    localStorage.setItem(cacheKey, JSON.stringify({ data: wx, ts: Date.now() }));
-    renderWeather(idx, wx, city);
-  }catch(e){
-    console.error('Erro ao carregar clima:', e);
-    const el = document.getElementById('clima-'+idx);
-    if(el){
-      const loadingEl = el.querySelector('.weather-loading');
-      if(loadingEl) loadingEl.textContent = 'Não foi possível carregar a previsão (verifique a internet ou o nome da cidade).';
+    case 'clock': {
+      el.classList.add('clock-slide');
+      const time = document.createElement('div');
+      time.className = 'time';
+      time.id = 'big-clock-time';
+      const date = document.createElement('div');
+      date.className = 'date';
+      date.id = 'big-clock-date';
+      el.appendChild(time);
+      el.appendChild(date);
+      break;
     }
-  }
-}
-
-function renderWeather(idx, wx, city){
-  const el = document.getElementById('clima-'+idx);
-  if(!el || !wx.current_weather) return;
-  const temp = Math.round(wx.current_weather.temperature);
-  const code = wx.current_weather.weathercode;
-  const icon = WEATHER_ICONS[code] || '🌡️';
-  const max = wx.daily ? Math.round(wx.daily.temperature_2m_max[0]) : null;
-  const min = wx.daily ? Math.round(wx.daily.temperature_2m_min[0]) : null;
-  el.innerHTML = `
-    <div class="slide-eyebrow">${escapeHTML(city)}</div>
-    <div class="weather-row">
-      <span class="weather-icon">${icon}</span>
-      <span class="weather-temp">${temp}°</span>
-    </div>
-    <div class="slide-body">${weatherDesc(code)}${(max!==null) ? ` · Máx ${max}° / Mín ${min}°` : ''}</div>
-  `;
-}
-
-async function loadNews(idx, query){
-  const cacheKey = 'news-cache-' + (query || 'geral').toLowerCase().trim();
-  try{
-    const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
-    if(cached && (Date.now() - cached.ts) < 20*60*1000){
-      renderNews(idx, cached.data);
-      return;
+    case 'news': {
+      el.classList.add('news-slide');
+      const eyebrow = document.createElement('div');
+      eyebrow.className = 'eyebrow';
+      eyebrow.textContent = slide.label || 'ÚLTIMAS NOTÍCIAS';
+      const ul = document.createElement('ul');
+      (slide.items || []).forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      el.appendChild(eyebrow);
+      el.appendChild(ul);
+      break;
     }
-  }catch(e){}
-
-  try{
-    const rssUrl = query
-      ? `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=pt-BR&gl=BR&ceid=BR:pt-BR`
-      : `https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt-BR`;
-    const data = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`).then(r=>r.json());
-    const items = (data.items || []).slice(0,5).map(it => it.title);
-    localStorage.setItem(cacheKey, JSON.stringify({ data: items, ts: Date.now() }));
-    renderNews(idx, items);
-  }catch(e){
-    const el = document.getElementById('noticias-'+idx);
-    if(el) el.querySelector('.news-loading').textContent = 'Não foi possível carregar notícias agora.';
+    default:
+      el.textContent = 'Tipo de slide desconhecido: ' + slide.type;
   }
+  return el;
 }
 
-function renderNews(idx, items){
-  const el = document.getElementById('noticias-'+idx);
-  if(!el) return;
-  const loading = el.querySelector('.news-loading');
-  if(!items || !items.length){ if(loading) loading.textContent = 'Nenhuma notícia encontrada.'; return; }
-  if(loading) loading.remove();
-  const list = document.createElement('div');
-  list.className = 'news-list';
-  list.innerHTML = items.map(t => `<div class="news-item">${escapeHTML(t)}</div>`).join('');
-  el.appendChild(list);
-}
-function renderSignalBars(){
-  const wrap = document.getElementById('signalBars');
-  wrap.innerHTML = '';
-  config.slides.forEach(()=>{
-    const seg = document.createElement('div');
-    seg.className = 'signal-seg';
-    seg.innerHTML = '<div class="fill"></div>';
-    wrap.appendChild(seg);
-  });
-}
-function goToSlide(index){
-  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
-  const slides = document.querySelectorAll('.slide');
-  if(slides[index]) slides[index].classList.add('active');
-  currentSlide = index;
-  document.querySelectorAll('.signal-seg').forEach((seg,i)=>{
-    seg.classList.toggle('done', i < index);
-    const fill = seg.querySelector('.fill');
-    if(i < index) fill.style.width = '100%';
-    else if(i > index) fill.style.width = '0%';
-  });
-  segmentElapsedMs = 0;
-
-  const activeSlideData = config.slides[index];
-  if(activeSlideData && activeSlideData.type === 'quiz') resetAndScheduleQuiz(index, activeSlideData);
-}
-
-let quizTimers = {};
-function resetAndScheduleQuiz(idx, slide){
-  const wrap = document.getElementById('quiz-'+idx);
-  if(!wrap) return;
-  wrap.classList.remove('revealed');
-  if(quizTimers[idx]) clearTimeout(quizTimers[idx]);
-  const revealMs = Math.max(2, slide.revealSeconds || 5) * 1000;
-  quizTimers[idx] = setTimeout(()=>{ wrap.classList.add('revealed'); }, revealMs);
-}
-function slideDurationMs(slide){
-  const custom = slide && slide.durationSeconds ? parseFloat(slide.durationSeconds) : null;
-  const base = (custom && custom > 0) ? Math.max(1, custom) * 1000 : Math.max(4, config.intervalSeconds || 8) * 1000;
-  if(slide && slide.type === 'quiz'){
-    const reveal = Math.max(2, slide.revealSeconds || 5);
-    return Math.max(base, (reveal + 3) * 1000); // dá pelo menos 3s pra mostrar a resposta antes de avançar
-  }
-  return base;
-}
-
-function startRotation(){
-  clearTimeout(rotationTimer); clearInterval(segmentTimer);
-  if(config.slides.length <= 1) return;
-  scheduleSlideAdvance();
-}
-function scheduleSlideAdvance(){
-  clearTimeout(rotationTimer); clearInterval(segmentTimer);
-  const totalMs = slideDurationMs(config.slides[currentSlide]);
-  segmentElapsedMs = 0;
-  segmentTimer = setInterval(()=>{
-    segmentElapsedMs += 100;
-    const pct = Math.min(100, (segmentElapsedMs/totalMs)*100);
-    const segs = document.querySelectorAll('.signal-seg');
-    if(segs[currentSlide]) segs[currentSlide].querySelector('.fill').style.width = pct+'%';
-  }, 100);
-  rotationTimer = setTimeout(()=>{
-    goToSlide((currentSlide+1) % config.slides.length);
-    scheduleSlideAdvance();
-  }, totalMs);
-}
-function tickClock(){
+function updateBigClock(){
+  const t = document.getElementById('big-clock-time');
+  const d = document.getElementById('big-clock-date');
+  if(!t && !d) return;
   const now = new Date();
-  document.getElementById('clock').textContent =
-    String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-
-  const liveClock = document.querySelector('[data-live-clock]');
-  if(liveClock){
-    liveClock.textContent = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-    const liveDate = document.querySelector('[data-live-date]');
-    if(liveDate) liveDate.textContent = now.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long' });
-  }
+  if(t) t.textContent = now.toLocaleTimeString('pt-BR');
+  if(d) d.textContent = now.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' });
 }
 
-// ---------- Theme picker UI ----------
-function renderColorSwatches(){
-  const wrap = document.getElementById('colorSwatches');
-  wrap.innerHTML = '';
-  COLOR_THEMES.forEach(t=>{
-    const el = document.createElement('div');
-    el.className = 'swatch' + (config.themeColor === t.id ? ' active' : '');
-    el.style.background = `linear-gradient(150deg, ${t.accent}, ${t.accent2})`;
-    el.title = t.name;
-    el.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 20.6 7.4l-1.4-1.4z"/></svg>';
-    el.addEventListener('click', ()=>{
-      config.themeColor = t.id;
-      applyTheme();
-      renderColorSwatches();
-    });
-    wrap.appendChild(el);
-  });
-}
-function renderModeSegmented(){
-  document.querySelectorAll('#modeSegmented button').forEach(btn=>{
-    btn.classList.toggle('active', btn.dataset.mode === config.themeMode);
-    btn.onclick = ()=>{
-      config.themeMode = btn.dataset.mode;
-      applyTheme();
-      renderModeSegmented();
-    };
-  });
-}
-function renderFontSegmented(){
-  document.querySelectorAll('#fontSegmented button').forEach(btn=>{
-    btn.classList.toggle('active', parseFloat(btn.dataset.scale) === (config.fontScale || 1));
-    btn.onclick = ()=>{
-      config.fontScale = parseFloat(btn.dataset.scale);
-      applyTheme();
-      renderFontSegmented();
-    };
-  });
+function updateRailClock(){
+  document.getElementById('rail-clock').textContent = new Date().toLocaleTimeString('pt-BR');
 }
 
-// ---------- Edit panel ----------
-function refreshFormFromConfig(){
-  document.getElementById('f-bizName').value = config.bizName;
-  document.getElementById('f-logoLetter').value = config.logoLetter;
-  document.getElementById('f-interval').value = config.intervalSeconds;
-  updateLogoPreview();
-  updateStorageIndicator();
-  renderColorSwatches();
-  renderModeSegmented();
-  renderFontSegmented();
-  renderSlidesList();
-}
-function openEditPanel(){
-  refreshFormFromConfig();
-  document.getElementById('editOverlay').classList.add('open');
-}
-function closeEditPanel(){ document.getElementById('editOverlay').classList.remove('open'); }
+function showSlide(index){
+  if(slides.length === 0) return;
+  stageEl.innerHTML = '';
+  const slide = slides[index];
+  const el = buildSlideEl(slide);
+  stageEl.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('active'));
+  renderDots();
 
-function updateLogoPreview(){
-  const img = document.getElementById('logoPreview');
-  if(config.logoUrl){ img.src = config.logoUrl; img.style.display = 'inline-block'; }
-  else{ img.style.display = 'none'; }
+  if(slide.type === 'clock') updateBigClock();
+
+  clearTimeout(slideTimer);
+  const duration = (slide.duration || 8) * 1000;
+  slideTimer = setTimeout(() => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }, duration);
 }
 
-function updateStorageIndicator(){
-  const el = document.getElementById('storageIndicator');
-  let bytes = 0;
-  try{
-    bytes = new Blob([JSON.stringify(config)]).size;
-  }catch(e){
-    bytes = JSON.stringify(config).length;
-  }
-  const limitKB = 5000; // estimativa conservadora do limite do navegador (~5MB)
-  const usedKB = Math.round(bytes / 1024);
-  const pct = Math.min(100, Math.round((usedKB / limitKB) * 100));
-  el.classList.toggle('warn', pct > 75);
-  el.innerHTML = `Espaço usado neste aparelho: <b>${usedKB} KB</b> de ~${limitKB} KB (${pct}%)
-    <div class="bar"><div class="fill" style="width:${pct}%;"></div></div>
-    ${pct > 75 ? 'Está ficando cheio — prefira "colar link (URL)" em vez de enviar arquivo para novas fotos.' : ''}`;
-}
-
-const TYPE_META = {
-  promo:        { label:'Promoção',                bodyLabel:'Texto', hasImage:true },
-  dica:         { label:'Dica',                     bodyLabel:'Texto', hasImage:true },
-  foto:         { label:'Foto (com legenda)',       bodyLabel:'Texto (opcional)', hasImage:true },
-  foto_tela:    { label:'Fotos tela inteira',       bodyLabel:'Texto (opcional)', hasImage:true },
-  horario:      { label:'Horário',                  bodyLabel:'Linhas (Dia: Horário, uma por linha)', hasImage:false },
-  redes:        { label:'Redes sociais',            bodyLabel:'Linhas (Plataforma: @usuario, uma por linha)', hasImage:false },
-  avaliacao:    { label:'Avaliação Google (★)',     bodyLabel:'Depoimento / citação', hasImage:false, extra:['rating','linkUrl'] },
-  video:        { label:'Vídeo',                    bodyLabel:'Legenda (opcional)', hasImage:false, extra:['videoUrl'] },
-  preco:        { label:'Preço antigo e novo',      bodyLabel:'Descrição', hasImage:true, extra:['oldPrice','newPrice'] },
-  qrcode:       { label:'QR Code',                  bodyLabel:'Texto de apoio', hasImage:false, extra:['linkUrl'] },
-  logo:         { label:'Logo da empresa',          bodyLabel:'Texto (opcional)', hasImage:true },
-  hora:         { label:'Hora certa',                bodyLabel:null, hasImage:false },
-  curiosidade:  { label:'Você sabia?',               bodyLabel:'Texto', hasImage:true },
-  anuncio:      { label:'Publicidade (outro cliente)', bodyLabel:'Texto', hasImage:true },
-  anuncie_aqui: { label:'Anuncie aqui!!',            bodyLabel:'Texto', hasImage:false },
-  depoimento:   { label:'Depoimento de cliente',     bodyLabel:'Citação', hasImage:true, titleLabel:'Nome do cliente' },
-  boasvindas:   { label:'Boas-vindas',               bodyLabel:'Mensagem', hasImage:false, titleLabel:'Nome (opcional)' },
-  clima:        { label:'Previsão do tempo (online)', bodyLabel:null, hasImage:false, extra:['city'] },
-  noticias:     { label:'Notícias (online)',          bodyLabel:null, hasImage:false, extra:['newsQuery'] },
-  codigo:       { label:'Incorporar código (iframe)', bodyLabel:null, hasImage:false, extra:['embedCode'] },
-  quiz:         { label:'Quiz',                       bodyLabel:null, hasImage:false, titleLabel:'Pergunta', extra:['quizOptions'] },
-  texto:        { label:'Texto livre',                 bodyLabel:'Texto', hasImage:false, extra:['fontSizeVh'] }
-};
-const TYPE_GROUPS = [
-  { label:'Conteúdo', types:['promo','dica','foto','foto_tela','curiosidade','texto'] },
-  { label:'Institucional', types:['horario','redes','logo','hora','boasvindas'] },
-  { label:'Prova social', types:['avaliacao','depoimento'] },
-  { label:'Vendas', types:['preco','video','qrcode'] },
-  { label:'Publicidade', types:['anuncio','anuncie_aqui'] },
-  { label:'Online (precisa de internet)', types:['clima','noticias'] },
-  { label:'Avançado', types:['codigo'] },
-  { label:'Interativo', types:['quiz'] }
-];
-
-function renderSlidesList(){
-  const list = document.getElementById('slidesList');
-  list.innerHTML = '';
-  config.slides.forEach((slide, idx)=>{
-    const meta = TYPE_META[slide.type] || TYPE_META.promo;
-    const card = document.createElement('div');
-    card.className = 'slide-card';
-
-    const optionsHTML = TYPE_GROUPS.map(g=>
-      `<optgroup label="${g.label}">` +
-      g.types.map(t=>`<option value="${t}" ${slide.type===t?'selected':''}>${TYPE_META[t].label}</option>`).join('') +
-      `</optgroup>`
-    ).join('');
-
-    let extraFieldsHTML = '';
-    if(meta.extra && meta.extra.includes('rating')){
-      extraFieldsHTML += `<div class="field" style="max-width:150px;"><label>Nota (estrelas)</label>
-        <select data-field="rating" data-idx="${idx}">
-          ${[5,4,3,2,1].map(n=>`<option value="${n}" ${(slide.rating||5)==n?'selected':''}>${n} ★</option>`).join('')}
-        </select></div>`;
-    }
-    if(meta.extra && meta.extra.includes('linkUrl')){
-      extraFieldsHTML += `<div class="field"><label>Link (site, review, WhatsApp…)</label>
-        <input data-field="linkUrl" data-idx="${idx}" type="text" placeholder="https://..." value="${escapeAttr(slide.linkUrl||'')}" /></div>`;
-    }
-    if(meta.extra && meta.extra.includes('videoUrl')){
-      extraFieldsHTML += `<div class="field"><label>Link do vídeo (YouTube ou .mp4)</label>
-        <input data-field="videoUrl" data-idx="${idx}" type="text" placeholder="https://..." value="${escapeAttr(slide.videoUrl||'')}" /></div>`;
-    }
-    if(meta.extra && meta.extra.includes('oldPrice')){
-      extraFieldsHTML += `<div class="field" style="max-width:140px;"><label>Preço antigo</label>
-        <input data-field="oldPrice" data-idx="${idx}" type="text" placeholder="R$ 150" value="${escapeAttr(slide.oldPrice||'')}" /></div>
-        <div class="field" style="max-width:140px;"><label>Preço novo</label>
-        <input data-field="newPrice" data-idx="${idx}" type="text" placeholder="R$ 99" value="${escapeAttr(slide.newPrice||'')}" /></div>`;
-    }
-    if(meta.extra && meta.extra.includes('city')){
-      extraFieldsHTML += `<div class="field"><label>Cidade (ex: São Paulo, BR)</label>
-        <input data-field="city" data-idx="${idx}" type="text" placeholder="São Paulo, BR" value="${escapeAttr(slide.city||'')}" /></div>`;
-    }
-    if(meta.extra && meta.extra.includes('newsQuery')){
-      extraFieldsHTML += `<div class="field"><label>Assunto (opcional — em branco mostra manchetes gerais do Brasil)</label>
-        <input data-field="newsQuery" data-idx="${idx}" type="text" placeholder="Ex: saúde bucal, economia…" value="${escapeAttr(slide.newsQuery||'')}" /></div>`;
-    }
-    if(meta.extra && meta.extra.includes('embedCode')){
-      extraFieldsHTML += `<div class="field" style="flex:1 1 100%;">
-        <label>Código de incorporar (copie do "Compartilhar → Incorporar" do site — Google Maps, YouTube, Spotify, etc.)</label>
-        <textarea data-field="embedCode" data-idx="${idx}" rows="4" placeholder='&lt;iframe src="..."&gt;&lt;/iframe&gt;'>${escapeHTML(slide.embedCode||'')}</textarea>
-        <div class="hint" style="margin-top:6px;">Funciona melhor com códigos de "iframe" (Google Maps, YouTube, Spotify, Google Agenda). Widgets que dependem de outro script (como alguns do Instagram) podem não funcionar.</div>
-      </div>`;
-    }
-    if(meta.extra && meta.extra.includes('quizOptions')){
-      extraFieldsHTML += `
-        <div class="field" style="flex:1 1 100%;"><label>Alternativa A</label>
-          <input data-field="option1" data-idx="${idx}" type="text" value="${escapeAttr(slide.option1||'')}" /></div>
-        <div class="field" style="flex:1 1 100%;"><label>Alternativa B</label>
-          <input data-field="option2" data-idx="${idx}" type="text" value="${escapeAttr(slide.option2||'')}" /></div>
-        <div class="field" style="flex:1 1 100%;"><label>Alternativa C (opcional)</label>
-          <input data-field="option3" data-idx="${idx}" type="text" value="${escapeAttr(slide.option3||'')}" /></div>
-        <div class="field" style="max-width:150px;"><label>Resposta certa</label>
-          <select data-field="correctOption" data-idx="${idx}">
-            <option value="1" ${(!slide.correctOption||slide.correctOption=='1')?'selected':''}>A</option>
-            <option value="2" ${slide.correctOption=='2'?'selected':''}>B</option>
-            <option value="3" ${slide.correctOption=='3'?'selected':''}>C</option>
-          </select></div>
-        <div class="field" style="max-width:180px;"><label>Revelar após (segundos)</label>
-          <input data-field="revealSeconds" data-idx="${idx}" type="number" min="2" max="30" value="${slide.revealSeconds||5}" /></div>
-        <div class="field" style="flex:1 1 100%;">
-          <div class="hint">Deixe um tempo menor que o "Tempo por slide" (lá em cima) — assim dá tempo de mostrar a resposta antes de passar pro próximo slide.</div>
-        </div>
-      `;
-    }
-    if(meta.extra && meta.extra.includes('fontSizeVh')){
-      extraFieldsHTML += `<div class="field" style="flex:1 1 100%;">
-        <label>Tamanho da fonte: <span id="fsz-${idx}">${slide.fontSizeVh||8}</span> (escala livre)</label>
-        <input data-field="fontSizeVh" data-idx="${idx}" type="range" min="2" max="20" step="0.5"
-          value="${slide.fontSizeVh||8}" oninput="document.getElementById('fsz-${idx}').textContent=this.value" />
-        <div class="hint" style="margin-top:6px;">Arraste pra ajustar bem pequeno ou bem grande — sem limite fixo. Bom pra frases de impacto ou avisos curtos.</div>
-      </div>`;
-    }
-
-    card.innerHTML = `
-      <div class="slide-card-head">
-        <span>SLIDE ${idx+1} · ${meta.label}</span>
-        <button class="btn btn-danger" data-remove="${idx}" type="button" style="padding:6px 12px;">Remover</button>
-      </div>
-      <div class="field-row">
-        <div class="field" style="max-width:190px;">
-          <label>Tipo</label>
-          <select data-field="type" data-idx="${idx}" data-retype="${idx}">${optionsHTML}</select>
-        </div>
-        <div class="field">
-          <label>Etiqueta</label>
-          <input data-field="eyebrow" data-idx="${idx}" type="text" value="${escapeAttr(slide.eyebrow||'')}" />
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field" style="max-width:170px;">
-          <label>Posição do texto</label>
-          <select data-field="align" data-idx="${idx}">
-            <option value="left" ${(!slide.align||slide.align==='left')?'selected':''}>Esquerda</option>
-            <option value="center" ${slide.align==='center'?'selected':''}>Centro</option>
-            <option value="right" ${slide.align==='right'?'selected':''}>Direita</option>
-          </select>
-        </div>
-        <div class="field" style="max-width:170px;">
-          <label>Tamanho do texto</label>
-          <select data-field="textSize" data-idx="${idx}">
-            <option value="sm" ${slide.textSize==='sm'?'selected':''}>Pequeno</option>
-            <option value="md" ${(!slide.textSize||slide.textSize==='md')?'selected':''}>Médio</option>
-            <option value="lg" ${slide.textSize==='lg'?'selected':''}>Grande</option>
-          </select>
-        </div>
-        <div class="field" style="max-width:190px;">
-          <label>Tempo neste slide (s)</label>
-          <input data-field="durationSeconds" data-idx="${idx}" type="number" min="1" max="120" placeholder="padrão" value="${slide.durationSeconds||''}" />
-        </div>
-      </div>
-      ${slide.durationSeconds ? `<div class="hint" style="margin:-6px 0 12px;">Esse slide vai ficar ${slide.durationSeconds}s na tela, em vez do tempo padrão.</div>` : ''}
-      <div class="field" style="margin-bottom:14px;">
-        <label>${meta.titleLabel || 'Título'}</label>
-        <input data-field="title" data-idx="${idx}" type="text" value="${escapeAttr(slide.title||'')}" />
-      </div>
-      ${extraFieldsHTML ? `<div class="field-row">${extraFieldsHTML}</div>` : ''}
-      ${meta.bodyLabel ? `<div class="field" style="margin-bottom:14px;">
-        <label>${meta.bodyLabel}</label>
-        <textarea data-field="body" data-idx="${idx}" rows="${slide.type==='horario'||slide.type==='redes'?4:3}">${escapeHTML(slide.body||'')}</textarea>
-      </div>` : ''}
-      ${meta.hasImage ? `<div class="field">
-        <label>Imagem</label>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-          <label class="btn btn-ghost" style="cursor:pointer;">📷 Enviar do computador
-            <input type="file" accept="image/*" data-imgfile="${idx}" style="display:none;" />
-          </label>
-          <button class="btn btn-ghost" type="button" data-gallery="${idx}">🗂️ Escolher da galeria</button>
-          <input data-field="imageUrl" data-idx="${idx}" type="text" placeholder="ou cole um link (URL)" value="${slide.imageUrl && slide.imageUrl.startsWith('http') ? escapeAttr(slide.imageUrl) : ''}" style="flex:1;min-width:140px;" />
-        </div>
-        ${slide.imageUrl ? `<img src="${escapeAttr(slide.imageUrl)}" style="max-width:100%;max-height:80px;border-radius:10px;margin-top:8px;border:1px solid var(--line);" />` : ''}
-        ${slide.type!=='foto_tela' && slide.type!=='logo' ? `<label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--text-muted);cursor:pointer;">
-          <input type="checkbox" data-checkbox="useBgImage" data-idx="${idx}" ${slide.useBgImage ? 'checked' : ''} />
-          Usar essa imagem como fundo do slide (tela toda)
-        </label>` : ''}
-      </div>` : ''}
-    `;
-    list.appendChild(card);
-  });
-
-  list.querySelectorAll('[data-retype]').forEach(sel=>{
-    sel.addEventListener('change', (e)=>{
-      const idx = parseInt(e.target.dataset.idx);
-      config.slides[idx].type = e.target.value;
-      renderSlidesList();
-    });
-  });
-
-  list.querySelectorAll('[data-checkbox]').forEach(input=>{
-    input.addEventListener('change', (e)=>{
-      const idx = parseInt(e.target.dataset.idx);
-      config.slides[idx][e.target.dataset.checkbox] = e.target.checked;
-    });
-  });
-
-  list.querySelectorAll('[data-gallery]').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      openGallery(parseInt(e.target.dataset.gallery));
-    });
-  });
-
-  list.querySelectorAll('[data-imgfile]').forEach(input=>{
-    input.addEventListener('change', (e)=>{
-      const idx = parseInt(e.target.dataset.imgfile);
-      const file = e.target.files[0];
-      if(!file) return;
-      if(file.size > 900*1024){
-        alert('Essa imagem é grande demais (máx. recomendado ~900KB). Tente uma foto mais leve, ou use um link (URL).');
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = ()=>{ config.slides[idx].imageUrl = reader.result; renderSlidesList(); updateStorageIndicator(); };
-      reader.readAsDataURL(file);
-    });
-  });
-  list.querySelectorAll('[data-field]').forEach(input=>{
-    input.addEventListener('input', (e)=>{
-      const idx = parseInt(e.target.dataset.idx);
-      config.slides[idx][e.target.dataset.field] = e.target.value;
-    });
-  });
-  list.querySelectorAll('[data-remove]').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      config.slides.splice(parseInt(e.target.dataset.remove),1);
-      renderSlidesList();
-    });
-  });
-}
-
-// ---------- Galeria de imagens (pasta /imagens no repositório) ----------
-const GALLERY_COUNT = 20;
-const GALLERY_EXTENSIONS = ['jpg','jpeg','png','webp'];
-let galleryTargetIdx = null;
-
-function openGallery(idx){
-  galleryTargetIdx = idx;
-  renderGalleryGrid();
-  document.getElementById('galleryOverlay').classList.add('open');
-}
-function closeGallery(){
-  document.getElementById('galleryOverlay').classList.remove('open');
-}
-
-function renderGalleryGrid(){
-  const grid = document.getElementById('galleryGrid');
-  const statusEl = document.getElementById('galleryStatus');
-  grid.innerHTML = '';
-  let checked = 0, found = 0;
-  statusEl.textContent = `Verificando… 0 de ${GALLERY_COUNT} conferidas`;
-
-  const updateStatus = ()=>{
-    if(checked < GALLERY_COUNT){
-      statusEl.textContent = `Verificando… ${checked} de ${GALLERY_COUNT} conferidas (${found} encontrada${found===1?'':'s'} até agora)`;
-    }else{
-      statusEl.textContent = found === GALLERY_COUNT
-        ? `✅ ${found} de ${GALLERY_COUNT} imagens encontradas — banco completo!`
-        : `${found} de ${GALLERY_COUNT} imagens encontradas. Faltam ${GALLERY_COUNT - found} — confira os nomes na pasta /imagens.`;
-    }
-  };
-
-  for(let n=1; n<=GALLERY_COUNT; n++){
-    const num = String(n).padStart(2,'0');
-    const thumb = document.createElement('div');
-    thumb.className = 'gallery-thumb';
-    const img = document.createElement('img');
-    let extIdx = 0;
-    let resolved = false;
-    img.onload = ()=>{
-      if(resolved) return;
-      resolved = true; checked++; found++; updateStatus();
-    };
-    const tryNextExt = ()=>{
-      if(extIdx >= GALLERY_EXTENSIONS.length){
-        if(!resolved){ resolved = true; checked++; updateStatus(); }
-        thumb.remove();
-        return;
-      }
-      img.src = `imagens/imagem-${num}.${GALLERY_EXTENSIONS[extIdx]}`;
-      extIdx++;
-    };
-    img.onerror = tryNextExt;
-    tryNextExt();
-    thumb.appendChild(img);
-    const label = document.createElement('div');
-    label.className = 'gallery-label';
-    label.textContent = 'imagem-' + num;
-    thumb.appendChild(label);
-    thumb.addEventListener('click', ()=> pickGalleryImage(img.src));
-    grid.appendChild(thumb);
-  }
-  setTimeout(()=>{
-    if(!grid.querySelector('.gallery-thumb')){
-      grid.innerHTML = '<div class="gallery-empty">Nenhuma imagem encontrada na pasta /imagens ainda.<br>Suba arquivos chamados imagem-01, imagem-02… até imagem-20 (jpg ou png) na raiz do repositório, dentro de uma pasta chamada "imagens".</div>';
-    }
-  }, 2500);
-}
-
-function pickGalleryImage(url){
-  if(galleryTargetIdx === null) return;
-  config.slides[galleryTargetIdx].imageUrl = url;
-  renderSlidesList();
-  closeGallery();
-}
-
-function addSlide(){
-  config.slides.push({ type:'promo', eyebrow:'', title:'Novo slide', body:'', imageUrl:'' });
-  renderSlidesList();
-}
-
-function exportConfig(){
-  try{
-    const blob = new Blob([JSON.stringify(config, null, 2)], { type:'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    const slug = (config.bizName || 'negocio').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-    a.href = url;
-    a.download = `tv-config-${slug || 'negocio'}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-    showToast('Arquivo de configuração baixado.');
-  }catch(e){
-    console.error(e);
-    showToast('Não foi possível exportar agora.');
-  }
-}
-
-function importConfig(file){
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    try{
-      const parsed = JSON.parse(reader.result);
-      if(!parsed || !Array.isArray(parsed.slides)) throw new Error('formato inválido');
-      config = parsed;
-      refreshFormFromConfig();
-      showToast('Configuração importada — revise e clique em "Salvar alterações" para aplicar na tela.');
-    }catch(e){
-      console.error(e);
-      alert('Esse arquivo não parece ser um arquivo de configuração válido desta TV.');
-    }
-  };
-  reader.readAsText(file);
-}
-
-function loadTemplate(){
-  const key = document.getElementById('f-template').value;
-  if(!key || !TEMPLATES[key]) return;
-  if(!confirm('Isso vai substituir os slides atuais pelo modelo escolhido. Continuar?')) return;
-  const tpl = TEMPLATES[key];
-  config.bizName = tpl.bizName;
-  config.logoLetter = tpl.logoLetter;
-  config.themeColor = tpl.themeColor;
-  config.slides = JSON.parse(JSON.stringify(tpl.slides));
-  document.getElementById('f-bizName').value = config.bizName;
-  document.getElementById('f-logoLetter').value = config.logoLetter;
-  applyTheme();
-  renderColorSwatches();
-  renderSlidesList();
-}
-
-function showToast(msg){
-  const toast = document.getElementById('saveToast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(()=> toast.classList.remove('show'), 2200);
-}
-
-async function handleSave(){
-  config.bizName = document.getElementById('f-bizName').value.trim() || 'Meu negócio';
-  config.logoLetter = document.getElementById('f-logoLetter').value.trim() || config.bizName[0];
-  config.intervalSeconds = parseInt(document.getElementById('f-interval').value) || 8;
-  if(config.slides.length === 0){
-    config.slides.push({type:'promo', eyebrow:'', title:'Adicione seu primeiro slide', body:'', imageUrl:''});
-  }
-  const ok = await saveConfig(config);
-  applyBrand();
-  applyTheme();
-  renderStage();
-  renderSignalBars();
-  goToSlide(0);
-  startRotation();
-  updateStorageIndicator();
-  showToast(ok ? 'Salvo com sucesso.' : 'Não foi possível salvar — tente novamente.');
-  closeEditPanel();
-}
-
-// ---------- Fullscreen ----------
-function toggleFullscreen(){
-  const el = document.documentElement;
-  const isFs = document.fullscreenElement || document.webkitFullscreenElement;
-  if(!isFs){
-    (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen || function(){}).call(el)
-      .catch(()=>{ showToast('Não foi possível entrar em tela cheia neste navegador.'); });
-  }else{
-    (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen || function(){}).call(document);
-  }
-}
-document.addEventListener('fullscreenchange', updateFullscreenIcon);
-document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
-function updateFullscreenIcon(){
-  const btn = document.getElementById('fullscreenBtn');
-  const isFs = document.fullscreenElement || document.webkitFullscreenElement;
-  btn.innerHTML = isFs
-    ? '<svg viewBox="0 0 24 24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>'
-    : '<svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>';
-}
-
-// ---------- PWA ----------
-if('serviceWorker' in navigator){
-  window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
-  });
-}
-
-// ---------- Init ----------
 async function init(){
-  config = await loadConfig();
-  applyBrand();
-  applyTheme();
-  renderStage();
-  renderSignalBars();
-  goToSlide(0);
-  startRotation();
-  tickClock();
-  setInterval(tickClock, 15000);
-  setInterval(loadLiveDataSlides, 15*60*1000);
+  await loadConfig();
+  if(slides.length > 0) showSlide(0);
+  setInterval(updateRailClock, 1000);
+  setInterval(updateBigClock, 1000);
+  updateRailClock();
 
-  document.getElementById('gearBtn').addEventListener('click', openEditPanel);
-  document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
-  document.getElementById('closeEditBtn').addEventListener('click', closeEditPanel);
-  document.getElementById('closeGalleryBtn').addEventListener('click', closeGallery);
-  document.getElementById('saveBtn').addEventListener('click', handleSave);
-  document.getElementById('addSlideBtn').addEventListener('click', addSlide);
-  document.getElementById('loadTemplateBtn').addEventListener('click', loadTemplate);
-  document.getElementById('exportConfigBtn').addEventListener('click', exportConfig);
-  document.getElementById('importConfigFile').addEventListener('change', (e)=>{
-    const file = e.target.files[0];
-    if(file) importConfig(file);
-    e.target.value = '';
-  });
+  // Verifica config.json periodicamente (não interrompe o slide atual)
+  setInterval(loadConfig, CONFIG_POLL_SECONDS * 1000);
 
-  document.getElementById('f-logoFile').addEventListener('change', (e)=>{
-    const file = e.target.files[0];
-    if(!file) return;
-    if(file.size > 500*1024){
-      alert('Prefira uma imagem de logo mais leve (menos de 500KB) — ela fica sempre visível na tela, então não precisa ser grande.');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = ()=>{
-      config.logoUrl = reader.result;
-      updateLogoPreview();
-      updateStorageIndicator();
-    };
-    reader.readAsDataURL(file);
-  });
-  document.getElementById('removeLogoBtn').addEventListener('click', ()=>{
-    config.logoUrl = '';
-    updateLogoPreview();
-  });
-
-  setTimeout(()=> document.getElementById('splash').classList.add('hide'), 900);
+  // Recarrega a página inteira de tempos em tempos (memória/estabilidade da TV box)
+  setTimeout(() => location.reload(), HARD_RELOAD_MINUTES * 60 * 1000);
 }
 
 init();
