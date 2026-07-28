@@ -1,322 +1,279 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TV Corporativa</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#14161A;
-    --surface:#1E2128;
-    --accent:#4FD1C5;
-    --accent-2:#F2A65A;
-    --text:#F5F5F0;
-    --muted:#8B92A0;
-    --rail-h: 64px;
-  }
-  *{box-sizing:border-box;}
-  html,body{
-    margin:0; padding:0; width:100%; height:100%;
-    background:var(--bg); color:var(--text);
-    font-family:'Inter',sans-serif;
-    overflow:hidden;
-  }
-  #stage{
-    position:absolute; top:0; left:0; right:0; bottom:var(--rail-h);
-    overflow:hidden;
-  }
-  .slide{
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    flex-direction:column;
-    opacity:0;
-    transition:opacity 0.9s ease;
-    padding:60px;
-    text-align:center;
-  }
-  .slide.active{ opacity:1; z-index:2; }
-  .slide.zoom img{ animation:kenburns 10s ease-in-out forwards; }
-  @keyframes kenburns{
-    from{ transform:scale(1); }
-    to{ transform:scale(1.08); }
-  }
-  .slide img.fit-cover{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  }
-  .caption-box{
-    position:absolute; left:0; right:0; bottom:70px;
-    padding:24px 60px;
-    background:linear-gradient(0deg, rgba(0,0,0,0.65), rgba(0,0,0,0));
-  }
-  .caption-box .caption{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    text-shadow:0 2px 12px rgba(0,0,0,0.6);
-  }
-  .text-slide .title{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    line-height:1.05;
-    margin:0 0 20px 0;
-  }
-  .text-slide .body{
-    font-family:'Inter',sans-serif;
-    font-weight:400;
-    color:var(--muted);
-    max-width:1100px;
-    line-height:1.4;
-  }
-  .clock-slide{
-    background:var(--surface);
-  }
-  .clock-slide .time{
-    font-family:'JetBrains Mono',monospace;
-    font-size:min(22vw, 260px);
-    font-weight:500;
-    letter-spacing:4px;
-    color:var(--accent);
-    line-height:1;
-  }
-  .clock-slide .date{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:42px;
-    text-transform:capitalize;
-    color:var(--text);
-    margin-top:18px;
-  }
-  .news-slide{
-    background:var(--surface);
-    align-items:flex-start;
-    text-align:left;
-    justify-content:center;
-    padding:80px 100px;
-  }
-  .news-slide .eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    color:var(--accent-2);
-    letter-spacing:3px;
-    font-size:20px;
-    margin-bottom:24px;
-  }
-  .news-slide ul{
-    list-style:none; margin:0; padding:0;
-    font-family:'Space Grotesk',sans-serif;
-    font-size:44px;
-    line-height:1.5;
-  }
-  .news-slide li{
-    display:flex; align-items:baseline; gap:20px;
-    margin-bottom:14px;
-  }
-  .news-slide li::before{
-    content:"—";
-    color:var(--accent);
-    flex-shrink:0;
-  }
-
-  /* Rail inferior: relógio ao vivo + progresso dos slides */
-  #rail{
-    position:absolute; left:0; right:0; bottom:0; height:var(--rail-h);
-    background:var(--surface);
-    border-top:1px solid rgba(255,255,255,0.06);
-    display:flex; align-items:center; justify-content:space-between;
-    padding:0 40px;
-    font-family:'JetBrains Mono',monospace;
-    z-index:5;
-  }
-  #rail-clock{ font-size:22px; color:var(--text); letter-spacing:1px; }
-  #rail-dots{ display:flex; gap:10px; }
-  #rail-dots span{
-    width:10px; height:10px; border-radius:50%;
-    background:rgba(255,255,255,0.15);
-    transition:background 0.3s;
-  }
-  #rail-dots span.on{ background:var(--accent); }
-  #rail-brand{ font-size:16px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
-</style>
-</head>
-<body>
-
-<div id="stage"></div>
-
-<div id="rail">
-  <div id="rail-clock">--:--:--</div>
-  <div id="rail-dots"></div>
-  <div id="rail-brand">Ao vivo</div>
-</div>
-
-<script>
-/* =========================================================
-   CONFIGURAÇÃO
-   Edite apenas o arquivo config.json no GitHub — este HTML
-   não precisa ser tocado no dia a dia.
-========================================================= */
-const CONFIG_URL = 'config.json';
-const CONFIG_POLL_SECONDS = 60;   // de quanto em quanto tempo verifica atualização
-const HARD_RELOAD_MINUTES = 120;  // recarrega a página inteira de tempos em tempos (evita travar a TV)
-
-let slides = [];
-let currentIndex = 0;
-let slideTimer = null;
-let stageEl = document.getElementById('stage');
-let dotsEl = document.getElementById('rail-dots');
-
-function cacheBust(url){
-  const sep = url.includes('?') ? '&' : '?';
-  return url + sep + 't=' + Date.now();
-}
-
-async function loadConfig(){
-  try{
-    const res = await fetch(cacheBust(CONFIG_URL), {cache:'no-store'});
-    const data = await res.json();
-    slides = data.slides || [];
-    renderDots();
-  }catch(e){
-    console.error('Falha ao carregar config.json', e);
-  }
-}
-
-function renderDots(){
-  dotsEl.innerHTML = '';
-  slides.forEach((_, i) => {
-    const d = document.createElement('span');
-    if(i === currentIndex) d.classList.add('on');
-    dotsEl.appendChild(d);
-  });
-}
-
-function buildSlideEl(slide){
-  const el = document.createElement('div');
-  el.className = 'slide';
-
-  const bg = slide.background || null;
-  if(bg) el.style.background = bg;
-
-  switch(slide.type){
-    case 'image': {
-      const img = document.createElement('img');
-      img.src = cacheBust(slide.src);
-      img.className = 'fit-cover';
-      el.appendChild(img);
-      if(slide.animation === 'zoom') el.classList.add('zoom');
-      if(slide.caption){
-        const box = document.createElement('div');
-        box.className = 'caption-box';
-        const cap = document.createElement('div');
-        cap.className = 'caption';
-        cap.textContent = slide.caption;
-        cap.style.color = slide.captionColor || '#F5F5F0';
-        cap.style.fontSize = slide.captionSize || '38px';
-        cap.style.textAlign = slide.captionAlign || 'left';
-        box.appendChild(cap);
-        el.appendChild(box);
-      }
-      break;
+{
+  "slides": [
+    {
+      "type": "text",
+      "title": "Bem-vindo!",
+      "body": "Confira as novidades da semana.",
+      "color": "#4FD1C5",
+      "fontSize": "90px",
+      "bodyColor": "#8B92A0",
+      "bodySize": "32px",
+      "background": "#1E2128",
+      "duration": 8
+    },
+    {
+      "type": "clock",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-02.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-03.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-04.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-05.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-06.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-07.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-08.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-09.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-10.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-11.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-12.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-13.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-14.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-15.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-16.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-17.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-18.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-19.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-20.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-21.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-22.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-23.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-24.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-25.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-26.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-27.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-28.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-29.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-30.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-31.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-32.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-33.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-34.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-35.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-36.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-37.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-38.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-39.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-40.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-41.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-42.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-43.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-44.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-45.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-46.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-47.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-48.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-49.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-50.jpg",
+      "duration": 8
+    },
+    {
+      "type": "news",
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Reunião geral sexta-feira às 9h",
+        "Nova política de reembolso já disponível",
+        "Parabéns aos aniversariantes do mês!"
+      ],
+      "duration": 12
     }
-    case 'text': {
-      el.classList.add('text-slide');
-      if(slide.title){
-        const t = document.createElement('div');
-        t.className = 'title';
-        t.textContent = slide.title;
-        t.style.color = slide.color || 'var(--accent)';
-        t.style.fontSize = slide.fontSize || '80px';
-        el.appendChild(t);
-      }
-      if(slide.body){
-        const b = document.createElement('div');
-        b.className = 'body';
-        b.textContent = slide.body;
-        if(slide.bodyColor) b.style.color = slide.bodyColor;
-        if(slide.bodySize) b.style.fontSize = slide.bodySize;
-        el.appendChild(b);
-      }
-      break;
-    }
-    case 'clock': {
-      el.classList.add('clock-slide');
-      const time = document.createElement('div');
-      time.className = 'time';
-      time.id = 'big-clock-time';
-      const date = document.createElement('div');
-      date.className = 'date';
-      date.id = 'big-clock-date';
-      el.appendChild(time);
-      el.appendChild(date);
-      break;
-    }
-    case 'news': {
-      el.classList.add('news-slide');
-      const eyebrow = document.createElement('div');
-      eyebrow.className = 'eyebrow';
-      eyebrow.textContent = slide.label || 'ÚLTIMAS NOTÍCIAS';
-      const ul = document.createElement('ul');
-      (slide.items || []).forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        ul.appendChild(li);
-      });
-      el.appendChild(eyebrow);
-      el.appendChild(ul);
-      break;
-    }
-    default:
-      el.textContent = 'Tipo de slide desconhecido: ' + slide.type;
-  }
-  return el;
+  ]
 }
-
-function updateBigClock(){
-  const t = document.getElementById('big-clock-time');
-  const d = document.getElementById('big-clock-date');
-  if(!t && !d) return;
-  const now = new Date();
-  if(t) t.textContent = now.toLocaleTimeString('pt-BR');
-  if(d) d.textContent = now.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' });
-}
-
-function updateRailClock(){
-  document.getElementById('rail-clock').textContent = new Date().toLocaleTimeString('pt-BR');
-}
-
-function showSlide(index){
-  if(slides.length === 0) return;
-  stageEl.innerHTML = '';
-  const slide = slides[index];
-  const el = buildSlideEl(slide);
-  stageEl.appendChild(el);
-  requestAnimationFrame(() => el.classList.add('active'));
-  renderDots();
-
-  if(slide.type === 'clock') updateBigClock();
-
-  clearTimeout(slideTimer);
-  const duration = (slide.duration || 8) * 1000;
-  slideTimer = setTimeout(() => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  }, duration);
-}
-
-async function init(){
-  await loadConfig();
-  if(slides.length > 0) showSlide(0);
-  setInterval(updateRailClock, 1000);
-  setInterval(updateBigClock, 1000);
-  updateRailClock();
-
-  // Verifica config.json periodicamente (não interrompe o slide atual)
-  setInterval(loadConfig, CONFIG_POLL_SECONDS * 1000);
-
-  // Recarrega a página inteira de tempos em tempos (memória/estabilidade da TV box)
-  setTimeout(() => location.reload(), HARD_RELOAD_MINUTES * 60 * 1000);
-}
-
-init();
-</script>
-</body>
-</html>
-
