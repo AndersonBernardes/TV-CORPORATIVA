@@ -97,13 +97,13 @@
     font-family:'JetBrains Mono',monospace;
     color:var(--accent-2);
     letter-spacing:3px;
-    font-size:20px;
+    font-size:clamp(14px, 1.4vw, 20px);
     margin-bottom:24px;
   }
   .news-slide ul{
     list-style:none; margin:0; padding:0;
     font-family:'Space Grotesk',sans-serif;
-    font-size:44px;
+    font-size:clamp(24px, 3.2vw, 44px);
     line-height:1.5;
   }
   .news-slide li{
@@ -148,20 +148,20 @@
     font-family:'JetBrains Mono',monospace;
     color:var(--accent-2);
     letter-spacing:4px;
-    font-size:20px;
+    font-size:clamp(14px, 1.4vw, 20px);
     text-transform:uppercase;
     margin-bottom:22px;
   }
   .ad-slide .ad-title{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:64px;
+    font-size:clamp(32px, 4.4vw, 64px);
     color:var(--text);
     margin-bottom:18px;
   }
   .ad-slide .ad-contact{
     font-family:'JetBrains Mono',monospace;
-    font-size:28px;
+    font-size:clamp(18px, 2vw, 28px);
     color:var(--accent);
   }
 </style>
@@ -195,6 +195,19 @@ let dotsEl = document.getElementById('rail-dots');
 function cacheBust(url){
   const sep = url.includes('?') ? '&' : '?';
   return url + sep + 't=' + Date.now();
+}
+
+/* Presets de tamanho responsivo: se ajustam sozinhos ao tamanho real da tela
+   (celular, monitor, TV pequena ou TV grande) usando clamp(mínimo, ideal, máximo). */
+const SIZE_PRESETS = {
+  title:   { pequeno:'clamp(32px,5vw,56px)',  medio:'clamp(48px,7vw,84px)',  grande:'clamp(64px,9vw,120px)', enorme:'clamp(80px,11vw,160px)' },
+  body:    { pequeno:'clamp(16px,2vw,22px)',  medio:'clamp(20px,2.6vw,30px)', grande:'clamp(26px,3.4vw,40px)', enorme:'clamp(32px,4.2vw,50px)' },
+  caption: { pequeno:'clamp(18px,2.4vw,26px)', medio:'clamp(24px,3.2vw,36px)', grande:'clamp(30px,4vw,46px)', enorme:'clamp(38px,5vw,58px)' },
+};
+function resolveSize(value, kind){
+  if(!value) return SIZE_PRESETS[kind].medio;
+  if(SIZE_PRESETS[kind][value]) return SIZE_PRESETS[kind][value];
+  return value; // valor CSS customizado, ex: "80px" ou "6vw" (compatibilidade com configs antigas)
 }
 
 async function loadConfig(){
@@ -239,7 +252,7 @@ function buildSlideEl(slide){
         cap.className = 'caption';
         cap.textContent = slide.caption;
         cap.style.color = slide.captionColor || '#F5F5F0';
-        cap.style.fontSize = slide.captionSize || '38px';
+        cap.style.fontSize = resolveSize(slide.captionSize, 'caption');
         cap.style.textAlign = slide.captionAlign || 'left';
         box.appendChild(cap);
         el.appendChild(box);
@@ -253,15 +266,15 @@ function buildSlideEl(slide){
         t.className = 'title';
         t.textContent = slide.title;
         t.style.color = slide.color || 'var(--accent)';
-        t.style.fontSize = slide.fontSize || '80px';
+        t.style.fontSize = resolveSize(slide.fontSize, 'title');
         el.appendChild(t);
       }
       if(slide.body){
         const b = document.createElement('div');
         b.className = 'body';
         b.textContent = slide.body;
-        if(slide.bodyColor) b.style.color = slide.bodyColor;
-        if(slide.bodySize) b.style.fontSize = slide.bodySize;
+        b.style.color = slide.bodyColor || 'var(--muted)';
+        b.style.fontSize = resolveSize(slide.bodySize, 'body');
         el.appendChild(b);
       }
       break;
