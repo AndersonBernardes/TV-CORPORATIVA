@@ -7,6 +7,18 @@
       "items": [
         ""
       ]
+    },
+    {
+      "type": "clock",
+      "duration": 8
+    },
+    {
+      "type": "news",
+      "duration": 8,
+      "label": "AVISOS INTERNOS",
+      "items": [
+        ""
+      ]
     }
   ]
 }
