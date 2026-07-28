@@ -3,13 +3,13 @@
   "slides": [
     {
       "type": "text",
-      "title": "Bem-vindo!",
-      "body": "Confira as novidades da semana.",
-      "color": "#b04a59",
+      "title": "ANCA ",
+      "body": "SOLUÇOES",
+      "color": "#c07835",
       "fontSize": "enorme",
-      "bodyColor": "#8B92A0",
+      "bodyColor": "#8da4d3",
       "bodySize": "grande",
-      "background": "#1E2128",
+      "background": "#103721",
       "duration": 8
     },
     {
@@ -18,12 +18,12 @@
     },
     {
       "type": "image",
-      "src": "imagens/imagem-01.jpg",
+      "src": "imagens/imagem-02.jpg",
       "duration": 8
     },
     {
       "type": "image",
-      "src": "imagens/imagem-02.jpg",
+      "src": "imagens/imagem-03.jpg",
       "duration": 8
     },
     {
@@ -38,27 +38,19 @@
       "duration": 8,
       "label": "AVISOS INTERNOS",
       "items": [
-        ""
+        "Tenha pontualidade",
+        "Atravesse na Faixa",
+        "Não alimente os animais nas dependências da empresa"
       ]
     },
     {
-      "type": "news",
+      "type": "image",
       "duration": 8,
-      "label": "AVISOS INTERNOS",
-      "items": [
-        "Dia 10/08/2026 (Vacinação)"
-      ]
-    },
-    {
-      "type": "text",
-      "duration": 8,
-      "title": "Continue",
-      "body": "",
-      "color": "#4FD1C5",
-      "fontSize": "pequeno",
-      "bodyColor": "#8B92A0",
-      "bodySize": "enorme",
-      "background": "#1E2128"
+      "src": "imagens/imagem-05.jpg",
+      "caption": "",
+      "captionColor": "#F2A65A",
+      "captionSize": "medio",
+      "animation": "zoom"
     }
   ]
 }
