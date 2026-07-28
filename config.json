@@ -10,7 +10,7 @@
       "bodyColor": "#8da4d3",
       "bodySize": "grande",
       "background": "#103721",
-      "duration": 8
+      "duration": 3
     },
     {
       "type": "clock",
@@ -19,16 +19,18 @@
     {
       "type": "image",
       "src": "imagens/imagem-02.jpg",
-      "duration": 8
+      "duration": 8,
+      "animation": "zoom"
     },
     {
       "type": "image",
       "src": "imagens/imagem-03.jpg",
-      "duration": 8
+      "duration": 8,
+      "animation": "zoom"
     },
     {
       "type": "ad",
-      "duration": 8,
+      "duration": 3,
       "subtitle": "Anuncie aqui",
       "title": "Este espaço está disponível",
       "contact": "(11) 95139-4342"
@@ -42,15 +44,6 @@
         "Atravesse na Faixa",
         "Não alimente os animais nas dependências da empresa"
       ]
-    },
-    {
-      "type": "image",
-      "duration": 8,
-      "src": "imagens/imagem-05.jpg",
-      "caption": "",
-      "captionColor": "#F2A65A",
-      "captionSize": "medio",
-      "animation": "zoom"
     }
   ]
 }
