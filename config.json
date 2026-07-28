@@ -28,7 +28,8 @@
       "items": [
         "Reunião geral sexta-feira às 9h",
         "Nova política de reembolso já disponível",
-        "Parabéns aos aniversariantes do mês!"
+        "Parabéns aos aniversariantes do mês!",
+        ""
       ],
       "duration": 12
     },
@@ -42,8 +43,8 @@
     {
       "type": "text",
       "duration": 8,
-      "title": "Novo título",
-      "body": "",
+      "title": "",
+      "body": "Inovação começa com pessoas comprometidas com a excelência.",
       "color": "#4FD1C5",
       "fontSize": "80px",
       "bodyColor": "#8B92A0",
