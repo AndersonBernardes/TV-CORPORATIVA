@@ -14,7 +14,7 @@
     },
     {
       "type": "clock",
-      "duration": 8
+      "duration": 1
     },
     {
       "type": "image",
@@ -40,6 +40,25 @@
       "items": [
         ""
       ]
+    },
+    {
+      "type": "news",
+      "duration": 8,
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Dia 10/08/2026 (Vacinação)"
+      ]
+    },
+    {
+      "type": "text",
+      "duration": 8,
+      "title": "Continue",
+      "body": "",
+      "color": "#4FD1C5",
+      "fontSize": "pequeno",
+      "bodyColor": "#8B92A0",
+      "bodySize": "enorme",
+      "background": "#1E2128"
     }
   ]
 }
