@@ -14,17 +14,17 @@
     },
     {
       "type": "clock",
-      "duration": 1
+      "duration": 5
     },
     {
       "type": "image",
-      "src": "imagens/imagem-02.jpg",
+      "src": "imagens/imagem-01.jpg",
       "duration": 8,
       "animation": "zoom"
     },
     {
       "type": "image",
-      "src": "imagens/imagem-03.jpg",
+      "src": "imagens/imagem-02.jpg",
       "duration": 8,
       "animation": "zoom"
     },
@@ -44,6 +44,15 @@
         "Atravesse na Faixa",
         "Não alimente os animais nas dependências da empresa"
       ]
+    },
+    {
+      "type": "image",
+      "duration": 8,
+      "src": "imagens/imagem-03.jpg",
+      "caption": "",
+      "captionColor": "#F2A65A",
+      "captionSize": "medio",
+      "animation": "zoom"
     }
   ]
 }
