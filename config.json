@@ -32,6 +32,14 @@
       "subtitle": "Anuncie aqui",
       "title": "Este espaço está disponível",
       "contact": "(11) 95139-4342"
+    },
+    {
+      "type": "news",
+      "duration": 8,
+      "label": "AVISOS INTERNOS",
+      "items": [
+        ""
+      ]
     }
   ]
 }
