@@ -62,6 +62,16 @@
         "@ancasoluçoes",
         "@ancasoluçoes"
       ]
+    },
+    {
+      "type": "news",
+      "duration": 8,
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "NÃO CORRA PARA ATRAVESSAR O PATIO ",
+        "A UTILIZAÇÃO DAS REDES SOCIAIS PODEM TE TORNAR DEPENDENTE DIGITAIS",
+        "RESPEITE OS INTERVALOS DO ALMOÇO"
+      ]
     }
   ]
 }
