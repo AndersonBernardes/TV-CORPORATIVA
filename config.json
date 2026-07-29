@@ -11,7 +11,7 @@
       "bodySize": "enorme",
       "background": "#1E2128",
       "duration": 8,
-      "titleAnimation": "slideup"
+      "titleAnimation": "scalepop"
     },
     {
       "type": "clock",
@@ -21,7 +21,9 @@
       "type": "image",
       "src": "imagens/imagem-01.jpg",
       "duration": 8,
-      "animation": "blur-focus"
+      "animation": "blur-focus",
+      "captionSize": "enorme",
+      "caption": "Siga para mais"
     },
     {
       "type": "social",
@@ -29,7 +31,7 @@
       "items": [
         "instagram:@ancasolucoes",
         "facebook:AncaSolucoes",
-        "whatsapp:(11) 99999-9999"
+        "whatsapp:(11) 95139-4342"
       ],
       "duration": 9
     },
@@ -44,7 +46,7 @@
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
       "feedUrl": "https://g1.globo.com/rss/g1/sp/sao-paulo/",
-      "maxItems": 5,
+      "maxItems": "3",
       "duration": 12
     },
     {
@@ -54,7 +56,7 @@
       "message": "",
       "annualDate": "07-29",
       "annualWindowDays": 0,
-      "titleAnimation": "glow"
+      "titleAnimation": "typewriter"
     },
     {
       "type": "ad",
@@ -65,9 +67,16 @@
       "titleAnimation": "kinetic"
     },
     {
-      "type": "embed",
+      "type": "text",
       "duration": 8,
-      "url": "https://sites.google.com/view/appinstrutor/assistente"
+      "title": "Força: ",
+      "body": "Você é muito mais forte do que imagina para superar qualquer obstáculo hoje.",
+      "color": "#4FD1C5",
+      "fontSize": "medio",
+      "bodyColor": "#8B92A0",
+      "bodySize": "grande",
+      "background": "#1E2128",
+      "titleAnimation": "typewriter"
     }
   ]
 }
