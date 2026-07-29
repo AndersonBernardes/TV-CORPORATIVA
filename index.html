@@ -45,6 +45,34 @@
     from{ transform:scale(1); }
     to{ transform:scale(1.08); }
   }
+  /* Animações extras de imagem — todas desligadas se o usuário preferir menos movimento */
+  @media (prefers-reduced-motion: no-preference){
+    .slide.anim-pan-left img{ animation:panLeft 10s ease-in-out forwards; }
+    .slide.anim-pan-right img{ animation:panRight 10s ease-in-out forwards; }
+    .slide.anim-fade-scale img{ animation:fadeScaleImg 1.3s ease-out forwards; }
+    .slide.anim-blur-focus img{ animation:blurFocusImg 1.5s ease-out forwards; }
+    .slide.anim-slide-in img{ animation:slideInImg 1s cubic-bezier(.2,.8,.2,1) forwards; }
+  }
+  @keyframes panLeft{
+    from{ transform:scale(1.12) translateX(3%); }
+    to{ transform:scale(1.12) translateX(-3%); }
+  }
+  @keyframes panRight{
+    from{ transform:scale(1.12) translateX(-3%); }
+    to{ transform:scale(1.12) translateX(3%); }
+  }
+  @keyframes fadeScaleImg{
+    from{ opacity:0; transform:scale(1.05); }
+    to{ opacity:1; transform:scale(1); }
+  }
+  @keyframes blurFocusImg{
+    from{ filter:blur(18px); transform:scale(1.03); }
+    to{ filter:blur(0); transform:scale(1); }
+  }
+  @keyframes slideInImg{
+    from{ opacity:0; transform:translateX(4%); }
+    to{ opacity:1; transform:translateX(0); }
+  }
   .slide img.fit-cover{
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   }
@@ -81,6 +109,33 @@
   @keyframes kineticIn{
     to{ opacity:1; transform:translateY(0); }
   }
+
+  /* Outras animações de título, selecionáveis no painel admin */
+  .title-anim-slideup{ opacity:0; transform:translateY(40px); }
+  .title-anim-scalepop{ opacity:0; transform:scale(0.7); }
+  .title-anim-glow{ opacity:0; }
+  @media (prefers-reduced-motion: no-preference){
+    .title-anim-slideup{ animation:titleSlideUp 0.7s cubic-bezier(.2,.8,.2,1) forwards; }
+    .title-anim-scalepop{ animation:titleScalePop 0.6s cubic-bezier(.34,1.56,.64,1) forwards; }
+    .title-anim-glow{ animation:titleGlowIn 0.6s ease-out forwards, titleGlowPulse 2.6s ease-in-out 0.6s infinite; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .title-anim-slideup, .title-anim-scalepop, .title-anim-glow{ opacity:1 !important; transform:none !important; }
+  }
+  @keyframes titleSlideUp{ to{ opacity:1; transform:translateY(0); } }
+  @keyframes titleScalePop{ to{ opacity:1; transform:scale(1); } }
+  @keyframes titleGlowIn{ to{ opacity:1; } }
+  @keyframes titleGlowPulse{
+    0%, 100%{ text-shadow:0 0 10px currentColor; }
+    50%{ text-shadow:0 0 28px currentColor, 0 0 46px currentColor; }
+  }
+  .typewriter-cursor::after{
+    content:'|'; margin-left:2px;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .typewriter-cursor::after{ animation:blinkCursor 0.8s steps(2) infinite; }
+  }
+  @keyframes blinkCursor{ 50%{ opacity:0; } }
   .text-slide .title{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
@@ -323,6 +378,35 @@ function kineticText(el, text){
   });
 }
 
+// Efeito de máquina de escrever: revela caractere por caractere.
+function typewriterReveal(el, text){
+  el.textContent = '';
+  el.classList.add('typewriter-cursor');
+  const chars = Array.from(text || '');
+  let idx = 0;
+  const totalMs = Math.min(3000, Math.max(800, chars.length * 45));
+  const step = totalMs / Math.max(1, chars.length);
+  const interval = setInterval(() => {
+    el.textContent += chars[idx];
+    idx++;
+    if(idx >= chars.length){
+      clearInterval(interval);
+      setTimeout(() => el.classList.remove('typewriter-cursor'), 700);
+    }
+  }, step);
+}
+
+// Escolhe a animação certa pro título, respeitando "reduzir movimento" do sistema
+function renderTitle(el, text, animType){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  animType = animType || 'kinetic';
+  if(reduced || animType === 'none'){ el.textContent = text; return; }
+  if(animType === 'kinetic'){ kineticText(el, text); return; }
+  if(animType === 'typewriter'){ typewriterReveal(el, text); return; }
+  el.textContent = text;
+  el.classList.add('title-anim-' + animType); // slideup, scalepop, glow
+}
+
 const SOCIAL_ICONS = {
   instagram:'📷', facebook:'📘', tiktok:'🎵', linkedin:'💼',
   whatsapp:'💬', youtube:'▶️', twitter:'🐦', x:'✕', site:'🌐',
@@ -402,6 +486,7 @@ function buildSlideEl(slide){
       img.className = 'fit-cover';
       el.appendChild(img);
       if(slide.animation === 'zoom') el.classList.add('zoom');
+      else if(slide.animation && slide.animation !== 'nenhuma') el.classList.add('anim-' + slide.animation);
       if(slide.caption){
         const box = document.createElement('div');
         box.className = 'caption-box';
@@ -424,7 +509,7 @@ function buildSlideEl(slide){
         t.style.color = slide.color || 'var(--accent)';
         t.style.fontSize = resolveSize(slide.fontSize, 'title');
         el.appendChild(t);
-        kineticText(t, slide.title);
+        renderTitle(t, slide.title, slide.titleAnimation);
       }
       if(slide.body){
         const b = document.createElement('div');
@@ -483,7 +568,7 @@ function buildSlideEl(slide){
       emoji.textContent = '🎂';
       const title = document.createElement('div');
       title.className = 'bday-title';
-      kineticText(title, slide.title || 'Feliz Aniversário!');
+      renderTitle(title, slide.title || 'Feliz Aniversário!', slide.titleAnimation);
       box.appendChild(emoji);
       box.appendChild(title);
       if(slide.message){
@@ -525,7 +610,7 @@ function buildSlideEl(slide){
       title.className = 'ad-title';
       box.appendChild(badge);
       box.appendChild(title);
-      kineticText(title, slide.title || 'Este espaço está disponível');
+      renderTitle(title, slide.title || 'Este espaço está disponível', slide.titleAnimation);
       if(slide.contact){
         const contact = document.createElement('div');
         contact.className = 'ad-contact';
