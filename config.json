@@ -10,7 +10,16 @@
       "bodyColor": "#8B92A0",
       "bodySize": "medio",
       "background": "#1E2128",
-      "duration": 8
+      "duration": 8,
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "type": "clock",
@@ -293,6 +302,34 @@
         "whatsapp:(11) 99999-9999"
       ],
       "duration": 9
+    },
+    {
+      "type": "ad",
+      "duration": 8,
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 99999-9999"
+    },
+    {
+      "type": "clock",
+      "duration": 8
+    },
+    {
+      "type": "news",
+      "duration": 8,
+      "label": "AVISOS INTERNOS",
+      "items": [
+        ""
+      ]
+    },
+    {
+      "type": "image",
+      "duration": 8,
+      "src": "imagens/imagem-01.jpg",
+      "caption": "",
+      "captionColor": "#F2A65A",
+      "captionSize": "medio",
+      "animation": "zoom"
     }
   ]
 }
