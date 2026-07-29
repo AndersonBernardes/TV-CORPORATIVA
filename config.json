@@ -31,7 +31,7 @@
       "annualDate": "07-29",
       "annualWindowDays": 1,
       "duration": 10,
-      "titleAnimation": "glow"
+      "titleAnimation": "typewriter"
     },
     {
       "type": "social",
