@@ -24,7 +24,8 @@
     {
       "type": "image",
       "src": "imagens/imagem-01.jpg",
-      "duration": 8
+      "duration": 8,
+      "animation": "zoom"
     },
     {
       "type": "ad",
