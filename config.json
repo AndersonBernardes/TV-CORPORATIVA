@@ -49,9 +49,19 @@
       "type": "birthday",
       "duration": 8,
       "title": "Feliz Aniversário!",
-      "message": "PARABENS - Pedro continue sendo essa pessoa maravilhosa",
+      "message": "Pedro Henrique\n",
       "annualDate": "07-29",
       "annualWindowDays": 0
+    },
+    {
+      "type": "social",
+      "duration": 8,
+      "title": "Siga-nos nas redes sociais",
+      "items": [
+        "instagram:@ancasoluçoes",
+        "@ancasoluçoes",
+        "@ancasoluçoes"
+      ]
     }
   ]
 }
