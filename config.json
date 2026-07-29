@@ -55,6 +55,19 @@
       "annualDate": "07-29",
       "annualWindowDays": 0,
       "titleAnimation": "glow"
+    },
+    {
+      "type": "ad",
+      "duration": 8,
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 95139-4342",
+      "titleAnimation": "kinetic"
+    },
+    {
+      "type": "embed",
+      "duration": 8,
+      "url": "https://sites.google.com/view/appinstrutor/assistente"
     }
   ]
 }
