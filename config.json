@@ -21,17 +21,270 @@
       "type": "image",
       "src": "imagens/imagem-01.jpg",
       "duration": 8,
-      "animation": "blur-focus",
-      "weekdays": []
+      "animation": "pan-left"
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-02.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-03.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-04.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-05.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-06.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-07.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-08.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-09.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-10.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-11.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-12.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-13.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-14.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-15.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-16.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-17.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-18.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-19.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-20.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-21.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-22.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-23.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-24.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-25.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-26.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-27.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-28.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-29.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-30.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-31.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-32.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-33.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-34.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-35.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-36.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-37.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-38.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-39.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-40.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-41.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-42.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-43.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-44.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-45.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-46.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-47.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-48.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-49.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-50.jpg",
+      "duration": 8
+    },
+    {
+      "type": "news",
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Reunião geral sexta-feira às 9h",
+        "Nova política de reembolso já disponível",
+        "Parabéns aos aniversariantes do mês!"
+      ],
+      "duration": 12
     },
     {
       "type": "birthday",
       "title": "Feliz Aniversário, Equipe!",
       "message": "Que venham muitas conquistas!",
-      "annualDate": "07-29",
+      "annualDate": "12-25",
       "annualWindowDays": 1,
-      "duration": 10,
-      "titleAnimation": "typewriter"
+      "duration": 10
     },
     {
       "type": "social",
@@ -39,40 +292,23 @@
       "items": [
         "instagram:@ancasolucoes",
         "facebook:AncaSolucoes",
-        "whatsapp:(11) 95139-4342"
+        "whatsapp:(11) 99999-9999"
       ],
-      "duration": 5,
-      "weekdays": [
-        1,
-        0,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
-      "dateStart": "2026-07-29",
-      "dateEnd": "2026-12-31"
+      "duration": 9
     },
     {
-      "type": "ad",
-      "duration": 8,
-      "subtitle": "Anuncie aqui",
-      "title": "Este espaço está disponível",
-      "contact": "(11) 95139-4342",
-      "titleAnimation": "kinetic"
+      "type": "weather",
+      "city": "São Paulo, São Paulo",
+      "lat": -23.5475,
+      "lon": -46.6361,
+      "duration": 8
     },
     {
-      "type": "text",
-      "duration": 8,
-      "title": "Novo título",
-      "body": "ssssss",
-      "color": "#4FD1C5",
-      "fontSize": "grande",
-      "bodyColor": "#8B92A0",
-      "bodySize": "medio",
-      "background": "#1E2128",
-      "titleAnimation": "typewriter"
+      "type": "rss",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "https://g1.globo.com/rss/g1/sp/sao-paulo/",
+      "maxItems": 5,
+      "duration": 12
     }
   ]
 }
