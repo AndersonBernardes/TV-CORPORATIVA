@@ -317,6 +317,57 @@
     color:var(--accent);
     font-size:clamp(16px,2vw,26px);
   }
+
+  /* ---- Slide de previsão do tempo ---- */
+  .weather-slide{
+    background:radial-gradient(circle at 80% 10%, rgba(79,209,197,0.12), transparent 55%), var(--surface);
+  }
+  .weather-slide .weather-city{
+    font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:clamp(24px,3vw,36px); color:var(--text); margin-bottom:6px;
+  }
+  .weather-slide .weather-icon{ font-size:clamp(70px,11vw,140px); line-height:1; }
+  .weather-slide .weather-temp{
+    font-family:'JetBrains Mono',monospace; font-weight:500;
+    font-size:clamp(60px,12vw,150px); color:var(--accent); line-height:1;
+  }
+  .weather-slide .weather-desc{
+    font-family:'Inter',sans-serif; color:var(--muted);
+    font-size:clamp(16px,2.2vw,26px); margin-top:8px; text-transform:capitalize;
+  }
+  .weather-slide .weather-minmax{
+    font-family:'JetBrains Mono',monospace; color:var(--muted);
+    font-size:clamp(14px,1.8vw,20px); margin-top:14px;
+  }
+
+  /* ---- Slide de notícias via RSS ---- */
+  .rss-slide{
+    background:radial-gradient(circle at 15% 20%, rgba(242,166,90,0.08), transparent 60%), var(--surface);
+    align-items:flex-start; text-align:left; justify-content:center;
+    padding:80px 100px;
+  }
+  .rss-slide .rss-eyebrow{
+    font-family:'JetBrains Mono',monospace; color:var(--accent-2);
+    letter-spacing:3px; font-size:clamp(14px,1.4vw,20px); margin-bottom:24px;
+  }
+  .rss-slide ul{
+    list-style:none; margin:0; padding:0;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(22px,2.8vw,38px);
+    line-height:1.5;
+  }
+  .rss-slide li{ display:flex; align-items:baseline; gap:18px; margin-bottom:16px; }
+  .rss-slide li::before{ content:"—"; color:var(--accent); flex-shrink:0; }
+
+  /* ---- Slide de site incorporado ---- */
+  .embed-slide{ padding:0; }
+  .embed-slide iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0;
+  }
+  .embed-slide .embed-error{
+    display:flex; align-items:center; justify-content:center; height:100%;
+    color:var(--muted); font-family:'Inter',sans-serif; font-size:20px; text-align:center; padding:60px;
+  }
 </style>
 </head>
 <body>
@@ -417,6 +468,41 @@ function parseSocialItem(raw){
   const key = raw.slice(0, idx).trim().toLowerCase();
   const handle = raw.slice(idx + 1).trim();
   return { icon: SOCIAL_ICONS[key] || '🔗', handle };
+}
+
+/* ---------- Previsão do tempo (Open-Meteo, gratuito, sem chave de API) ---------- */
+const WEATHER_CODE_MAP = {
+  0:['☀️','Céu limpo'], 1:['🌤️','Poucas nuvens'], 2:['⛅','Parcialmente nublado'], 3:['☁️','Nublado'],
+  45:['🌫️','Nevoeiro'], 48:['🌫️','Nevoeiro com geada'],
+  51:['🌦️','Garoa fraca'], 53:['🌦️','Garoa'], 55:['🌦️','Garoa forte'],
+  61:['🌧️','Chuva fraca'], 63:['🌧️','Chuva'], 65:['🌧️','Chuva forte'],
+  71:['🌨️','Neve fraca'], 73:['🌨️','Neve'], 75:['❄️','Neve forte'],
+  80:['🌧️','Pancadas de chuva'], 81:['🌧️','Pancadas de chuva'], 82:['⛈️','Pancadas fortes'],
+  95:['⛈️','Tempestade'], 96:['⛈️','Tempestade com granizo'], 99:['⛈️','Tempestade forte'],
+};
+const weatherCache = {};
+async function getWeather(lat, lon){
+  const key = `${lat},${lon}`;
+  const cached = weatherCache[key];
+  if(cached && (Date.now() - cached.time) < 15 * 60 * 1000) return cached.data;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`;
+  const res = await fetch(url);
+  const data = await res.json();
+  weatherCache[key] = { data, time: Date.now() };
+  return data;
+}
+
+/* ---------- Notícias via RSS (usando rss2json.com como conversor, com CORS liberado) ---------- */
+const rssCache = {};
+async function getRssItems(feedUrl){
+  const cached = rssCache[feedUrl];
+  if(cached && (Date.now() - cached.time) < 10 * 60 * 1000) return cached.items;
+  const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+  const res = await fetch(proxyUrl);
+  const data = await res.json();
+  const items = (data.items || []).map(it => it.title);
+  rssCache[feedUrl] = { items, time: Date.now() };
+  return items;
 }
 
 /* ---------- Agendamento: slide só aparece nas datas/dias configurados ---------- */
@@ -618,6 +704,58 @@ function buildSlideEl(slide){
         box.appendChild(contact);
       }
       el.appendChild(box);
+      break;
+    }
+    case 'weather': {
+      el.classList.add('weather-slide');
+      el.innerHTML = `<div class="weather-city">${slide.city || ''}</div><div class="weather-icon">⏳</div>`;
+      if(slide.lat && slide.lon){
+        getWeather(slide.lat, slide.lon).then(data => {
+          const code = data.current?.weather_code;
+          const [icon, desc] = WEATHER_CODE_MAP[code] || ['🌡️','—'];
+          const temp = Math.round(data.current?.temperature_2m ?? 0);
+          const max = Math.round(data.daily?.temperature_2m_max?.[0] ?? 0);
+          const min = Math.round(data.daily?.temperature_2m_min?.[0] ?? 0);
+          el.innerHTML = `
+            <div class="weather-city">${slide.city || ''}</div>
+            <div class="weather-icon">${icon}</div>
+            <div class="weather-temp">${temp}°</div>
+            <div class="weather-desc">${desc}</div>
+            <div class="weather-minmax">Máx ${max}° · Mín ${min}°</div>`;
+        }).catch(() => {
+          el.innerHTML = `<div class="weather-city">${slide.city || ''}</div><div class="weather-desc">Não foi possível carregar o clima agora</div>`;
+        });
+      }
+      break;
+    }
+    case 'rss': {
+      el.classList.add('rss-slide');
+      const eyebrow = document.createElement('div');
+      eyebrow.className = 'rss-eyebrow';
+      eyebrow.textContent = slide.label || 'NOTÍCIAS';
+      const ul = document.createElement('ul');
+      ul.innerHTML = '<li>Carregando notícias...</li>';
+      el.appendChild(eyebrow);
+      el.appendChild(ul);
+      if(slide.feedUrl){
+        getRssItems(slide.feedUrl).then(items => {
+          const max = slide.maxItems || 5;
+          ul.innerHTML = items.slice(0, max).map(t => `<li>${t}</li>`).join('') || '<li>Nenhuma notícia encontrada</li>';
+        }).catch(() => {
+          ul.innerHTML = '<li>Não foi possível carregar as notícias agora</li>';
+        });
+      }
+      break;
+    }
+    case 'embed': {
+      el.classList.add('embed-slide');
+      if(slide.url){
+        const iframe = document.createElement('iframe');
+        iframe.src = slide.url;
+        el.appendChild(iframe);
+      } else {
+        el.innerHTML = '<div class="embed-error">Nenhum link configurado para este slide</div>';
+      }
       break;
     }
     default:
