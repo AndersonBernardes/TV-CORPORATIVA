@@ -22,10 +22,6 @@
       ]
     },
     {
-      "type": "clock",
-      "duration": 8
-    },
-    {
       "type": "image",
       "src": "imagens/imagem-01.jpg",
       "duration": 8
@@ -50,13 +46,12 @@
       ]
     },
     {
-      "type": "image",
+      "type": "birthday",
       "duration": 8,
-      "src": "imagens/imagem-01.jpg",
-      "caption": "",
-      "captionColor": "#F2A65A",
-      "captionSize": "medio",
-      "animation": "zoom"
+      "title": "Feliz Aniversário!",
+      "message": "PARABENS - Pedro continue sendo essa pessoa maravilhosa",
+      "annualDate": "07-29",
+      "annualWindowDays": 0
     }
   ]
 }
