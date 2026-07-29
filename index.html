@@ -45,14 +45,12 @@
     from{ transform:scale(1); }
     to{ transform:scale(1.08); }
   }
-  /* Animações extras de imagem — todas desligadas se o usuário preferir menos movimento */
-  @media (prefers-reduced-motion: no-preference){
-    .slide.anim-pan-left img{ animation:panLeft 10s ease-in-out forwards; }
-    .slide.anim-pan-right img{ animation:panRight 10s ease-in-out forwards; }
-    .slide.anim-fade-scale img{ animation:fadeScaleImg 1.3s ease-out forwards; }
-    .slide.anim-blur-focus img{ animation:blurFocusImg 1.5s ease-out forwards; }
-    .slide.anim-slide-in img{ animation:slideInImg 1s cubic-bezier(.2,.8,.2,1) forwards; }
-  }
+  /* Animações extras de imagem — a TV é uma tela pública, então sempre animam */
+  .slide.anim-pan-left img{ animation:panLeft 10s ease-in-out forwards; }
+  .slide.anim-pan-right img{ animation:panRight 10s ease-in-out forwards; }
+  .slide.anim-fade-scale img{ animation:fadeScaleImg 1.3s ease-out forwards; }
+  .slide.anim-blur-focus img{ animation:blurFocusImg 1.5s ease-out forwards; }
+  .slide.anim-slide-in img{ animation:slideInImg 1s cubic-bezier(.2,.8,.2,1) forwards; }
   @keyframes panLeft{
     from{ transform:scale(1.12) translateX(3%); }
     to{ transform:scale(1.12) translateX(-3%); }
@@ -92,36 +90,21 @@
   }
 
   /* Tipografia cinética: cada palavra entra com leve atraso em cascata.
-     Some sozinha se o usuário preferir menos movimento. */
+     A TV é uma tela pública, então sempre anima (não depende do dispositivo). */
   .kinetic-word{
     display:inline-block;
     opacity:0;
     transform:translateY(0.3em);
-  }
-  @media (prefers-reduced-motion: no-preference){
-    .kinetic-word{
-      animation:kineticIn 0.6s cubic-bezier(.2,.8,.2,1) forwards;
-    }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .kinetic-word{ opacity:1; transform:none; }
+    animation:kineticIn 0.6s cubic-bezier(.2,.8,.2,1) forwards;
   }
   @keyframes kineticIn{
     to{ opacity:1; transform:translateY(0); }
   }
 
   /* Outras animações de título, selecionáveis no painel admin */
-  .title-anim-slideup{ opacity:0; transform:translateY(40px); }
-  .title-anim-scalepop{ opacity:0; transform:scale(0.7); }
-  .title-anim-glow{ opacity:0; }
-  @media (prefers-reduced-motion: no-preference){
-    .title-anim-slideup{ animation:titleSlideUp 0.7s cubic-bezier(.2,.8,.2,1) forwards; }
-    .title-anim-scalepop{ animation:titleScalePop 0.6s cubic-bezier(.34,1.56,.64,1) forwards; }
-    .title-anim-glow{ animation:titleGlowIn 0.6s ease-out forwards, titleGlowPulse 2.6s ease-in-out 0.6s infinite; }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .title-anim-slideup, .title-anim-scalepop, .title-anim-glow{ opacity:1 !important; transform:none !important; }
-  }
+  .title-anim-slideup{ opacity:0; transform:translateY(40px); animation:titleSlideUp 0.7s cubic-bezier(.2,.8,.2,1) forwards; }
+  .title-anim-scalepop{ opacity:0; transform:scale(0.7); animation:titleScalePop 0.6s cubic-bezier(.34,1.56,.64,1) forwards; }
+  .title-anim-glow{ opacity:0; animation:titleGlowIn 0.6s ease-out forwards, titleGlowPulse 2.6s ease-in-out 0.6s infinite; }
   @keyframes titleSlideUp{ to{ opacity:1; transform:translateY(0); } }
   @keyframes titleScalePop{ to{ opacity:1; transform:scale(1); } }
   @keyframes titleGlowIn{ to{ opacity:1; } }
@@ -131,9 +114,7 @@
   }
   .typewriter-cursor::after{
     content:'|'; margin-left:2px;
-  }
-  @media (prefers-reduced-motion: no-preference){
-    .typewriter-cursor::after{ animation:blinkCursor 0.8s steps(2) infinite; }
+    animation:blinkCursor 0.8s steps(2) infinite;
   }
   @keyframes blinkCursor{ 50%{ opacity:0; } }
   .text-slide .title{
@@ -259,9 +240,7 @@
   .birthday-slide .confetti{
     position:absolute; top:-40px; font-size:32px;
     opacity:0.9;
-  }
-  @media (prefers-reduced-motion: no-preference){
-    .birthday-slide .confetti{ animation:fall linear infinite; }
+    animation:fall linear infinite;
   }
   @keyframes fall{
     to{ transform:translateY(115vh) rotate(360deg); }
@@ -447,11 +426,11 @@ function typewriterReveal(el, text){
   }, step);
 }
 
-// Escolhe a animação certa pro título, respeitando "reduzir movimento" do sistema
+// Escolhe a animação certa pro título. A TV é uma tela pública, então
+// sempre anima — não depende de preferências pessoais do aparelho.
 function renderTitle(el, text, animType){
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   animType = animType || 'kinetic';
-  if(reduced || animType === 'none'){ el.textContent = text; return; }
+  if(animType === 'none'){ el.textContent = text; return; }
   if(animType === 'kinetic'){ kineticText(el, text); return; }
   if(animType === 'typewriter'){ typewriterReveal(el, text); return; }
   el.textContent = text;
