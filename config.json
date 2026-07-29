@@ -61,6 +61,18 @@
       "title": "Este espaço está disponível",
       "contact": "(11) 95139-4342",
       "titleAnimation": "kinetic"
+    },
+    {
+      "type": "text",
+      "duration": 8,
+      "title": "Novo título",
+      "body": "ssssss",
+      "color": "#4FD1C5",
+      "fontSize": "grande",
+      "bodyColor": "#8B92A0",
+      "bodySize": "medio",
+      "background": "#1E2128",
+      "titleAnimation": "typewriter"
     }
   ]
 }
