@@ -53,6 +53,14 @@
       ],
       "dateStart": "2026-07-29",
       "dateEnd": "2026-12-31"
+    },
+    {
+      "type": "ad",
+      "duration": 8,
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 95139-4342",
+      "titleAnimation": "kinetic"
     }
   ]
 }
