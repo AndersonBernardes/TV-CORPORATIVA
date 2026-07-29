@@ -8,13 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#14161A;
-    --surface:#1E2128;
+    --bg:#000000;
+    --surface:#15171C;
+    --surface-glass: rgba(255,255,255,0.05);
     --accent:#4FD1C5;
     --accent-2:#F2A65A;
+    --accent-3:#FF6FA5;
     --text:#F5F5F0;
     --muted:#8B92A0;
     --rail-h: 64px;
+    --border-glass: rgba(255,255,255,0.09);
   }
   *{box-sizing:border-box;}
   html,body{
@@ -46,14 +49,37 @@
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   }
   .caption-box{
-    position:absolute; left:0; right:0; bottom:70px;
-    padding:24px 60px;
-    background:linear-gradient(0deg, rgba(0,0,0,0.65), rgba(0,0,0,0));
+    position:absolute; left:40px; right:40px; bottom:100px;
+    padding:22px 32px;
+    background:var(--surface-glass);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border:1px solid var(--border-glass);
+    border-radius:16px;
   }
   .caption-box .caption{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
     text-shadow:0 2px 12px rgba(0,0,0,0.6);
+  }
+
+  /* Tipografia cinética: cada palavra entra com leve atraso em cascata.
+     Some sozinha se o usuário preferir menos movimento. */
+  .kinetic-word{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(0.3em);
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .kinetic-word{
+      animation:kineticIn 0.6s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .kinetic-word{ opacity:1; transform:none; }
+  }
+  @keyframes kineticIn{
+    to{ opacity:1; transform:translateY(0); }
   }
   .text-slide .title{
     font-family:'Space Grotesk',sans-serif;
@@ -87,7 +113,7 @@
     margin-top:18px;
   }
   .news-slide{
-    background:var(--surface);
+    background:radial-gradient(circle at 15% 20%, rgba(79,209,197,0.08), transparent 60%), var(--surface);
     align-items:flex-start;
     text-align:left;
     justify-content:center;
@@ -140,8 +166,11 @@
     background:var(--surface);
   }
   .ad-slide .ad-box{
-    border:2px dashed rgba(79,209,197,0.35);
-    border-radius:20px;
+    border:1px solid var(--border-glass);
+    background:var(--surface-glass);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border-radius:24px;
     padding:70px 90px;
   }
   .ad-slide .ad-badge{
@@ -163,6 +192,75 @@
     font-family:'JetBrains Mono',monospace;
     font-size:clamp(18px, 2vw, 28px);
     color:var(--accent);
+  }
+
+  /* ---- Slide de aniversário: confete flutuante em CSS puro ---- */
+  .birthday-slide{
+    background:radial-gradient(circle at 50% 0%, rgba(255,111,165,0.18), transparent 55%),
+               radial-gradient(circle at 85% 85%, rgba(79,209,197,0.15), transparent 55%),
+               var(--surface);
+    overflow:hidden;
+  }
+  .birthday-slide .confetti{
+    position:absolute; top:-40px; font-size:32px;
+    opacity:0.9;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .birthday-slide .confetti{ animation:fall linear infinite; }
+  }
+  @keyframes fall{
+    to{ transform:translateY(115vh) rotate(360deg); }
+  }
+  .birthday-slide .bday-box{
+    position:relative; z-index:2;
+    border:1px solid var(--border-glass);
+    background:var(--surface-glass);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border-radius:28px;
+    padding:60px 90px;
+  }
+  .birthday-slide .bday-emoji{ font-size:clamp(40px,6vw,72px); margin-bottom:14px; }
+  .birthday-slide .bday-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(40px,6vw,88px);
+    color:var(--accent-3);
+    margin-bottom:14px;
+  }
+  .birthday-slide .bday-message{
+    font-family:'Inter',sans-serif;
+    color:var(--text);
+    font-size:clamp(18px,2.4vw,30px);
+    max-width:800px;
+  }
+
+  /* ---- Slide de redes sociais ---- */
+  .social-slide{ background:var(--surface); }
+  .social-slide .social-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(32px,4.5vw,60px);
+    color:var(--text);
+    margin-bottom:44px;
+  }
+  .social-slide .social-grid{
+    display:flex; gap:28px; flex-wrap:wrap; justify-content:center;
+  }
+  .social-slide .social-item{
+    display:flex; align-items:center; gap:16px;
+    border:1px solid var(--border-glass);
+    background:var(--surface-glass);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border-radius:18px;
+    padding:20px 30px;
+  }
+  .social-slide .social-icon{ font-size:clamp(28px,3.4vw,44px); }
+  .social-slide .social-handle{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--accent);
+    font-size:clamp(16px,2vw,26px);
   }
 </style>
 </head>
@@ -186,6 +284,7 @@ const CONFIG_URL = 'config.json';
 const CONFIG_POLL_SECONDS = 60;   // de quanto em quanto tempo verifica atualização
 const HARD_RELOAD_MINUTES = 120;  // recarrega a página inteira de tempos em tempos (evita travar a TV)
 
+let allSlides = [];
 let slides = [];
 let currentIndex = 0;
 let slideTimer = null;
@@ -210,15 +309,73 @@ function resolveSize(value, kind){
   return value; // valor CSS customizado, ex: "80px" ou "6vw" (compatibilidade com configs antigas)
 }
 
+// Quebra um texto em palavras, cada uma como <span> com atraso crescente,
+// criando o efeito de "tipografia cinética" (entrada em cascata).
+function kineticText(el, text){
+  el.innerHTML = '';
+  (text || '').split(' ').forEach((word, idx) => {
+    const span = document.createElement('span');
+    span.className = 'kinetic-word';
+    span.style.animationDelay = (idx * 0.08) + 's';
+    span.textContent = word;
+    el.appendChild(span);
+    el.appendChild(document.createTextNode(' '));
+  });
+}
+
+const SOCIAL_ICONS = {
+  instagram:'📷', facebook:'📘', tiktok:'🎵', linkedin:'💼',
+  whatsapp:'💬', youtube:'▶️', twitter:'🐦', x:'✕', site:'🌐',
+};
+function parseSocialItem(raw){
+  const idx = (raw || '').indexOf(':');
+  if(idx === -1) return { icon:'🔗', handle: raw || '' };
+  const key = raw.slice(0, idx).trim().toLowerCase();
+  const handle = raw.slice(idx + 1).trim();
+  return { icon: SOCIAL_ICONS[key] || '🔗', handle };
+}
+
+/* ---------- Agendamento: slide só aparece nas datas/dias configurados ---------- */
+function isSlideActive(slide, now){
+  if(slide.hidden) return false;
+  if(slide.dateStart && now < new Date(slide.dateStart + 'T00:00:00')) return false;
+  if(slide.dateEnd && now > new Date(slide.dateEnd + 'T23:59:59')) return false;
+  if(slide.annualDate){
+    const parts = slide.annualDate.split('-').map(Number);
+    const mm = parts[0], dd = parts[1];
+    if(mm && dd){
+      const target = new Date(now.getFullYear(), mm - 1, dd);
+      const windowDays = slide.annualWindowDays || 0;
+      const diffDays = Math.abs((now - target) / 86400000);
+      if(diffDays > windowDays) return false;
+    }
+  }
+  if(slide.weekdays && slide.weekdays.length && !slide.weekdays.includes(now.getDay())) return false;
+  return true;
+}
+
 async function loadConfig(){
   try{
     const res = await fetch(cacheBust(CONFIG_URL), {cache:'no-store'});
     const data = await res.json();
-    slides = data.slides || [];
+    allSlides = data.slides || [];
     if(data.brand) document.getElementById('rail-brand').textContent = data.brand;
-    renderDots();
+    applySchedule();
   }catch(e){
     console.error('Falha ao carregar config.json', e);
+  }
+}
+
+// Recalcula quais slides estão "no ar" agora, sem precisar buscar o arquivo de novo.
+// Roda a cada minuto, então um slide de data específica aparece/some sozinho na hora certa.
+function applySchedule(){
+  const now = new Date();
+  const active = allSlides.filter(s => isSlideActive(s, now));
+  const changed = JSON.stringify(active) !== JSON.stringify(slides);
+  slides = active;
+  if(changed){
+    currentIndex = 0;
+    renderDots();
   }
 }
 
@@ -264,10 +421,10 @@ function buildSlideEl(slide){
       if(slide.title){
         const t = document.createElement('div');
         t.className = 'title';
-        t.textContent = slide.title;
         t.style.color = slide.color || 'var(--accent)';
         t.style.fontSize = resolveSize(slide.fontSize, 'title');
         el.appendChild(t);
+        kineticText(t, slide.title);
       }
       if(slide.body){
         const b = document.createElement('div');
@@ -306,6 +463,57 @@ function buildSlideEl(slide){
       el.appendChild(ul);
       break;
     }
+    case 'birthday': {
+      el.classList.add('birthday-slide');
+      // Confetes flutuantes em CSS puro, sem depender de imagens
+      const confettiEmojis = ['🎉','🎈','🎊','✨'];
+      for(let c = 0; c < 14; c++){
+        const conf = document.createElement('div');
+        conf.className = 'confetti';
+        conf.textContent = confettiEmojis[c % confettiEmojis.length];
+        conf.style.left = (Math.random() * 100) + '%';
+        conf.style.animationDuration = (6 + Math.random() * 6) + 's';
+        conf.style.animationDelay = (Math.random() * 6) + 's';
+        el.appendChild(conf);
+      }
+      const box = document.createElement('div');
+      box.className = 'bday-box';
+      const emoji = document.createElement('div');
+      emoji.className = 'bday-emoji';
+      emoji.textContent = '🎂';
+      const title = document.createElement('div');
+      title.className = 'bday-title';
+      kineticText(title, slide.title || 'Feliz Aniversário!');
+      box.appendChild(emoji);
+      box.appendChild(title);
+      if(slide.message){
+        const msg = document.createElement('div');
+        msg.className = 'bday-message';
+        msg.textContent = slide.message;
+        box.appendChild(msg);
+      }
+      el.appendChild(box);
+      break;
+    }
+    case 'social': {
+      el.classList.add('social-slide');
+      const title = document.createElement('div');
+      title.className = 'social-title';
+      title.textContent = slide.title || 'Siga-nos nas redes sociais';
+      const grid = document.createElement('div');
+      grid.className = 'social-grid';
+      (slide.items || []).forEach(raw => {
+        const { icon, handle } = parseSocialItem(raw);
+        const item = document.createElement('div');
+        item.className = 'social-item';
+        item.innerHTML = `<span class="social-icon">${icon}</span><span class="social-handle"></span>`;
+        item.querySelector('.social-handle').textContent = handle;
+        grid.appendChild(item);
+      });
+      el.appendChild(title);
+      el.appendChild(grid);
+      break;
+    }
     case 'ad': {
       el.classList.add('ad-slide');
       const box = document.createElement('div');
@@ -315,9 +523,9 @@ function buildSlideEl(slide){
       badge.textContent = '📣 ' + (slide.subtitle || 'Anuncie aqui');
       const title = document.createElement('div');
       title.className = 'ad-title';
-      title.textContent = slide.title || 'Este espaço está disponível';
       box.appendChild(badge);
       box.appendChild(title);
+      kineticText(title, slide.title || 'Este espaço está disponível');
       if(slide.contact){
         const contact = document.createElement('div');
         contact.className = 'ad-contact';
@@ -347,9 +555,15 @@ function updateRailClock(){
 }
 
 function showSlide(index){
-  if(slides.length === 0) return;
+  if(slides.length === 0){
+    // Nenhum slide ativo agora (ex: tudo fora do período agendado) — tenta de novo em breve
+    stageEl.innerHTML = '<div style="color:#8B92A0;display:flex;align-items:center;justify-content:center;height:100%;font-family:Inter,sans-serif;">Nenhum slide ativo no momento</div>';
+    clearTimeout(slideTimer);
+    slideTimer = setTimeout(() => showSlide(0), 10000);
+    return;
+  }
   stageEl.innerHTML = '';
-  const slide = slides[index];
+  const slide = slides[index % slides.length];
   const el = buildSlideEl(slide);
   stageEl.appendChild(el);
   requestAnimationFrame(() => el.classList.add('active'));
@@ -367,13 +581,16 @@ function showSlide(index){
 
 async function init(){
   await loadConfig();
-  if(slides.length > 0) showSlide(0);
+  showSlide(0);
   setInterval(updateRailClock, 1000);
   setInterval(updateBigClock, 1000);
   updateRailClock();
 
   // Verifica config.json periodicamente (não interrompe o slide atual)
   setInterval(loadConfig, CONFIG_POLL_SECONDS * 1000);
+
+  // Reavalia agendamento (datas/dias) todo minuto, sem precisar buscar o arquivo de novo
+  setInterval(applySchedule, 60 * 1000);
 
   // Recarrega a página inteira de tempos em tempos (memória/estabilidade da TV box)
   setTimeout(() => location.reload(), HARD_RELOAD_MINUTES * 60 * 1000);
