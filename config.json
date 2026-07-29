@@ -40,7 +40,18 @@
         "facebook:AncaSolucoes",
         "whatsapp:(11) 99999-9999"
       ],
-      "duration": 9
+      "duration": 9,
+      "weekdays": [
+        1,
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "dateStart": "2026-07-29",
+      "dateEnd": "2026-12-31"
     }
   ]
 }
