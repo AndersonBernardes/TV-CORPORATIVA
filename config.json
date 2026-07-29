@@ -21,7 +21,8 @@
       "type": "image",
       "src": "imagens/imagem-01.jpg",
       "duration": 8,
-      "animation": "pan-left"
+      "animation": "blur-focus",
+      "weekdays": []
     },
     {
       "type": "birthday",
@@ -30,7 +31,7 @@
       "annualDate": "07-29",
       "annualWindowDays": 1,
       "duration": 10,
-      "titleAnimation": "scalepop"
+      "titleAnimation": "glow"
     },
     {
       "type": "social",
