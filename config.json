@@ -6,12 +6,12 @@
       "title": "Bem-vindo!",
       "body": "Confira as novidades da semana.",
       "color": "#4FD1C5",
-      "fontSize": "enorme",
+      "fontSize": "grande",
       "bodyColor": "#8B92A0",
-      "bodySize": "enorme",
+      "bodySize": "medio",
       "background": "#1E2128",
       "duration": 8,
-      "titleAnimation": "scalepop"
+      "titleAnimation": "slideup"
     },
     {
       "type": "clock",
@@ -21,9 +21,270 @@
       "type": "image",
       "src": "imagens/imagem-01.jpg",
       "duration": 8,
-      "animation": "blur-focus",
-      "captionSize": "enorme",
-      "caption": "Siga para mais"
+      "animation": "pan-left"
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-02.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-03.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-04.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-05.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-06.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-07.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-08.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-09.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-10.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-11.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-12.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-13.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-14.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-15.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-16.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-17.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-18.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-19.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-20.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-21.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-22.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-23.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-24.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-25.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-26.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-27.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-28.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-29.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-30.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-31.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-32.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-33.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-34.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-35.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-36.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-37.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-38.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-39.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-40.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-41.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-42.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-43.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-44.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-45.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-46.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-47.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-48.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-49.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-50.jpg",
+      "duration": 8
+    },
+    {
+      "type": "news",
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Reunião geral sexta-feira às 9h",
+        "Nova política de reembolso já disponível",
+        "Parabéns aos aniversariantes do mês!"
+      ],
+      "duration": 12
+    },
+    {
+      "type": "birthday",
+      "title": "Feliz Aniversário, Equipe!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "12-25",
+      "annualWindowDays": 1,
+      "duration": 10
     },
     {
       "type": "social",
@@ -31,7 +292,7 @@
       "items": [
         "instagram:@ancasolucoes",
         "facebook:AncaSolucoes",
-        "whatsapp:(11) 95139-4342"
+        "whatsapp:(11) 99999-9999"
       ],
       "duration": 9
     },
@@ -39,44 +300,61 @@
       "type": "weather",
       "city": "São Paulo, São Paulo",
       "lat": -23.5475,
-      "lon": -46.63611,
+      "lon": -46.6361,
       "duration": 8
     },
     {
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
       "feedUrl": "https://g1.globo.com/rss/g1/sp/sao-paulo/",
-      "maxItems": "3",
+      "maxItems": 5,
       "duration": 12
     },
     {
-      "type": "birthday",
-      "duration": 8,
-      "title": "Feliz Aniversário, Maria Fernandes ",
-      "message": "",
-      "annualDate": "07-29",
-      "annualWindowDays": 0,
-      "titleAnimation": "typewriter"
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "menu": {
+        "1": [
+          "Bife acebolado",
+          "Arroz, feijão, purê de batata e salada"
+        ],
+        "2": [
+          "Almôndegas ao molho",
+          "Arroz, feijão, macarrão e salada"
+        ],
+        "3": [
+          "Frango grelhado",
+          "Arroz, feijão, legumes salteados"
+        ],
+        "4": [
+          "Feijoada leve",
+          "Arroz, farofa, couve e laranja"
+        ],
+        "5": [
+          "Peixe assado",
+          "Arroz, feijão, salada verde"
+        ]
+      },
+      "duration": 10
     },
     {
-      "type": "ad",
-      "duration": 8,
-      "subtitle": "Anuncie aqui",
-      "title": "Este espaço está disponível",
-      "contact": "(11) 95139-4342",
-      "titleAnimation": "kinetic"
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+        "Grandes equipes constroem grandes resultados.|Anca Soluções",
+        "Foco no progresso, não na perfeição.",
+        "Comece onde você está. Use o que você tem. Faça o que você pode.|Arthur Ashe",
+        "Cada dia é uma nova chance de fazer a diferença."
+      ],
+      "titleAnimation": "kinetic",
+      "duration": 9
     },
     {
-      "type": "text",
-      "duration": 8,
-      "title": "Frase do dia!!",
-      "body": "Força: Você é muito mais forte do que imagina para superar qualquer obstáculo hoje.",
-      "color": "#4FD1C5",
-      "fontSize": "medio",
-      "bodyColor": "#8B92A0",
-      "bodySize": "grande",
-      "background": "#1E2128",
-      "titleAnimation": "typewriter"
+      "type": "video",
+      "src": "videos/institucional-01.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 20
     }
   ]
 }
