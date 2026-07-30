@@ -394,6 +394,20 @@
   }
   .menu-slide li{ margin-bottom:6px; }
   .menu-slide li::before{ content:"🍽️ "; }
+  .menu-slide.menu-with-image{
+    flex-direction:row; align-items:stretch; justify-content:center;
+    gap:60px; text-align:left; padding:70px 90px;
+  }
+  .menu-slide .menu-content{
+    flex:1; display:flex; flex-direction:column; justify-content:center; min-width:0;
+  }
+  .menu-slide .menu-image-wrap{
+    position:relative; flex:0 0 38%; border-radius:24px; overflow:hidden;
+    border:1px solid var(--border-glass);
+  }
+  .menu-slide .menu-image-wrap img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  }
 
   /* ---- Slide de frases motivacionais ---- */
   .motivation-slide{ background:radial-gradient(circle at 50% 0%, rgba(79,209,197,0.12), transparent 55%), var(--surface); padding:60px 110px; }
@@ -841,6 +855,8 @@ function buildSlideEl(slide){
       const now = new Date();
       const dayNames = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
       const todayItems = (slide.menu && slide.menu[String(now.getDay())]) || [];
+      const content = document.createElement('div');
+      content.className = 'menu-content';
       const eyebrow = document.createElement('div');
       eyebrow.className = 'menu-eyebrow';
       eyebrow.textContent = slide.title || 'Cardápio do dia';
@@ -849,9 +865,21 @@ function buildSlideEl(slide){
       dayLabel.textContent = dayNames[now.getDay()];
       const ul = document.createElement('ul');
       ul.innerHTML = todayItems.map(t => `<li>${t}</li>`).join('') || '<li>Sem cardápio cadastrado para hoje</li>';
-      el.appendChild(eyebrow);
-      el.appendChild(dayLabel);
-      el.appendChild(ul);
+      content.appendChild(eyebrow);
+      content.appendChild(dayLabel);
+      content.appendChild(ul);
+      if(slide.image){
+        el.classList.add('menu-with-image');
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'menu-image-wrap';
+        const img = document.createElement('img');
+        img.src = cacheBust(slide.image);
+        imgWrap.appendChild(img);
+        el.appendChild(imgWrap);
+        if(slide.imageAnimation === 'zoom') el.classList.add('zoom');
+        else if(slide.imageAnimation && slide.imageAnimation !== 'nenhuma') el.classList.add('anim-' + slide.imageAnimation);
+      }
+      el.appendChild(content);
       break;
     }
     case 'motivation': {
