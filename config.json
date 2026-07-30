@@ -72,7 +72,7 @@
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
       "feedUrl": "https://g1.globo.com/rss/g1/sp/sao-paulo/",
-      "maxItems": 5,
+      "maxItems": "3",
       "duration": 12
     },
     {
@@ -121,7 +121,8 @@
       "src": "videos/institucional-01.mp4",
       "muted": true,
       "loop": false,
-      "duration": 20
+      "duration": 20,
+      "hidden": true
     }
   ]
 }
