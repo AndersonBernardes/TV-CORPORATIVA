@@ -129,6 +129,14 @@
       "captionSize": "grande",
       "animation": "zoom",
       "duration": 10
+    },
+    {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+      ],
+      "titleAnimation": "typewriter",
+      "duration": 9
     }
   ]
 }
