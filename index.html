@@ -376,6 +376,45 @@
     display:flex; align-items:center; justify-content:center; height:100%;
     color:var(--muted); font-family:'Inter',sans-serif; font-size:20px; text-align:center; padding:60px;
   }
+
+  /* ---- Slide de cardápio do refeitório ---- */
+  .menu-slide{ background:radial-gradient(circle at 85% 15%, rgba(242,166,90,0.10), transparent 50%), var(--surface); }
+  .menu-slide .menu-eyebrow{
+    font-family:'JetBrains Mono',monospace; color:var(--accent-2); letter-spacing:3px;
+    font-size:clamp(14px,1.4vw,20px); margin-bottom:6px; text-transform:uppercase;
+  }
+  .menu-slide .menu-day{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--text);
+    font-size:clamp(28px,3.6vw,48px); margin-bottom:28px;
+  }
+  .menu-slide ul{
+    list-style:none; margin:0; padding:0;
+    font-family:'Inter',sans-serif; color:var(--text);
+    font-size:clamp(22px,2.8vw,36px); line-height:1.6;
+  }
+  .menu-slide li{ margin-bottom:6px; }
+  .menu-slide li::before{ content:"🍽️ "; }
+
+  /* ---- Slide de frases motivacionais ---- */
+  .motivation-slide{ background:radial-gradient(circle at 50% 0%, rgba(79,209,197,0.12), transparent 55%), var(--surface); padding:60px 110px; }
+  .motivation-slide .motivation-mark{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--accent);
+    font-size:clamp(60px,8vw,120px); line-height:0.6; opacity:0.5; margin-bottom:10px;
+  }
+  .motivation-slide .motivation-phrase{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--text);
+    font-size:clamp(30px,4.2vw,60px); line-height:1.3; max-width:1100px;
+  }
+  .motivation-slide .motivation-author{
+    font-family:'JetBrains Mono',monospace; color:var(--muted);
+    font-size:clamp(16px,2vw,24px); margin-top:24px;
+  }
+
+  /* ---- Slide de vídeo institucional ---- */
+  .video-slide{ padding:0; background:#000; }
+  .video-slide video{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000;
+  }
 </style>
 </head>
 <body>
@@ -478,6 +517,21 @@ function parseSocialItem(raw){
   return { icon: SOCIAL_ICONS[key] || '🔗', handle };
 }
 
+// Sorteia uma frase motivacional da lista, evitando repetir a mesma da vez anterior.
+// Aceita o formato "frase" ou "frase|Autor" (autor é opcional).
+const motivationLastIndex = new Map();
+function pickMotivationPhrase(slide, items){
+  if(!items || items.length === 0) return { phrase:'', author:'' };
+  let idx = Math.floor(Math.random() * items.length);
+  if(items.length > 1 && idx === motivationLastIndex.get(slide)){
+    idx = (idx + 1) % items.length;
+  }
+  motivationLastIndex.set(slide, idx);
+  const raw = items[idx];
+  const [phrase, author] = raw.split('|').map(s => (s || '').trim());
+  return { phrase, author };
+}
+
 /* ---------- Previsão do tempo (Open-Meteo, gratuito, sem chave de API) ---------- */
 const WEATHER_CODE_MAP = {
   0:['☀️','Céu limpo'], 1:['🌤️','Poucas nuvens'], 2:['⛅','Parcialmente nublado'], 3:['☁️','Nublado'],
@@ -529,6 +583,11 @@ function isSlideActive(slide, now){
     }
   }
   if(slide.weekdays && slide.weekdays.length && !slide.weekdays.includes(now.getDay())) return false;
+  // Cardápio: se não tem nada cadastrado pro dia de hoje (ex: fim de semana), some sozinho
+  if(slide.type === 'menu'){
+    const todayItems = (slide.menu && slide.menu[String(now.getDay())]) || [];
+    if(todayItems.length === 0) return false;
+  }
   return true;
 }
 
@@ -777,6 +836,62 @@ function buildSlideEl(slide){
       }
       break;
     }
+    case 'menu': {
+      el.classList.add('menu-slide');
+      const now = new Date();
+      const dayNames = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+      const todayItems = (slide.menu && slide.menu[String(now.getDay())]) || [];
+      const eyebrow = document.createElement('div');
+      eyebrow.className = 'menu-eyebrow';
+      eyebrow.textContent = slide.title || 'Cardápio do dia';
+      const dayLabel = document.createElement('div');
+      dayLabel.className = 'menu-day';
+      dayLabel.textContent = dayNames[now.getDay()];
+      const ul = document.createElement('ul');
+      ul.innerHTML = todayItems.map(t => `<li>${t}</li>`).join('') || '<li>Sem cardápio cadastrado para hoje</li>';
+      el.appendChild(eyebrow);
+      el.appendChild(dayLabel);
+      el.appendChild(ul);
+      break;
+    }
+    case 'motivation': {
+      el.classList.add('motivation-slide');
+      const { phrase, author } = pickMotivationPhrase(slide, slide.items);
+      const mark = document.createElement('div');
+      mark.className = 'motivation-mark';
+      mark.textContent = '“';
+      const p = document.createElement('div');
+      p.className = 'motivation-phrase';
+      el.appendChild(mark);
+      el.appendChild(p);
+      renderTitle(p, phrase, slide.titleAnimation);
+      if(author){
+        const a = document.createElement('div');
+        a.className = 'motivation-author';
+        a.textContent = '— ' + author;
+        el.appendChild(a);
+      }
+      break;
+    }
+    case 'video': {
+      el.classList.add('video-slide');
+      if(slide.src){
+        const video = document.createElement('video');
+        video.src = cacheBust(slide.src);
+        video.autoplay = true;
+        video.muted = slide.muted !== false;
+        video.loop = !!slide.loop;
+        video.playsInline = true;
+        el.appendChild(video);
+        if(!slide.loop){
+          video.addEventListener('ended', () => goToNextSlide());
+        }
+        video.play().catch(() => {});
+      } else {
+        el.innerHTML = '<div class="embed-error">Nenhum vídeo configurado para este slide</div>';
+      }
+      break;
+    }
     default:
       el.textContent = 'Tipo de slide desconhecido: ' + slide.type;
   }
@@ -827,10 +942,13 @@ function showSlide(index){
 
   clearTimeout(slideTimer);
   const duration = (slide.duration || 8) * 1000;
-  slideTimer = setTimeout(() => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  }, duration);
+  slideTimer = setTimeout(goToNextSlide, duration);
+}
+
+function goToNextSlide(){
+  clearTimeout(slideTimer);
+  currentIndex = (currentIndex + 1) % slides.length;
+  showSlide(currentIndex);
 }
 
 async function init(){
