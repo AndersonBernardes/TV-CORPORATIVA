@@ -67,7 +67,7 @@
     {
       "type": "menu",
       "title": "Cardápio do Refeitório",
-      "image": "imagens/prato-01.jpg",
+      "image": "videos/peixe.jpg",
       "imageAnimation": "pan-left",
       "menu": {
         "0": [],
