@@ -137,6 +137,21 @@
       ],
       "titleAnimation": "typewriter",
       "duration": 9
+    },
+    {
+      "type": "ad",
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 99999-9999",
+      "titleAnimation": "scalepop",
+      "duration": 9
+    },
+    {
+      "type": "rss",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "",
+      "maxItems": 5,
+      "duration": 12
     }
   ]
 }
