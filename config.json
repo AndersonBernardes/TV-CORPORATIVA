@@ -32,6 +32,13 @@
       "muted": true,
       "loop": false,
       "duration": 30
+    },
+    {
+      "type": "video",
+      "src": "videos/v1.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 30
     }
   ]
 }
