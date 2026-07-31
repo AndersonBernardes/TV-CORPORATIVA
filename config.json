@@ -152,6 +152,24 @@
       "feedUrl": "",
       "maxItems": 5,
       "duration": 12
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Confira nossas novidades",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "parallax",
+      "duration": 10
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Confira nossas novidades",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "parallax",
+      "duration": 10
     }
   ]
 }
