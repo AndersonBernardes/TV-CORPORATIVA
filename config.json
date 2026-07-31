@@ -16,6 +16,15 @@
       "captionSize": "grande",
       "animation": "bounce-in",
       "duration": 10
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Promoção do mês",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "fade-scale",
+      "duration": 10
     }
   ]
 }
