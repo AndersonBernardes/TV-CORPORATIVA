@@ -14,7 +14,7 @@
       "caption": "Promoção do mês",
       "captionColor": "#F2A65A",
       "captionSize": "grande",
-      "animation": "bounce-in",
+      "animation": "parallax",
       "duration": 10
     },
     {
