@@ -18,27 +18,81 @@
       "duration": 10
     },
     {
-      "type": "image",
-      "src": "imagens/imagem-01.jpg",
-      "caption": "Promoção do mês",
-      "captionColor": "#F2A65A",
-      "captionSize": "grande",
-      "animation": "fade-scale",
+      "type": "video",
+      "src": "videos/v1.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 30
+    },
+    {
+      "type": "ad",
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 95139-4342",
+      "titleAnimation": "scalepop",
+      "duration": 9
+    },
+    {
+      "type": "weather",
+      "city": "São Paulo, São Paulo",
+      "lat": -23.5475,
+      "lon": -46.63611,
+      "duration": 8
+    },
+    {
+      "type": "rss",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "",
+      "maxItems": "3",
+      "duration": 12
+    },
+    {
+      "type": "news",
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Reunião geral sexta-feira às 9h",
+        "Parabéns aos aniversariantes do mês!"
+      ],
+      "duration": 12
+    },
+    {
+      "type": "birthday",
+      "title": "Feliz Aniversário!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "03-31",
+      "annualWindowDays": 1,
+      "titleAnimation": "slideup",
       "duration": 10
     },
     {
-      "type": "video",
-      "src": "videos/v1.mp4",
-      "muted": true,
-      "loop": false,
-      "duration": 30
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "image": "imagens/prato-01.jpg",
+      "imageAnimation": "pan-left",
+      "menu": {
+        "0": [],
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [
+          "PEIXE ACEBOLADO"
+        ],
+        "6": []
+      },
+      "duration": 10
     },
     {
-      "type": "video",
-      "src": "videos/v1.mp4",
-      "muted": true,
-      "loop": false,
-      "duration": 30
+      "type": "clock",
+      "duration": 8
+    },
+    {
+      "type": "ad",
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 95139-4342",
+      "titleAnimation": "scalepop",
+      "duration": 9
     }
   ]
 }
