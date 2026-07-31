@@ -93,6 +93,13 @@
       "contact": "(11) 95139-4342",
       "titleAnimation": "scalepop",
       "duration": 9
+    },
+    {
+      "type": "rss",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "",
+      "maxItems": 5,
+      "duration": 12
     }
   ]
 }
