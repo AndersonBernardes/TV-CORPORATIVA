@@ -7,6 +7,15 @@
       "caption": "",
       "animation": "slide-right",
       "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-03.jpg",
+      "caption": "Promoção do mês",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "slide-in",
+      "duration": 10
     }
   ]
 }
