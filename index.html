@@ -612,12 +612,25 @@ const WEATHER_CODE_MAP = {
   95:['⛈️','Tempestade'], 96:['⛈️','Tempestade com granizo'], 99:['⛈️','Tempestade forte'],
 };
 const weatherCache = {};
+// fetch com limite de tempo: se a internet travar, desiste depois de alguns
+// segundos em vez de ficar "carregando" pra sempre.
+async function fetchWithTimeout(url, ms = 8000){
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), ms);
+  try{
+    const res = await fetch(url, { signal: controller.signal });
+    return res;
+  } finally {
+    clearTimeout(id);
+  }
+}
+
 async function getWeather(lat, lon){
   const key = `${lat},${lon}`;
   const cached = weatherCache[key];
   if(cached && (Date.now() - cached.time) < 15 * 60 * 1000) return cached.data;
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`;
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url);
   const data = await res.json();
   weatherCache[key] = { data, time: Date.now() };
   return data;
@@ -629,8 +642,9 @@ async function getRssItems(feedUrl){
   const cached = rssCache[feedUrl];
   if(cached && (Date.now() - cached.time) < 10 * 60 * 1000) return cached.items;
   const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
-  const res = await fetch(proxyUrl);
+  const res = await fetchWithTimeout(proxyUrl);
   const data = await res.json();
+  if(data.status !== 'ok') throw new Error(data.message || 'Feed inválido');
   const items = (data.items || []).map(it => it.title);
   rssCache[feedUrl] = { items, time: Date.now() };
   return items;
