@@ -4,7 +4,7 @@
     {
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
-      "feedUrl": "",
+      "feedUrl": "https://g1.globo.com/",
       "maxItems": 5,
       "duration": 12
     },
