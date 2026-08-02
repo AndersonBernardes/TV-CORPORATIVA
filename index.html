@@ -872,24 +872,26 @@ function buildSlideEl(slide){
     }
     case 'weather': {
       el.classList.add('weather-slide');
-      el.innerHTML = `<div class="weather-city">${slide.city || ''}</div><div class="weather-icon">⏳</div>`;
-      if(slide.lat && slide.lon){
-        getWeather(slide.lat, slide.lon).then(data => {
-          const code = data.current?.weather_code;
-          const [icon, desc] = WEATHER_CODE_MAP[code] || ['🌡️','—'];
-          const temp = Math.round(data.current?.temperature_2m ?? 0);
-          const max = Math.round(data.daily?.temperature_2m_max?.[0] ?? 0);
-          const min = Math.round(data.daily?.temperature_2m_min?.[0] ?? 0);
-          el.innerHTML = `
-            <div class="weather-city">${slide.city || ''}</div>
-            <div class="weather-icon">${icon}</div>
-            <div class="weather-temp">${temp}°</div>
-            <div class="weather-desc">${desc}</div>
-            <div class="weather-minmax">Máx ${max}° · Mín ${min}°</div>`;
-        }).catch(() => {
-          el.innerHTML = `<div class="weather-city">${slide.city || ''}</div><div class="weather-desc">Não foi possível carregar o clima agora</div>`;
-        });
+      if(!slide.lat || !slide.lon){
+        el.innerHTML = `<div class="weather-desc">⚠️ Configure a cidade deste slide no painel admin (clique em "Buscar" pra preencher as coordenadas)</div>`;
+        break;
       }
+      el.innerHTML = `<div class="weather-city">${slide.city || ''}</div><div class="weather-icon">⏳</div>`;
+      getWeather(slide.lat, slide.lon).then(data => {
+        const code = data.current?.weather_code;
+        const [icon, desc] = WEATHER_CODE_MAP[code] || ['🌡️','—'];
+        const temp = Math.round(data.current?.temperature_2m ?? 0);
+        const max = Math.round(data.daily?.temperature_2m_max?.[0] ?? 0);
+        const min = Math.round(data.daily?.temperature_2m_min?.[0] ?? 0);
+        el.innerHTML = `
+          <div class="weather-city">${slide.city || ''}</div>
+          <div class="weather-icon">${icon}</div>
+          <div class="weather-temp">${temp}°</div>
+          <div class="weather-desc">${desc}</div>
+          <div class="weather-minmax">Máx ${max}° · Mín ${min}°</div>`;
+      }).catch(() => {
+        el.innerHTML = `<div class="weather-city">${slide.city || ''}</div><div class="weather-desc">Não foi possível carregar o clima agora</div>`;
+      });
       break;
     }
     case 'rss': {
@@ -898,18 +900,22 @@ function buildSlideEl(slide){
       eyebrow.className = 'rss-eyebrow';
       eyebrow.textContent = slide.label || 'NOTÍCIAS';
       const ul = document.createElement('ul');
+      if(!slide.feedUrl){
+        ul.innerHTML = '<li>⚠️ Configure o link do feed RSS deste slide no painel admin</li>';
+        el.appendChild(eyebrow);
+        el.appendChild(ul);
+        break;
+      }
       ul.innerHTML = '<li>Carregando notícias...</li>';
       el.appendChild(eyebrow);
       el.appendChild(ul);
-      if(slide.feedUrl){
-        getRssItems(slide.feedUrl).then(items => {
-          const max = slide.maxItems || 5;
-          ul.innerHTML = items.slice(0, max).map(t => `<li>${t}</li>`).join('') || '<li>Nenhuma notícia encontrada</li>';
-          applyStagger(ul);
-        }).catch(() => {
-          ul.innerHTML = '<li>Não foi possível carregar as notícias agora</li>';
-        });
-      }
+      getRssItems(slide.feedUrl).then(items => {
+        const max = slide.maxItems || 5;
+        ul.innerHTML = items.slice(0, max).map(t => `<li>${t}</li>`).join('') || '<li>Nenhuma notícia encontrada</li>';
+        applyStagger(ul);
+      }).catch(() => {
+        ul.innerHTML = '<li>Não foi possível carregar as notícias agora</li>';
+      });
       break;
     }
     case 'embed': {
