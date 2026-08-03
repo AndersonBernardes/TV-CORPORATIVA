@@ -42,6 +42,15 @@
       "caption": "",
       "animation": "scale-in",
       "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "videos/Pets, divertido, azul e amarelo, vídeo.mp4",
+      "caption": "Confira nossas novidades",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "parallax",
+      "duration": 10
     }
   ]
 }
