@@ -2,55 +2,27 @@
   "brand": "Anca Soluções",
   "slides": [
     {
-      "type": "text",
-      "title": "Bem-vindo(a)!",
-      "body": "Estamos felizes em ter você aqui.",
-      "color": "#4FD1C5",
-      "fontSize": "enorme",
-      "bodyColor": "#8B92A0",
-      "bodySize": "medio",
-      "background": "#15171C",
-      "titleAnimation": "glow",
-      "duration": 8
-    },
-    {
-      "type": "rss",
-      "label": "NOTÍCIAS REGIONAIS",
-      "feedUrl": "https://feeds.folha.uol.com.br/ilustrada/rss091.xml",
-      "maxItems": "3",
-      "duration": 12
-    },
-    {
-      "type": "image",
-      "src": "imagens/imagem-01.jpg",
-      "caption": "Promoção do mês",
-      "captionColor": "#F2A65A",
-      "captionSize": "grande",
-      "animation": "zoom",
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "image": "imagens/prato-01.jpg",
+      "imageAnimation": "pan-left",
+      "menu": {
+        "0": [],
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": []
+      },
       "duration": 10
     },
     {
       "type": "video",
-      "src": "videos/Hambúrguer super promoção animado preto laranja post para Instagram.mp4",
+      "src": "videos/Pets, divertido, azul e amarelo, vídeo.mp4",
       "muted": true,
       "loop": false,
       "duration": 20
-    },
-    {
-      "type": "image",
-      "src": "imagens/imagem-01.jpg",
-      "caption": "",
-      "animation": "scale-in",
-      "duration": 8
-    },
-    {
-      "type": "image",
-      "src": "videos/Pets, divertido, azul e amarelo, vídeo.mp4",
-      "caption": "Confira nossas novidades",
-      "captionColor": "#F2A65A",
-      "captionSize": "grande",
-      "animation": "parallax",
-      "duration": 10
     }
   ]
 }
