@@ -2,11 +2,32 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "text",
+      "title": "Bem-vindo(a)!",
+      "body": "Estamos felizes em ter você aqui.",
+      "color": "#4FD1C5",
+      "fontSize": "enorme",
+      "bodyColor": "#8B92A0",
+      "bodySize": "medio",
+      "background": "#15171C",
+      "titleAnimation": "glow",
+      "duration": 8
+    },
+    {
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
-      "feedUrl": "https://rss.tecmundo.com.br/feed ",
+      "feedUrl": "https://feeds.folha.uol.com.br/ilustrada/rss091.xml",
       "maxItems": "3",
       "duration": 12
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Promoção do mês",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "zoom",
+      "duration": 10
     }
   ]
 }
