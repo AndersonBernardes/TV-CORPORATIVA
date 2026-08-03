@@ -4,11 +4,13 @@
     {
       "type": "menu",
       "title": "Cardápio do Refeitório",
-      "image": "imagens/prato-01.jpg",
+      "image": "imagens/BIFE.jpg",
       "imageAnimation": "pan-left",
       "menu": {
         "0": [],
-        "1": [],
+        "1": [
+          "BIFE ACEBOLADO COM BATATA"
+        ],
         "2": [],
         "3": [],
         "4": [],
@@ -23,6 +25,38 @@
       "muted": true,
       "loop": false,
       "duration": 20
+    },
+    {
+      "type": "ad",
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 99999-9999",
+      "titleAnimation": "scalepop",
+      "duration": 9
+    },
+    {
+      "type": "weather",
+      "city": "",
+      "lat": "",
+      "lon": "",
+      "duration": 8
+    },
+    {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+      ],
+      "titleAnimation": "typewriter",
+      "duration": 9
+    },
+    {
+      "type": "birthday",
+      "title": "Feliz Aniversário!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "",
+      "annualWindowDays": 1,
+      "titleAnimation": "slideup",
+      "duration": 10
     }
   ]
 }
