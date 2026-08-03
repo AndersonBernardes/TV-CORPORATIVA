@@ -4,7 +4,7 @@
     {
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
-      "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
+      "feedUrl": "https://rss.tecmundo.com.br/feed ",
       "maxItems": "3",
       "duration": 12
     }
