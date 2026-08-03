@@ -51,7 +51,7 @@
     },
     {
       "type": "birthday",
-      "title": "Feliz Aniversário! JUNIOR",
+      "title": "Feliz Aniversário! Júnior",
       "message": "Que venham muitas conquistas!",
       "annualDate": "08-03",
       "annualWindowDays": 30,
@@ -73,7 +73,7 @@
       "items": [
         "ancasolucoes@.com.br",
         "whatsapp:(11) 95139-4342",
-        "@ancasolucao"
+        "@ancasolucoes"
       ],
       "duration": 9
     },
@@ -83,6 +83,13 @@
       "caption": "",
       "animation": "fade-in",
       "duration": 8
+    },
+    {
+      "type": "rss",
+      "label": "NOTÍCIAS ",
+      "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
+      "maxItems": "3",
+      "duration": 12
     }
   ]
 }
