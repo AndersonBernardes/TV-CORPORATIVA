@@ -4,16 +4,9 @@
     {
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
-      "feedUrl": "https://g1.globo.com/",
-      "maxItems": 5,
+      "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
+      "maxItems": "3",
       "duration": 12
-    },
-    {
-      "type": "weather",
-      "city": "São Paulo, São Paulo",
-      "lat": -23.5475,
-      "lon": -46.63611,
-      "duration": 8
     }
   ]
 }
