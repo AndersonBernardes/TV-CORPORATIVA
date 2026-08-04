@@ -2,6 +2,14 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+      ],
+      "titleAnimation": "slideup",
+      "duration": 9
+    },
+    {
       "type": "menu",
       "title": "Cardápio do Refeitório",
       "imageAnimation": "parallax",
