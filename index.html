@@ -668,10 +668,20 @@ function isSlideActive(slide, now){
   if(slide.weekdays && slide.weekdays.length && !slide.weekdays.includes(now.getDay())) return false;
   // Cardápio: se não tem nada cadastrado pro dia de hoje (ex: fim de semana), some sozinho
   if(slide.type === 'menu'){
-    const todayItems = (slide.menu && slide.menu[String(now.getDay())]) || [];
-    if(todayItems.length === 0) return false;
+    if(getDayMenu(slide, String(now.getDay())).items.length === 0) return false;
   }
   return true;
+}
+
+// Lê o cardápio de um dia específico. Aceita tanto o formato novo
+// (cada dia com itens + imagem própria) quanto o formato antigo
+// (lista simples de itens, com uma imagem só compartilhada por todos os dias).
+function getDayMenu(slide, dayKey){
+  const raw = (slide.menu && slide.menu[dayKey]) || [];
+  if(Array.isArray(raw)){
+    return { items: raw, image: slide.image || '' };
+  }
+  return { items: raw.items || [], image: raw.image || slide.image || '' };
 }
 
 async function loadConfig(){
@@ -933,7 +943,7 @@ function buildSlideEl(slide){
       el.classList.add('menu-slide');
       const now = new Date();
       const dayNames = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-      const todayItems = (slide.menu && slide.menu[String(now.getDay())]) || [];
+      const todayMenu = getDayMenu(slide, String(now.getDay()));
       const content = document.createElement('div');
       content.className = 'menu-content';
       const eyebrow = document.createElement('div');
@@ -943,17 +953,17 @@ function buildSlideEl(slide){
       dayLabel.className = 'menu-day';
       dayLabel.textContent = dayNames[now.getDay()];
       const ul = document.createElement('ul');
-      ul.innerHTML = todayItems.map(t => `<li>${t}</li>`).join('') || '<li>Sem cardápio cadastrado para hoje</li>';
+      ul.innerHTML = todayMenu.items.map(t => `<li>${t}</li>`).join('') || '<li>Sem cardápio cadastrado para hoje</li>';
       content.appendChild(eyebrow);
       content.appendChild(dayLabel);
       content.appendChild(ul);
       applyStagger(ul);
-      if(slide.image){
+      if(todayMenu.image){
         el.classList.add('menu-with-image');
         const imgWrap = document.createElement('div');
         imgWrap.className = 'menu-image-wrap';
         const img = document.createElement('img');
-        img.src = cacheBust(slide.image);
+        img.src = cacheBust(todayMenu.image);
         imgWrap.appendChild(img);
         el.appendChild(imgWrap);
         if(slide.imageAnimation === 'zoom') el.classList.add('zoom');
