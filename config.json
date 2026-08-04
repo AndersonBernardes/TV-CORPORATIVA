@@ -15,7 +15,9 @@
           "image": "imagens/prato-segunda.jpg"
         },
         "2": {
-          "items": [],
+          "items": [
+            "Peixe ao molho"
+          ],
           "image": "imagens/peixe.jpg"
         },
         "3": {
