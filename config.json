@@ -2,94 +2,344 @@
   "brand": "Anca Soluções",
   "slides": [
     {
-      "type": "menu",
-      "title": "Cardápio do Refeitório",
-      "image": "imagens/BIFE.jpg",
-      "imageAnimation": "pan-left",
-      "menu": {
-        "0": [],
-        "1": [
-          "BIFE ACEBOLADO COM BATATA"
-        ],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": []
-      },
-      "duration": 10
+      "type": "text",
+      "title": "Bem-vindo!",
+      "body": "Confira as novidades da semana.",
+      "color": "#4FD1C5",
+      "fontSize": "grande",
+      "bodyColor": "#8B92A0",
+      "bodySize": "medio",
+      "background": "#1E2128",
+      "duration": 8,
+      "titleAnimation": "slideup"
     },
     {
-      "type": "video",
-      "src": "videos/Pets, divertido, azul e amarelo, vídeo.mp4",
-      "muted": true,
-      "loop": false,
-      "duration": 20
-    },
-    {
-      "type": "ad",
-      "subtitle": "Anuncie aqui",
-      "title": "Este espaço está disponível",
-      "contact": "(11) 95139-4342",
-      "titleAnimation": "scalepop",
-      "duration": 9
-    },
-    {
-      "type": "weather",
-      "city": "São Paulo, São Paulo",
-      "lat": -23.5475,
-      "lon": -46.63611,
+      "type": "clock",
       "duration": 8
     },
     {
-      "type": "motivation",
-      "items": [
-        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
-      ],
-      "titleAnimation": "typewriter",
-      "duration": 9
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "duration": 8,
+      "animation": "pan-left"
     },
     {
-      "type": "birthday",
-      "title": "Feliz Aniversário! Júnior",
-      "message": "Que venham muitas conquistas!",
-      "annualDate": "08-03",
-      "annualWindowDays": 30,
-      "titleAnimation": "glow",
-      "duration": 10
+      "type": "image",
+      "src": "imagens/imagem-02.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-03.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-04.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-05.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-06.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-07.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-08.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-09.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-10.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-11.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-12.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-13.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-14.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-15.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-16.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-17.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-18.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-19.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-20.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-21.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-22.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-23.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-24.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-25.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-26.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-27.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-28.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-29.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-30.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-31.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-32.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-33.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-34.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-35.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-36.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-37.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-38.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-39.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-40.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-41.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-42.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-43.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-44.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-45.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-46.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-47.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-48.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-49.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-50.jpg",
+      "duration": 8
     },
     {
       "type": "news",
       "label": "AVISOS INTERNOS",
       "items": [
         "Reunião geral sexta-feira às 9h",
+        "Nova política de reembolso já disponível",
         "Parabéns aos aniversariantes do mês!"
       ],
       "duration": 12
     },
     {
+      "type": "birthday",
+      "title": "Feliz Aniversário, Equipe!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "12-25",
+      "annualWindowDays": 1,
+      "duration": 10
+    },
+    {
       "type": "social",
       "title": "Siga-nos nas redes sociais",
       "items": [
-        "ancasolucoes@.com.br",
-        "whatsapp:(11) 95139-4342",
-        "@ancasolucoes"
+        "instagram:@ancasolucoes",
+        "facebook:AncaSolucoes",
+        "whatsapp:(11) 99999-9999"
       ],
       "duration": 9
     },
     {
-      "type": "image",
-      "src": "imagens/imagem-01.jpg",
-      "caption": "",
-      "animation": "fade-in",
+      "type": "weather",
+      "city": "São Paulo, São Paulo",
+      "lat": -23.5475,
+      "lon": -46.6361,
       "duration": 8
     },
     {
       "type": "rss",
-      "label": "NOTÍCIAS ",
-      "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
-      "maxItems": "3",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "https://g1.globo.com/rss/g1/sp/sao-paulo/",
+      "maxItems": 5,
       "duration": 12
+    },
+    {
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "menu": {
+        "0123456": {
+          "items": [],
+          "image": ""
+        }
+      },
+      "duration": 10,
+      "imageAnimation": "pan-left"
+    },
+    {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+        "Grandes equipes constroem grandes resultados.|Anca Soluções",
+        "Foco no progresso, não na perfeição.",
+        "Comece onde você está. Use o que você tem. Faça o que você pode.|Arthur Ashe",
+        "Cada dia é uma nova chance de fazer a diferença."
+      ],
+      "titleAnimation": "kinetic",
+      "duration": 9
+    },
+    {
+      "type": "video",
+      "src": "videos/institucional-01.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 20
     }
   ]
 }
