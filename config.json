@@ -57,7 +57,7 @@
     {
       "type": "menu",
       "title": "Cardápio do Refeitório",
-      "imageAnimation": "zoom",
+      "imageAnimation": "slide-right",
       "menu": {
         "0": {
           "items": [
@@ -105,7 +105,7 @@
         }
       },
       "duration": 8,
-      "zone": "painel"
+      "zone": "banner"
     },
     {
       "type": "weather",
