@@ -88,10 +88,9 @@
         },
         "4": {
           "items": [
-            "Feijoada leve",
-            "Arroz, farofa, couve e laranja"
+            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco"
           ],
-          "image": ""
+          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
         },
         "5": {
           "items": [
@@ -106,7 +105,7 @@
         }
       },
       "duration": 8,
-      "zone": "banner"
+      "zone": "painel"
     },
     {
       "type": "weather",
@@ -128,8 +127,9 @@
     {
       "type": "rss",
       "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
-      "maxItems": 5,
-      "duration": 8
+      "maxItems": "3",
+      "duration": 8,
+      "zone": "painel"
     }
   ]
 }
