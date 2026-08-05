@@ -2,6 +2,13 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "weather",
+      "city": "São Paulo, São Paulo",
+      "lat": -23.5475,
+      "lon": -46.63611,
+      "duration": 10
+    },
+    {
       "type": "birthday",
       "title": "Feliz Aniversário, Flavio!",
       "message": "Parabéns pelo seu dia! Que a inspiração que você oferece a cada dia retorne em forma de conquistas e alegrias sem fim.",
