@@ -2,6 +2,15 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "image",
+      "src": "imagens/manicure-e-pedicure.jpg",
+      "caption": "Agende o seu horário!",
+      "captionColor": "#e972d3",
+      "captionSize": "grande",
+      "animation": "zoom",
+      "duration": 10
+    },
+    {
       "type": "rss",
       "label": "ACONTECEU - MUNDO",
       "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
