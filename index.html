@@ -10,45 +10,95 @@
   :root{
     --bg:#000000;
     --surface:#15171C;
+    --surface-2:#1D2027;
     --surface-glass: rgba(255,255,255,0.05);
-    --accent:#4FD1C5;
+    --accent:#C0392B;
     --accent-2:#F2A65A;
     --accent-3:#FF6FA5;
     --text:#F5F5F0;
-    --muted:#8B92A0;
-    --rail-h: 64px;
+    --muted:#9AA0AB;
     --border-glass: rgba(255,255,255,0.09);
   }
-  *{box-sizing:border-box;}
+  *{ box-sizing:border-box; margin:0; padding:0; }
   html,body{
-    margin:0; padding:0; width:100%; height:100%;
+    width:100vw; height:100vh; overflow:hidden;
     background:var(--bg); color:var(--text);
     font-family:'Inter',sans-serif;
-    overflow:hidden;
   }
-  #stage{
-    position:absolute; top:0; left:0; right:0; bottom:var(--rail-h);
-    overflow:hidden;
+
+  /* ===== Cabeçalho: logo + relógio ===== */
+  #topo{
+    height:100px; background:var(--accent);
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 50px; box-shadow:0 4px 24px rgba(0,0,0,0.35);
   }
+  #logo{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:32px; letter-spacing:0.5px; }
+  #relogio{ text-align:right; font-family:'JetBrains Mono',monospace; }
+  #hora{ font-size:38px; font-weight:600; line-height:1; }
+  #data{ font-size:15px; opacity:0.88; text-transform:capitalize; margin-top:4px; }
+
+  /* ===== Corpo: banner + painel ===== */
+  #corpo{ display:flex; height:calc(100vh - 100px - 56px); }
+
+  #banner{ width:70%; position:relative; overflow:hidden; background:#000; }
+  #stage{ position:absolute; inset:0; overflow:hidden; }
+
+  #painel{
+    width:30%; background:var(--surface); padding:22px;
+    overflow-y:auto; display:flex; flex-direction:column; gap:16px;
+  }
+  #painel::-webkit-scrollbar{ width:6px; }
+  #painel::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.15); border-radius:3px; }
+  .card{
+    background:var(--surface-2); border-left:5px solid var(--accent);
+    border-radius:10px; padding:16px 18px; flex-shrink:0;
+    opacity:0; transform:translateY(10px);
+    animation:cardIn 0.6s ease forwards;
+  }
+  @keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
+  .card h2{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px;
+    color:var(--accent-2); margin-bottom:10px;
+  }
+  .card .card-sub{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin:-6px 0 8px; text-transform:uppercase; letter-spacing:1px; }
+  .card p{ font-size:14px; line-height:1.5; color:var(--text); }
+  .card ul{ list-style:none; }
+  .card li{ font-size:13px; line-height:1.6; margin-bottom:4px; color:var(--text); }
+  .card li::before{ content:"• "; color:var(--accent-2); }
+  .card .card-social-row{ display:flex; align-items:center; gap:8px; margin-bottom:6px; font-family:'JetBrains Mono',monospace; font-size:12px; }
+  .card .card-weather-big{ font-size:40px; font-family:'JetBrains Mono',monospace; color:var(--accent-2); }
+  .card .card-empty{ color:var(--muted); font-size:13px; }
+
+  /* ===== Rodapé: ticker rolando ===== */
+  #rodape{
+    height:56px; background:var(--accent);
+    display:flex; align-items:center; overflow:hidden; white-space:nowrap;
+  }
+  #ticker{
+    font-family:'JetBrains Mono',monospace; font-size:19px; font-weight:500;
+    display:inline-block; padding-left:100%;
+    animation:rolarTicker 35s linear infinite;
+  }
+  @keyframes rolarTicker{ from{ transform:translateX(0); } to{ transform:translateX(-100%); } }
+
+  /* ===================================================================
+     A partir daqui: motor de slides do banner (praticamente idêntico ao
+     motor de tela cheia anterior, só que contido dentro de #stage/#banner
+     em vez de ocupar o viewport inteiro).
+  =================================================================== */
   .slide{
     position:absolute; inset:0;
     display:flex; align-items:center; justify-content:center;
     flex-direction:column;
-    opacity:0;
-    transform:scale(1.035);
+    opacity:0; transform:scale(1.035);
     transition:opacity 1s ease, transform 1.3s cubic-bezier(.2,.8,.2,1);
-    padding:60px;
-    text-align:center;
+    padding:40px; text-align:center;
   }
   .slide.active{ opacity:1; transform:scale(1); z-index:2; }
-
-  /* Brilho ambiente: um leve movimento de luz por trás de todo slide,
-     dá vida e profundidade sem atrapalhar a leitura do conteúdo. */
   .slide::before{
-    content:'';
-    position:absolute; inset:0; z-index:0; pointer-events:none;
+    content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
     background:
-      radial-gradient(circle at 18% 25%, rgba(79,209,197,0.14), transparent 42%),
+      radial-gradient(circle at 18% 25%, rgba(192,57,43,0.16), transparent 42%),
       radial-gradient(circle at 82% 75%, rgba(255,111,165,0.10), transparent 42%),
       radial-gradient(circle at 50% 100%, rgba(242,166,90,0.08), transparent 45%);
     background-size:180% 180%;
@@ -60,13 +110,11 @@
     from{ background-position:0% 0%, 100% 100%, 50% 100%; }
     to{ background-position:60% 40%, 30% 60%, 70% 40%; }
   }
+  .slide img.fit-cover{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 
+  /* Animações de imagem */
   .slide.zoom img{ animation:kenburns 10s ease-in-out forwards; }
-  @keyframes kenburns{
-    from{ transform:scale(1); }
-    to{ transform:scale(1.08); }
-  }
-  /* Animações extras de imagem — a TV é uma tela pública, então sempre animam */
+  @keyframes kenburns{ from{ transform:scale(1); } to{ transform:scale(1.08); } }
   .slide.anim-pan-left img{ animation:panLeft 10s ease-in-out forwards; }
   .slide.anim-pan-right img{ animation:panRight 10s ease-in-out forwards; }
   .slide.anim-fade-scale img{ animation:fadeScaleImg 1.3s ease-out forwards; }
@@ -78,459 +126,146 @@
   .slide.anim-bounce-in img{ animation:bounceInImg 0.9s cubic-bezier(.34,1.56,.64,1) forwards; }
   .slide.anim-scale-in img{ animation:scaleInImg 0.7s cubic-bezier(.2,.8,.2,1) forwards; }
   .slide.anim-parallax img{ animation:parallaxImg 1.6s cubic-bezier(.2,.8,.2,1) forwards; }
-  @keyframes panLeft{
-    from{ transform:scale(1.12) translateX(3%); }
-    to{ transform:scale(1.12) translateX(-3%); }
-  }
-  @keyframes panRight{
-    from{ transform:scale(1.12) translateX(-3%); }
-    to{ transform:scale(1.12) translateX(3%); }
-  }
-  @keyframes fadeScaleImg{
-    from{ opacity:0; transform:scale(1.05); }
-    to{ opacity:1; transform:scale(1); }
-  }
-  @keyframes blurFocusImg{
-    from{ filter:blur(18px); transform:scale(1.03); }
-    to{ filter:blur(0); transform:scale(1); }
-  }
-  @keyframes slideInImg{
-    from{ opacity:0; transform:translateX(4%); }
-    to{ opacity:1; transform:translateX(0); }
-  }
-  @keyframes slideRightImg{
-    from{ opacity:0; transform:translateX(10%); }
-    to{ opacity:1; transform:translateX(0); }
-  }
-  @keyframes fadeInImg{
-    from{ opacity:0; }
-    to{ opacity:1; }
-  }
-  @keyframes zoomInImg{
-    from{ opacity:0; transform:scale(1.3); }
-    to{ opacity:1; transform:scale(1); }
-  }
-  @keyframes bounceInImg{
-    from{ opacity:0; transform:scale(0.7); }
-    to{ opacity:1; transform:scale(1); }
-  }
-  @keyframes scaleInImg{
-    from{ opacity:0; transform:scale(0.3); }
-    to{ opacity:1; transform:scale(1); }
-  }
-  @keyframes parallaxImg{
-    from{ opacity:0; transform:translateY(4%) scale(1.06); }
-    to{ opacity:1; transform:translateY(0) scale(1); }
-  }
-  /* No efeito parallax, a legenda entra num ritmo diferente da imagem — camadas com "profundidade" */
-  .caption-box.caption-parallax{
-    opacity:0; transform:translateY(26px);
-    animation:parallaxCaption 0.8s cubic-bezier(.2,.8,.2,1) 0.5s forwards;
-  }
-  @keyframes parallaxCaption{
-    to{ opacity:1; transform:translateY(0); }
-  }
-  /* Stagger: cada item de uma lista entra um pouco depois do anterior */
-  .stagger-item{
-    opacity:0; transform:translateY(16px);
-    animation:staggerIn 0.55s ease forwards;
-  }
-  @keyframes staggerIn{
-    to{ opacity:1; transform:translateY(0); }
-  }
-  .slide img.fit-cover{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  }
+  @keyframes panLeft{ from{ transform:scale(1.12) translateX(3%); } to{ transform:scale(1.12) translateX(-3%); } }
+  @keyframes panRight{ from{ transform:scale(1.12) translateX(-3%); } to{ transform:scale(1.12) translateX(3%); } }
+  @keyframes fadeScaleImg{ from{ opacity:0; transform:scale(1.05); } to{ opacity:1; transform:scale(1); } }
+  @keyframes blurFocusImg{ from{ filter:blur(18px); transform:scale(1.03); } to{ filter:blur(0); transform:scale(1); } }
+  @keyframes slideInImg{ from{ opacity:0; transform:translateX(4%); } to{ opacity:1; transform:translateX(0); } }
+  @keyframes slideRightImg{ from{ opacity:0; transform:translateX(10%); } to{ opacity:1; transform:translateX(0); } }
+  @keyframes fadeInImg{ from{ opacity:0; } to{ opacity:1; } }
+  @keyframes zoomInImg{ from{ opacity:0; transform:scale(1.3); } to{ opacity:1; transform:scale(1); } }
+  @keyframes bounceInImg{ from{ opacity:0; transform:scale(0.7); } to{ opacity:1; transform:scale(1); } }
+  @keyframes scaleInImg{ from{ opacity:0; transform:scale(0.3); } to{ opacity:1; transform:scale(1); } }
+  @keyframes parallaxImg{ from{ opacity:0; transform:translateY(4%) scale(1.06); } to{ opacity:1; transform:translateY(0) scale(1); } }
   .caption-box{
-    position:absolute; left:40px; right:40px; bottom:100px;
-    padding:22px 32px;
-    background:var(--surface-glass);
-    backdrop-filter:blur(18px) saturate(140%);
+    position:absolute; left:24px; right:24px; bottom:24px; padding:18px 24px;
+    background:var(--surface-glass); backdrop-filter:blur(18px) saturate(140%);
     -webkit-backdrop-filter:blur(18px) saturate(140%);
-    border:1px solid var(--border-glass);
-    border-radius:16px;
+    border:1px solid var(--border-glass); border-radius:14px;
   }
-  .caption-box .caption{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    text-shadow:0 2px 12px rgba(0,0,0,0.6);
-  }
+  .caption-box.caption-parallax{ opacity:0; transform:translateY(26px); animation:parallaxCaption 0.8s cubic-bezier(.2,.8,.2,1) 0.5s forwards; }
+  @keyframes parallaxCaption{ to{ opacity:1; transform:translateY(0); } }
+  .caption-box .caption{ font-family:'Space Grotesk',sans-serif; font-weight:700; text-shadow:0 2px 12px rgba(0,0,0,0.6); }
 
-  /* Tipografia cinética: cada palavra entra com leve atraso em cascata.
-     A TV é uma tela pública, então sempre anima (não depende do dispositivo). */
-  .kinetic-word{
-    display:inline-block;
-    opacity:0;
-    transform:translateY(0.3em);
-    animation:kineticIn 0.6s cubic-bezier(.2,.8,.2,1) forwards;
-  }
-  @keyframes kineticIn{
-    to{ opacity:1; transform:translateY(0); }
-  }
-
-  /* Outras animações de título, selecionáveis no painel admin */
+  /* Tipografia cinética e outras animações de título */
+  .kinetic-word{ display:inline-block; opacity:0; transform:translateY(0.3em); animation:kineticIn 0.6s cubic-bezier(.2,.8,.2,1) forwards; }
+  @keyframes kineticIn{ to{ opacity:1; transform:translateY(0); } }
   .title-anim-slideup{ opacity:0; transform:translateY(40px); animation:titleSlideUp 0.7s cubic-bezier(.2,.8,.2,1) forwards; }
   .title-anim-scalepop{ opacity:0; transform:scale(0.7); animation:titleScalePop 0.6s cubic-bezier(.34,1.56,.64,1) forwards; }
   .title-anim-glow{ opacity:0; animation:titleGlowIn 0.6s ease-out forwards, titleGlowPulse 2.6s ease-in-out 0.6s infinite; }
   @keyframes titleSlideUp{ to{ opacity:1; transform:translateY(0); } }
   @keyframes titleScalePop{ to{ opacity:1; transform:scale(1); } }
   @keyframes titleGlowIn{ to{ opacity:1; } }
-  @keyframes titleGlowPulse{
-    0%, 100%{ text-shadow:0 0 10px currentColor; }
-    50%{ text-shadow:0 0 28px currentColor, 0 0 46px currentColor; }
-  }
-  .typewriter-cursor::after{
-    content:'|'; margin-left:2px;
-    animation:blinkCursor 0.8s steps(2) infinite;
-  }
+  @keyframes titleGlowPulse{ 0%,100%{ text-shadow:0 0 10px currentColor; } 50%{ text-shadow:0 0 28px currentColor, 0 0 46px currentColor; } }
+  .typewriter-cursor::after{ content:'|'; margin-left:2px; animation:blinkCursor 0.8s steps(2) infinite; }
   @keyframes blinkCursor{ 50%{ opacity:0; } }
-  .text-slide .title{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    line-height:1.05;
-    margin:0 0 20px 0;
-  }
-  .text-slide .body{
-    font-family:'Inter',sans-serif;
-    font-weight:400;
-    color:var(--muted);
-    max-width:1100px;
-    line-height:1.4;
-  }
-  .clock-slide{
-    background:var(--surface);
-  }
-  .clock-slide .time{
-    font-family:'JetBrains Mono',monospace;
-    font-size:min(22vw, 260px);
-    font-weight:500;
-    letter-spacing:4px;
-    color:var(--accent);
-    line-height:1;
-  }
-  .clock-slide .date{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:42px;
-    text-transform:capitalize;
-    color:var(--text);
-    margin-top:18px;
-  }
-  .news-slide{
-    background:radial-gradient(circle at 15% 20%, rgba(79,209,197,0.08), transparent 60%), var(--surface);
-    align-items:flex-start;
-    text-align:left;
-    justify-content:center;
-    padding:80px 100px;
-  }
-  .news-slide .eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    color:var(--accent-2);
-    letter-spacing:3px;
-    font-size:clamp(14px, 1.4vw, 20px);
-    margin-bottom:24px;
-  }
-  .news-slide ul{
-    list-style:none; margin:0; padding:0;
-    font-family:'Space Grotesk',sans-serif;
-    font-size:clamp(24px, 3.2vw, 44px);
-    line-height:1.5;
-  }
-  .news-slide li{
-    display:flex; align-items:baseline; gap:20px;
-    margin-bottom:14px;
-  }
-  .news-slide li::before{
-    content:"—";
-    color:var(--accent);
-    flex-shrink:0;
-  }
+  .stagger-item{ opacity:0; transform:translateY(16px); animation:staggerIn 0.55s ease forwards; }
+  @keyframes staggerIn{ to{ opacity:1; transform:translateY(0); } }
 
-  /* Rail inferior: relógio ao vivo + progresso dos slides */
-  #rail{
-    position:absolute; left:0; right:0; bottom:0; height:var(--rail-h);
-    background:var(--surface);
-    border-top:1px solid rgba(255,255,255,0.06);
-    display:flex; align-items:center; justify-content:space-between;
-    padding:0 40px;
-    font-family:'JetBrains Mono',monospace;
-    z-index:5;
-  }
-  #rail-clock{ font-size:22px; color:var(--text); letter-spacing:1px; }
-  #rail-dots{ display:flex; gap:8px; }
-  .rail-dot{
-    width:10px; height:6px; border-radius:3px;
-    background:rgba(255,255,255,0.15);
-    overflow:hidden; position:relative;
-    transition:width 0.35s ease, background 0.3s;
-  }
-  .rail-dot.active{ width:44px; }
-  .rail-dot-fill{
-    position:absolute; inset:0;
-    background:var(--accent);
-    transform:scaleX(0); transform-origin:left;
-    transition-property:transform;
-    transition-timing-function:linear;
-  }
-  #rail-brand{ font-size:16px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
-
-  .ad-slide{
-    background:var(--surface);
-  }
+  /* Slides de texto/anúncio/aniversário dentro do banner */
+  .text-slide .title{ font-family:'Space Grotesk',sans-serif; font-weight:700; line-height:1.05; margin-bottom:16px; }
+  .text-slide .body{ font-family:'Inter',sans-serif; color:var(--muted); max-width:90%; line-height:1.4; }
+  .clock-slide{ background:var(--surface); }
+  .clock-slide .time{ font-family:'JetBrains Mono',monospace; font-size:min(16vw,180px); font-weight:500; color:var(--accent-2); line-height:1; }
+  .clock-slide .date{ font-family:'Space Grotesk',sans-serif; font-size:28px; text-transform:capitalize; margin-top:14px; }
   .ad-slide .ad-box{
-    border:1px solid var(--border-glass);
-    background:var(--surface-glass);
-    backdrop-filter:blur(18px) saturate(140%);
-    -webkit-backdrop-filter:blur(18px) saturate(140%);
-    border-radius:24px;
-    padding:70px 90px;
+    border:1px solid var(--border-glass); background:var(--surface-glass);
+    backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border-radius:20px; padding:40px 50px;
   }
-  .ad-slide .ad-badge{
-    font-family:'JetBrains Mono',monospace;
-    color:var(--accent-2);
-    letter-spacing:4px;
-    font-size:clamp(14px, 1.4vw, 20px);
-    text-transform:uppercase;
-    margin-bottom:22px;
-  }
-  .ad-slide .ad-title{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:clamp(32px, 4.4vw, 64px);
-    color:var(--text);
-    margin-bottom:18px;
-  }
-  .ad-slide .ad-contact{
-    font-family:'JetBrains Mono',monospace;
-    font-size:clamp(18px, 2vw, 28px);
-    color:var(--accent);
-  }
-
-  /* ---- Slide de aniversário: confete flutuante em CSS puro ---- */
+  .ad-slide .ad-badge{ font-family:'JetBrains Mono',monospace; color:var(--accent-2); letter-spacing:3px; font-size:14px; text-transform:uppercase; margin-bottom:16px; }
+  .ad-slide .ad-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(26px,3.4vw,48px); margin-bottom:14px; }
+  .ad-slide .ad-contact{ font-family:'JetBrains Mono',monospace; font-size:clamp(14px,1.6vw,22px); color:var(--accent-2); }
   .birthday-slide{
     background:radial-gradient(circle at 50% 0%, rgba(255,111,165,0.18), transparent 55%),
-               radial-gradient(circle at 85% 85%, rgba(79,209,197,0.15), transparent 55%),
-               var(--surface);
+               radial-gradient(circle at 85% 85%, rgba(192,57,43,0.15), transparent 55%), var(--surface);
     overflow:hidden;
   }
-  .birthday-slide .confetti{
-    position:absolute; top:-40px; font-size:32px;
-    opacity:0.9;
-    animation:fall linear infinite;
-  }
-  @keyframes fall{
-    to{ transform:translateY(115vh) rotate(360deg); }
-  }
+  .birthday-slide .confetti{ position:absolute; top:-40px; font-size:26px; opacity:0.9; animation:fall linear infinite; }
+  @keyframes fall{ to{ transform:translateY(115vh) rotate(360deg); } }
   .birthday-slide .bday-box{
-    position:relative; z-index:2;
-    border:1px solid var(--border-glass);
-    background:var(--surface-glass);
-    backdrop-filter:blur(18px) saturate(140%);
-    -webkit-backdrop-filter:blur(18px) saturate(140%);
-    border-radius:28px;
-    padding:60px 90px;
+    position:relative; z-index:2; border:1px solid var(--border-glass); background:var(--surface-glass);
+    backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border-radius:22px; padding:36px 50px;
   }
-  .birthday-slide .bday-emoji{ font-size:clamp(40px,6vw,72px); margin-bottom:14px; }
-  .birthday-slide .bday-title{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:clamp(40px,6vw,88px);
-    color:var(--accent-3);
-    margin-bottom:14px;
-  }
-  .birthday-slide .bday-message{
-    font-family:'Inter',sans-serif;
-    color:var(--text);
-    font-size:clamp(18px,2.4vw,30px);
-    max-width:800px;
-  }
-
-  /* ---- Slide de redes sociais ---- */
-  .social-slide{ background:var(--surface); }
-  .social-slide .social-title{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:clamp(32px,4.5vw,60px);
-    color:var(--text);
-    margin-bottom:44px;
-  }
-  .social-slide .social-grid{
-    display:flex; gap:28px; flex-wrap:wrap; justify-content:center;
-  }
-  .social-slide .social-item{
-    display:flex; align-items:center; gap:16px;
-    border:1px solid var(--border-glass);
-    background:var(--surface-glass);
-    backdrop-filter:blur(18px) saturate(140%);
-    -webkit-backdrop-filter:blur(18px) saturate(140%);
-    border-radius:18px;
-    padding:20px 30px;
-  }
-  .social-slide .social-icon{ font-size:clamp(28px,3.4vw,44px); }
-  .social-slide .social-handle{
-    font-family:'JetBrains Mono',monospace;
-    color:var(--accent);
-    font-size:clamp(16px,2vw,26px);
-  }
-
-  /* ---- Slide de previsão do tempo ---- */
-  .weather-slide{
-    background:radial-gradient(circle at 80% 10%, rgba(79,209,197,0.12), transparent 55%), var(--surface);
-  }
-  .weather-slide .weather-city{
-    font-family:'Space Grotesk',sans-serif; font-weight:700;
-    font-size:clamp(24px,3vw,36px); color:var(--text); margin-bottom:6px;
-  }
-  .weather-slide .weather-icon{ font-size:clamp(70px,11vw,140px); line-height:1; }
-  .weather-slide .weather-temp{
-    font-family:'JetBrains Mono',monospace; font-weight:500;
-    font-size:clamp(60px,12vw,150px); color:var(--accent); line-height:1;
-  }
-  .weather-slide .weather-desc{
-    font-family:'Inter',sans-serif; color:var(--muted);
-    font-size:clamp(16px,2.2vw,26px); margin-top:8px; text-transform:capitalize;
-  }
-  .weather-slide .weather-minmax{
-    font-family:'JetBrains Mono',monospace; color:var(--muted);
-    font-size:clamp(14px,1.8vw,20px); margin-top:14px;
-  }
-
-  /* ---- Slide de notícias via RSS ---- */
-  .rss-slide{
-    background:radial-gradient(circle at 15% 20%, rgba(242,166,90,0.08), transparent 60%), var(--surface);
-    align-items:flex-start; text-align:left; justify-content:center;
-    padding:80px 100px;
-  }
-  .rss-slide .rss-eyebrow{
-    font-family:'JetBrains Mono',monospace; color:var(--accent-2);
-    letter-spacing:3px; font-size:clamp(14px,1.4vw,20px); margin-bottom:24px;
-  }
-  .rss-slide ul{
-    list-style:none; margin:0; padding:0;
-    font-family:'Space Grotesk',sans-serif;
-    font-size:clamp(22px,2.8vw,38px);
-    line-height:1.5;
-  }
-  .rss-slide li{ display:flex; align-items:baseline; gap:18px; margin-bottom:16px; }
-  .rss-slide li::before{ content:"—"; color:var(--accent); flex-shrink:0; }
-
-  /* ---- Slide de site incorporado ---- */
+  .birthday-slide .bday-emoji{ font-size:clamp(32px,4.5vw,56px); margin-bottom:10px; }
+  .birthday-slide .bday-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(28px,4vw,56px); color:var(--accent-3); margin-bottom:10px; }
+  .birthday-slide .bday-message{ font-family:'Inter',sans-serif; font-size:clamp(15px,1.8vw,22px); max-width:90%; }
   .embed-slide{ padding:0; }
-  .embed-slide iframe{
-    position:absolute; inset:0; width:100%; height:100%; border:0;
-  }
-  .embed-slide .embed-error{
-    display:flex; align-items:center; justify-content:center; height:100%;
-    color:var(--muted); font-family:'Inter',sans-serif; font-size:20px; text-align:center; padding:60px;
-  }
-
-  /* ---- Slide de cardápio do refeitório ---- */
-  .menu-slide{ background:radial-gradient(circle at 85% 15%, rgba(242,166,90,0.10), transparent 50%), var(--surface); }
-  .menu-slide .menu-eyebrow{
-    font-family:'JetBrains Mono',monospace; color:var(--accent-2); letter-spacing:3px;
-    font-size:clamp(14px,1.4vw,20px); margin-bottom:6px; text-transform:uppercase;
-  }
-  .menu-slide .menu-day{
-    font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--text);
-    font-size:clamp(28px,3.6vw,48px); margin-bottom:28px;
-  }
-  .menu-slide ul{
-    list-style:none; margin:0; padding:0;
-    font-family:'Inter',sans-serif; color:var(--text);
-    font-size:clamp(22px,2.8vw,36px); line-height:1.6;
-  }
-  .menu-slide li{ margin-bottom:6px; }
-  .menu-slide li::before{ content:"🍽️ "; }
-  .menu-slide.menu-with-image{
-    flex-direction:row; align-items:stretch; justify-content:center;
-    gap:60px; text-align:left; padding:70px 90px;
-  }
-  .menu-slide .menu-content{
-    flex:1; display:flex; flex-direction:column; justify-content:center; min-width:0;
-  }
-  .menu-slide .menu-image-wrap{
-    position:relative; flex:0 0 38%; border-radius:24px; overflow:hidden;
-    border:1px solid var(--border-glass);
-  }
-  .menu-slide .menu-image-wrap img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  }
-
-  /* ---- Slide de frases motivacionais ---- */
-  .motivation-slide{ background:radial-gradient(circle at 50% 0%, rgba(79,209,197,0.12), transparent 55%), var(--surface); padding:60px 110px; }
-  .motivation-slide .motivation-mark{
-    font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--accent);
-    font-size:clamp(60px,8vw,120px); line-height:0.6; opacity:0.5; margin-bottom:10px;
-  }
-  .motivation-slide .motivation-phrase{
-    font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--text);
-    font-size:clamp(30px,4.2vw,60px); line-height:1.3; max-width:1100px;
-  }
-  .motivation-slide .motivation-author{
-    font-family:'JetBrains Mono',monospace; color:var(--muted);
-    font-size:clamp(16px,2vw,24px); margin-top:24px;
-  }
-
-  /* ---- Slide de vídeo institucional ---- */
+  .embed-slide iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .embed-slide .embed-error{ display:flex; align-items:center; justify-content:center; height:100%; color:var(--muted); font-size:16px; text-align:center; padding:40px; }
   .video-slide{ padding:0; background:#000; }
-  .video-slide video{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000;
-  }
+  .video-slide video{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000; }
+
+  /* Barra de progresso dos slides do banner */
+  #bannerDots{ position:absolute; left:20px; bottom:16px; display:flex; gap:6px; z-index:5; }
+  .rail-dot{ width:9px; height:5px; border-radius:3px; background:rgba(255,255,255,0.2); overflow:hidden; position:relative; transition:width 0.35s ease; }
+  .rail-dot.active{ width:34px; }
+  .rail-dot-fill{ position:absolute; inset:0; background:var(--accent-2); transform:scaleX(0); transform-origin:left; transition-property:transform; transition-timing-function:linear; }
 </style>
 </head>
 <body>
 
-<div id="stage"></div>
+<div id="topo">
+  <div id="logo">Anca Soluções</div>
+  <div id="relogio">
+    <div id="hora">--:--:--</div>
+    <div id="data">--</div>
+  </div>
+</div>
 
-<div id="rail">
-  <div id="rail-clock">--:--:--</div>
-  <div id="rail-dots"></div>
-  <div id="rail-brand">Anca Soluções</div>
+<div id="corpo">
+  <div id="banner">
+    <div id="stage"></div>
+    <div id="bannerDots"></div>
+  </div>
+  <div id="painel"></div>
+</div>
+
+<div id="rodape">
+  <div id="ticker">Carregando...</div>
 </div>
 
 <script>
 /* =========================================================
    CONFIGURAÇÃO
-   Edite apenas o arquivo config.json no GitHub — este HTML
-   não precisa ser tocado no dia a dia.
 ========================================================= */
 const CONFIG_URL = 'config.json';
-const CONFIG_POLL_SECONDS = 60;   // de quanto em quanto tempo verifica atualização
-const HARD_RELOAD_MINUTES = 120;  // recarrega a página inteira de tempos em tempos (evita travar a TV)
+const CONFIG_POLL_SECONDS = 60;
+const HARD_RELOAD_MINUTES = 120;
 
 let allSlides = [];
-let slides = [];
+let bannerSlides = [];
 let currentIndex = 0;
 let slideTimer = null;
 let stageEl = document.getElementById('stage');
-let dotsEl = document.getElementById('rail-dots');
+let dotsEl = document.getElementById('bannerDots');
 
 function cacheBust(url){
   const sep = url.includes('?') ? '&' : '?';
   return url + sep + 't=' + Date.now();
 }
 
-/* Presets de tamanho responsivo: se ajustam sozinhos ao tamanho real da tela
-   (celular, monitor, TV pequena ou TV grande) usando clamp(mínimo, ideal, máximo). */
+/* ---------- Zonas: cada slide mora no banner, no painel, ou no ticker ---------- */
+const DEFAULT_ZONE = {
+  image:'banner', video:'banner', ad:'banner', birthday:'banner', embed:'banner', text:'banner', clock:'banner',
+  news:'painel', social:'painel', menu:'painel', weather:'painel',
+  motivation:'ticker', rss:'ticker',
+};
+function getZone(slide){
+  return slide.zone || DEFAULT_ZONE[slide.type] || 'painel';
+}
+
+/* Presets de tamanho responsivo */
 const SIZE_PRESETS = {
-  title:   { pequeno:'clamp(32px,5vw,56px)',  medio:'clamp(48px,7vw,84px)',  grande:'clamp(64px,9vw,120px)', enorme:'clamp(80px,11vw,160px)' },
-  body:    { pequeno:'clamp(16px,2vw,22px)',  medio:'clamp(20px,2.6vw,30px)', grande:'clamp(26px,3.4vw,40px)', enorme:'clamp(32px,4.2vw,50px)' },
-  caption: { pequeno:'clamp(18px,2.4vw,26px)', medio:'clamp(24px,3.2vw,36px)', grande:'clamp(30px,4vw,46px)', enorme:'clamp(38px,5vw,58px)' },
+  title:   { pequeno:'clamp(22px,4vw,40px)',  medio:'clamp(30px,5.5vw,60px)',  grande:'clamp(38px,7vw,84px)', enorme:'clamp(46px,8.5vw,110px)' },
+  body:    { pequeno:'clamp(14px,1.8vw,18px)', medio:'clamp(16px,2.2vw,24px)', grande:'clamp(20px,2.8vw,30px)', enorme:'clamp(24px,3.4vw,38px)' },
+  caption: { pequeno:'clamp(15px,2vw,20px)', medio:'clamp(18px,2.6vw,26px)', grande:'clamp(22px,3.2vw,34px)', enorme:'clamp(28px,4vw,42px)' },
 };
 function resolveSize(value, kind){
   if(!value) return SIZE_PRESETS[kind].medio;
   if(SIZE_PRESETS[kind][value]) return SIZE_PRESETS[kind][value];
-  return value; // valor CSS customizado, ex: "80px" ou "6vw" (compatibilidade com configs antigas)
-}
-
-// Quebra um texto em palavras, cada uma como <span> com atraso crescente,
-// criando o efeito de "tipografia cinética" (entrada em cascata).
-// Aplica entrada escalonada: cada filho do container aparece um pouco
-// depois do anterior, criando o efeito "stagger" (um após o outro).
-function applyStagger(container, baseDelay = 0.08){
-  Array.from(container.children).forEach((child, idx) => {
-    child.classList.add('stagger-item');
-    child.style.animationDelay = (idx * baseDelay) + 's';
-  });
+  return value;
 }
 
 function kineticText(el, text){
@@ -544,8 +279,6 @@ function kineticText(el, text){
     el.appendChild(document.createTextNode(' '));
   });
 }
-
-// Efeito de máquina de escrever: revela caractere por caractere.
 function typewriterReveal(el, text){
   el.textContent = '';
   el.classList.add('typewriter-cursor');
@@ -562,22 +295,22 @@ function typewriterReveal(el, text){
     }
   }, step);
 }
-
-// Escolhe a animação certa pro título. A TV é uma tela pública, então
-// sempre anima — não depende de preferências pessoais do aparelho.
 function renderTitle(el, text, animType){
   animType = animType || 'kinetic';
   if(animType === 'none'){ el.textContent = text; return; }
   if(animType === 'kinetic'){ kineticText(el, text); return; }
   if(animType === 'typewriter'){ typewriterReveal(el, text); return; }
   el.textContent = text;
-  el.classList.add('title-anim-' + animType); // slideup, scalepop, glow
+  el.classList.add('title-anim-' + animType);
+}
+function applyStagger(container, baseDelay = 0.08){
+  Array.from(container.children).forEach((child, idx) => {
+    child.classList.add('stagger-item');
+    child.style.animationDelay = (idx * baseDelay) + 's';
+  });
 }
 
-const SOCIAL_ICONS = {
-  instagram:'📷', facebook:'📘', tiktok:'🎵', linkedin:'💼',
-  whatsapp:'💬', youtube:'▶️', twitter:'🐦', x:'✕', site:'🌐',
-};
+const SOCIAL_ICONS = { instagram:'📷', facebook:'📘', tiktok:'🎵', linkedin:'💼', whatsapp:'💬', youtube:'▶️', twitter:'🐦', x:'✕', site:'🌐' };
 function parseSocialItem(raw){
   const idx = (raw || '').indexOf(':');
   if(idx === -1) return { icon:'🔗', handle: raw || '' };
@@ -586,8 +319,54 @@ function parseSocialItem(raw){
   return { icon: SOCIAL_ICONS[key] || '🔗', handle };
 }
 
-// Sorteia uma frase motivacional da lista, evitando repetir a mesma da vez anterior.
-// Aceita o formato "frase" ou "frase|Autor" (autor é opcional).
+/* ---------- fetch com timeout: nunca fica preso "carregando" pra sempre ---------- */
+async function fetchWithTimeout(url, ms = 8000){
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), ms);
+  try{
+    return await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(id);
+  }
+}
+
+/* ---------- Previsão do tempo (Open-Meteo) ---------- */
+const WEATHER_CODE_MAP = {
+  0:['☀️','Céu limpo'], 1:['🌤️','Poucas nuvens'], 2:['⛅','Parcialmente nublado'], 3:['☁️','Nublado'],
+  45:['🌫️','Nevoeiro'], 48:['🌫️','Nevoeiro com geada'],
+  51:['🌦️','Garoa fraca'], 53:['🌦️','Garoa'], 55:['🌦️','Garoa forte'],
+  61:['🌧️','Chuva fraca'], 63:['🌧️','Chuva'], 65:['🌧️','Chuva forte'],
+  71:['🌨️','Neve fraca'], 73:['🌨️','Neve'], 75:['❄️','Neve forte'],
+  80:['🌧️','Pancadas de chuva'], 81:['🌧️','Pancadas de chuva'], 82:['⛈️','Pancadas fortes'],
+  95:['⛈️','Tempestade'], 96:['⛈️','Tempestade com granizo'], 99:['⛈️','Tempestade forte'],
+};
+const weatherCache = {};
+async function getWeather(lat, lon){
+  const key = `${lat},${lon}`;
+  const cached = weatherCache[key];
+  if(cached && (Date.now() - cached.time) < 15 * 60 * 1000) return cached.data;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`;
+  const res = await fetchWithTimeout(url);
+  const data = await res.json();
+  weatherCache[key] = { data, time: Date.now() };
+  return data;
+}
+
+/* ---------- Notícias via RSS (rss2json.com) ---------- */
+const rssCache = {};
+async function getRssItems(feedUrl){
+  const cached = rssCache[feedUrl];
+  if(cached && (Date.now() - cached.time) < 10 * 60 * 1000) return cached.items;
+  const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+  const res = await fetchWithTimeout(proxyUrl);
+  const data = await res.json();
+  if(data.status !== 'ok') throw new Error(data.message || 'Feed inválido');
+  const items = (data.items || []).map(it => it.title);
+  rssCache[feedUrl] = { items, time: Date.now() };
+  return items;
+}
+
+/* ---------- Frases motivacionais ---------- */
 const motivationLastIndex = new Map();
 function pickMotivationPhrase(slide, items){
   if(!items || items.length === 0) return { phrase:'', author:'' };
@@ -601,53 +380,11 @@ function pickMotivationPhrase(slide, items){
   return { phrase, author };
 }
 
-/* ---------- Previsão do tempo (Open-Meteo, gratuito, sem chave de API) ---------- */
-const WEATHER_CODE_MAP = {
-  0:['☀️','Céu limpo'], 1:['🌤️','Poucas nuvens'], 2:['⛅','Parcialmente nublado'], 3:['☁️','Nublado'],
-  45:['🌫️','Nevoeiro'], 48:['🌫️','Nevoeiro com geada'],
-  51:['🌦️','Garoa fraca'], 53:['🌦️','Garoa'], 55:['🌦️','Garoa forte'],
-  61:['🌧️','Chuva fraca'], 63:['🌧️','Chuva'], 65:['🌧️','Chuva forte'],
-  71:['🌨️','Neve fraca'], 73:['🌨️','Neve'], 75:['❄️','Neve forte'],
-  80:['🌧️','Pancadas de chuva'], 81:['🌧️','Pancadas de chuva'], 82:['⛈️','Pancadas fortes'],
-  95:['⛈️','Tempestade'], 96:['⛈️','Tempestade com granizo'], 99:['⛈️','Tempestade forte'],
-};
-const weatherCache = {};
-// fetch com limite de tempo: se a internet travar, desiste depois de alguns
-// segundos em vez de ficar "carregando" pra sempre.
-async function fetchWithTimeout(url, ms = 8000){
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), ms);
-  try{
-    const res = await fetch(url, { signal: controller.signal });
-    return res;
-  } finally {
-    clearTimeout(id);
-  }
-}
-
-async function getWeather(lat, lon){
-  const key = `${lat},${lon}`;
-  const cached = weatherCache[key];
-  if(cached && (Date.now() - cached.time) < 15 * 60 * 1000) return cached.data;
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`;
-  const res = await fetchWithTimeout(url);
-  const data = await res.json();
-  weatherCache[key] = { data, time: Date.now() };
-  return data;
-}
-
-/* ---------- Notícias via RSS (usando rss2json.com como conversor, com CORS liberado) ---------- */
-const rssCache = {};
-async function getRssItems(feedUrl){
-  const cached = rssCache[feedUrl];
-  if(cached && (Date.now() - cached.time) < 10 * 60 * 1000) return cached.items;
-  const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
-  const res = await fetchWithTimeout(proxyUrl);
-  const data = await res.json();
-  if(data.status !== 'ok') throw new Error(data.message || 'Feed inválido');
-  const items = (data.items || []).map(it => it.title);
-  rssCache[feedUrl] = { items, time: Date.now() };
-  return items;
+/* ---------- Cardápio: lê o dia certo, com compatibilidade pro formato antigo ---------- */
+function getDayMenu(slide, dayKey){
+  const raw = (slide.menu && slide.menu[dayKey]) || [];
+  if(Array.isArray(raw)) return { items: raw, image: slide.image || '' };
+  return { items: raw.items || [], image: raw.image || slide.image || '' };
 }
 
 /* ---------- Agendamento: slide só aparece nas datas/dias configurados ---------- */
@@ -666,73 +403,17 @@ function isSlideActive(slide, now){
     }
   }
   if(slide.weekdays && slide.weekdays.length && !slide.weekdays.includes(now.getDay())) return false;
-  // Cardápio: se não tem nada cadastrado pro dia de hoje (ex: fim de semana), some sozinho
-  if(slide.type === 'menu'){
-    if(getDayMenu(slide, String(now.getDay())).items.length === 0) return false;
-  }
+  if(slide.type === 'menu' && getDayMenu(slide, String(now.getDay())).items.length === 0) return false;
   return true;
 }
 
-// Lê o cardápio de um dia específico. Aceita tanto o formato novo
-// (cada dia com itens + imagem própria) quanto o formato antigo
-// (lista simples de itens, com uma imagem só compartilhada por todos os dias).
-function getDayMenu(slide, dayKey){
-  const raw = (slide.menu && slide.menu[dayKey]) || [];
-  if(Array.isArray(raw)){
-    return { items: raw, image: slide.image || '' };
-  }
-  return { items: raw.items || [], image: raw.image || slide.image || '' };
-}
-
-async function loadConfig(){
-  try{
-    const res = await fetch(cacheBust(CONFIG_URL), {cache:'no-store'});
-    const data = await res.json();
-    allSlides = data.slides || [];
-    if(data.brand) document.getElementById('rail-brand').textContent = data.brand;
-    applySchedule();
-  }catch(e){
-    console.error('Falha ao carregar config.json', e);
-  }
-}
-
-// Recalcula quais slides estão "no ar" agora, sem precisar buscar o arquivo de novo.
-// Roda a cada minuto, então um slide de data específica aparece/some sozinho na hora certa.
-function applySchedule(){
-  const now = new Date();
-  const active = allSlides.filter(s => isSlideActive(s, now));
-  const changed = JSON.stringify(active) !== JSON.stringify(slides);
-  slides = active;
-  if(changed){
-    currentIndex = 0;
-    renderDots();
-  }
-}
-
-function renderDots(){
-  dotsEl.innerHTML = '';
-  slides.forEach((s, i) => {
-    const dot = document.createElement('span');
-    dot.className = 'rail-dot';
-    if(i === currentIndex){
-      dot.classList.add('active');
-      const fill = document.createElement('span');
-      fill.className = 'rail-dot-fill';
-      dot.appendChild(fill);
-      const durationSec = s.duration || 8;
-      requestAnimationFrame(() => {
-        fill.style.transitionDuration = durationSec + 's';
-        fill.style.transform = 'scaleX(1)';
-      });
-    }
-    dotsEl.appendChild(dot);
-  });
-}
-
+/* =========================================================
+   BANNER: motor de slides em rotação (praticamente igual ao
+   antigo motor de tela cheia, só que contido em #stage/#banner)
+========================================================= */
 function buildSlideEl(slide){
   const el = document.createElement('div');
   el.className = 'slide';
-
   const bg = slide.background || null;
   if(bg) el.style.background = bg;
 
@@ -753,7 +434,6 @@ function buildSlideEl(slide){
         cap.textContent = slide.caption;
         cap.style.color = slide.captionColor || '#F5F5F0';
         cap.style.fontSize = resolveSize(slide.captionSize, 'caption');
-        cap.style.textAlign = slide.captionAlign || 'left';
         box.appendChild(cap);
         el.appendChild(box);
       }
@@ -764,7 +444,7 @@ function buildSlideEl(slide){
       if(slide.title){
         const t = document.createElement('div');
         t.className = 'title';
-        t.style.color = slide.color || 'var(--accent)';
+        t.style.color = slide.color || 'var(--accent-2)';
         t.style.fontSize = resolveSize(slide.fontSize, 'title');
         el.appendChild(t);
         renderTitle(t, slide.title, slide.titleAnimation);
@@ -781,37 +461,15 @@ function buildSlideEl(slide){
     }
     case 'clock': {
       el.classList.add('clock-slide');
-      const time = document.createElement('div');
-      time.className = 'time';
-      time.id = 'big-clock-time';
-      const date = document.createElement('div');
-      date.className = 'date';
-      date.id = 'big-clock-date';
-      el.appendChild(time);
-      el.appendChild(date);
-      break;
-    }
-    case 'news': {
-      el.classList.add('news-slide');
-      const eyebrow = document.createElement('div');
-      eyebrow.className = 'eyebrow';
-      eyebrow.textContent = slide.label || 'ÚLTIMAS NOTÍCIAS';
-      const ul = document.createElement('ul');
-      (slide.items || []).forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        ul.appendChild(li);
-      });
-      el.appendChild(eyebrow);
-      el.appendChild(ul);
-      applyStagger(ul);
+      const time = document.createElement('div'); time.className = 'time'; time.id = 'big-clock-time';
+      const date = document.createElement('div'); date.className = 'date'; date.id = 'big-clock-date';
+      el.appendChild(time); el.appendChild(date);
       break;
     }
     case 'birthday': {
       el.classList.add('birthday-slide');
-      // Confetes flutuantes em CSS puro, sem depender de imagens
       const confettiEmojis = ['🎉','🎈','🎊','✨'];
-      for(let c = 0; c < 14; c++){
+      for(let c = 0; c < 12; c++){
         const conf = document.createElement('div');
         conf.className = 'confetti';
         conf.textContent = confettiEmojis[c % confettiEmojis.length];
@@ -820,174 +478,39 @@ function buildSlideEl(slide){
         conf.style.animationDelay = (Math.random() * 6) + 's';
         el.appendChild(conf);
       }
-      const box = document.createElement('div');
-      box.className = 'bday-box';
-      const emoji = document.createElement('div');
-      emoji.className = 'bday-emoji';
-      emoji.textContent = '🎂';
-      const title = document.createElement('div');
-      title.className = 'bday-title';
+      const box = document.createElement('div'); box.className = 'bday-box';
+      const emoji = document.createElement('div'); emoji.className = 'bday-emoji'; emoji.textContent = '🎂';
+      const title = document.createElement('div'); title.className = 'bday-title';
+      box.appendChild(emoji); box.appendChild(title);
       renderTitle(title, slide.title || 'Feliz Aniversário!', slide.titleAnimation);
-      box.appendChild(emoji);
-      box.appendChild(title);
       if(slide.message){
-        const msg = document.createElement('div');
-        msg.className = 'bday-message';
-        msg.textContent = slide.message;
+        const msg = document.createElement('div'); msg.className = 'bday-message'; msg.textContent = slide.message;
         box.appendChild(msg);
       }
       el.appendChild(box);
       break;
     }
-    case 'social': {
-      el.classList.add('social-slide');
-      const title = document.createElement('div');
-      title.className = 'social-title';
-      title.textContent = slide.title || 'Siga-nos nas redes sociais';
-      const grid = document.createElement('div');
-      grid.className = 'social-grid';
-      (slide.items || []).forEach(raw => {
-        const { icon, handle } = parseSocialItem(raw);
-        const item = document.createElement('div');
-        item.className = 'social-item';
-        item.innerHTML = `<span class="social-icon">${icon}</span><span class="social-handle"></span>`;
-        item.querySelector('.social-handle').textContent = handle;
-        grid.appendChild(item);
-      });
-      el.appendChild(title);
-      el.appendChild(grid);
-      applyStagger(grid, 0.1);
-      break;
-    }
     case 'ad': {
       el.classList.add('ad-slide');
-      const box = document.createElement('div');
-      box.className = 'ad-box';
-      const badge = document.createElement('div');
-      badge.className = 'ad-badge';
-      badge.textContent = '📣 ' + (slide.subtitle || 'Anuncie aqui');
-      const title = document.createElement('div');
-      title.className = 'ad-title';
-      box.appendChild(badge);
-      box.appendChild(title);
+      const box = document.createElement('div'); box.className = 'ad-box';
+      const badge = document.createElement('div'); badge.className = 'ad-badge'; badge.textContent = '📣 ' + (slide.subtitle || 'Anuncie aqui');
+      const title = document.createElement('div'); title.className = 'ad-title';
+      box.appendChild(badge); box.appendChild(title);
       renderTitle(title, slide.title || 'Este espaço está disponível', slide.titleAnimation);
       if(slide.contact){
-        const contact = document.createElement('div');
-        contact.className = 'ad-contact';
-        contact.textContent = slide.contact;
+        const contact = document.createElement('div'); contact.className = 'ad-contact'; contact.textContent = slide.contact;
         box.appendChild(contact);
       }
       el.appendChild(box);
       break;
     }
-    case 'weather': {
-      el.classList.add('weather-slide');
-      if(!slide.lat || !slide.lon){
-        el.innerHTML = `<div class="weather-desc">⚠️ Configure a cidade deste slide no painel admin (clique em "Buscar" pra preencher as coordenadas)</div>`;
-        break;
-      }
-      el.innerHTML = `<div class="weather-city">${slide.city || ''}</div><div class="weather-icon">⏳</div>`;
-      getWeather(slide.lat, slide.lon).then(data => {
-        const code = data.current?.weather_code;
-        const [icon, desc] = WEATHER_CODE_MAP[code] || ['🌡️','—'];
-        const temp = Math.round(data.current?.temperature_2m ?? 0);
-        const max = Math.round(data.daily?.temperature_2m_max?.[0] ?? 0);
-        const min = Math.round(data.daily?.temperature_2m_min?.[0] ?? 0);
-        el.innerHTML = `
-          <div class="weather-city">${slide.city || ''}</div>
-          <div class="weather-icon">${icon}</div>
-          <div class="weather-temp">${temp}°</div>
-          <div class="weather-desc">${desc}</div>
-          <div class="weather-minmax">Máx ${max}° · Mín ${min}°</div>`;
-      }).catch(() => {
-        el.innerHTML = `<div class="weather-city">${slide.city || ''}</div><div class="weather-desc">Não foi possível carregar o clima agora</div>`;
-      });
-      break;
-    }
-    case 'rss': {
-      el.classList.add('rss-slide');
-      const eyebrow = document.createElement('div');
-      eyebrow.className = 'rss-eyebrow';
-      eyebrow.textContent = slide.label || 'NOTÍCIAS';
-      const ul = document.createElement('ul');
-      if(!slide.feedUrl){
-        ul.innerHTML = '<li>⚠️ Configure o link do feed RSS deste slide no painel admin</li>';
-        el.appendChild(eyebrow);
-        el.appendChild(ul);
-        break;
-      }
-      ul.innerHTML = '<li>Carregando notícias...</li>';
-      el.appendChild(eyebrow);
-      el.appendChild(ul);
-      getRssItems(slide.feedUrl).then(items => {
-        const max = slide.maxItems || 5;
-        ul.innerHTML = items.slice(0, max).map(t => `<li>${t}</li>`).join('') || '<li>Nenhuma notícia encontrada</li>';
-        applyStagger(ul);
-      }).catch(() => {
-        ul.innerHTML = '<li>Não foi possível carregar as notícias agora</li>';
-      });
-      break;
-    }
     case 'embed': {
       el.classList.add('embed-slide');
       if(slide.url){
-        const iframe = document.createElement('iframe');
-        iframe.src = slide.url;
+        const iframe = document.createElement('iframe'); iframe.src = slide.url;
         el.appendChild(iframe);
       } else {
         el.innerHTML = '<div class="embed-error">Nenhum link configurado para este slide</div>';
-      }
-      break;
-    }
-    case 'menu': {
-      el.classList.add('menu-slide');
-      const now = new Date();
-      const dayNames = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-      const todayMenu = getDayMenu(slide, String(now.getDay()));
-      const content = document.createElement('div');
-      content.className = 'menu-content';
-      const eyebrow = document.createElement('div');
-      eyebrow.className = 'menu-eyebrow';
-      eyebrow.textContent = slide.title || 'Cardápio do dia';
-      const dayLabel = document.createElement('div');
-      dayLabel.className = 'menu-day';
-      dayLabel.textContent = dayNames[now.getDay()];
-      const ul = document.createElement('ul');
-      ul.innerHTML = todayMenu.items.map(t => `<li>${t}</li>`).join('') || '<li>Sem cardápio cadastrado para hoje</li>';
-      content.appendChild(eyebrow);
-      content.appendChild(dayLabel);
-      content.appendChild(ul);
-      applyStagger(ul);
-      if(todayMenu.image){
-        el.classList.add('menu-with-image');
-        const imgWrap = document.createElement('div');
-        imgWrap.className = 'menu-image-wrap';
-        const img = document.createElement('img');
-        img.src = cacheBust(todayMenu.image);
-        imgWrap.appendChild(img);
-        el.appendChild(imgWrap);
-        if(slide.imageAnimation === 'zoom') el.classList.add('zoom');
-        else if(slide.imageAnimation && slide.imageAnimation !== 'nenhuma') el.classList.add('anim-' + slide.imageAnimation);
-      }
-      el.appendChild(content);
-      break;
-    }
-    case 'motivation': {
-      el.classList.add('motivation-slide');
-      const { phrase, author } = pickMotivationPhrase(slide, slide.items);
-      const mark = document.createElement('div');
-      mark.className = 'motivation-mark';
-      mark.textContent = '“';
-      const p = document.createElement('div');
-      p.className = 'motivation-phrase';
-      el.appendChild(mark);
-      el.appendChild(p);
-      renderTitle(p, phrase, slide.titleAnimation);
-      if(author){
-        const a = document.createElement('div');
-        a.className = 'motivation-author';
-        a.textContent = '— ' + author;
-        el.appendChild(a);
       }
       break;
     }
@@ -1001,9 +524,7 @@ function buildSlideEl(slide){
         video.loop = !!slide.loop;
         video.playsInline = true;
         el.appendChild(video);
-        if(!slide.loop){
-          video.addEventListener('ended', () => goToNextSlide());
-        }
+        if(!slide.loop) video.addEventListener('ended', () => goToNextSlide());
         video.play().catch(() => {});
       } else {
         el.innerHTML = '<div class="embed-error">Nenhum vídeo configurado para este slide</div>';
@@ -1011,7 +532,7 @@ function buildSlideEl(slide){
       break;
     }
     default:
-      el.textContent = 'Tipo de slide desconhecido: ' + slide.type;
+      el.textContent = '';
   }
   return el;
 }
@@ -1025,64 +546,197 @@ function updateBigClock(){
   if(d) d.textContent = now.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' });
 }
 
-function updateRailClock(){
-  document.getElementById('rail-clock').textContent = new Date().toLocaleTimeString('pt-BR');
+function renderDots(){
+  dotsEl.innerHTML = '';
+  bannerSlides.forEach((s, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'rail-dot';
+    if(i === currentIndex){
+      dot.classList.add('active');
+      const fill = document.createElement('span'); fill.className = 'rail-dot-fill';
+      dot.appendChild(fill);
+      const durationSec = s.duration || 8;
+      requestAnimationFrame(() => {
+        fill.style.transitionDuration = durationSec + 's';
+        fill.style.transform = 'scaleX(1)';
+      });
+    }
+    dotsEl.appendChild(dot);
+  });
 }
 
 function showSlide(index){
-  if(slides.length === 0){
-    // Nenhum slide ativo agora (ex: tudo fora do período agendado) — tenta de novo em breve
-    stageEl.innerHTML = '<div style="color:#8B92A0;display:flex;align-items:center;justify-content:center;height:100%;font-family:Inter,sans-serif;">Nenhum slide ativo no momento</div>';
+  if(bannerSlides.length === 0){
+    stageEl.innerHTML = '<div style="color:#8B92A0;display:flex;align-items:center;justify-content:center;height:100%;font-family:Inter,sans-serif;">Nenhum conteúdo no banner agora</div>';
     clearTimeout(slideTimer);
     slideTimer = setTimeout(() => showSlide(0), 10000);
     return;
   }
-  const slide = slides[index % slides.length];
+  const slide = bannerSlides[index % bannerSlides.length];
   const el = buildSlideEl(slide);
   stageEl.appendChild(el);
-
-  // Crossfade de verdade: o slide anterior perde a classe "active" (e some suavemente)
-  // enquanto o novo ganha "active" (e aparece), os dois ao mesmo tempo.
-  Array.from(stageEl.children).forEach(child => {
-    if(child !== el) child.classList.remove('active');
-  });
+  Array.from(stageEl.children).forEach(child => { if(child !== el) child.classList.remove('active'); });
   requestAnimationFrame(() => el.classList.add('active'));
   renderDots();
-
   if(slide.type === 'clock') updateBigClock();
-
-  // Remove os slides antigos da tela só depois que a transição termina
   setTimeout(() => {
-    Array.from(stageEl.children).forEach(child => {
-      if(child !== el) child.remove();
-    });
+    Array.from(stageEl.children).forEach(child => { if(child !== el) child.remove(); });
   }, 1300);
-
   clearTimeout(slideTimer);
   const duration = (slide.duration || 8) * 1000;
   slideTimer = setTimeout(goToNextSlide, duration);
 }
-
 function goToNextSlide(){
   clearTimeout(slideTimer);
-  currentIndex = (currentIndex + 1) % slides.length;
+  currentIndex = (currentIndex + 1) % bannerSlides.length;
   showSlide(currentIndex);
+}
+
+/* =========================================================
+   PAINEL LATERAL: cartões compactos, todos visíveis ao mesmo tempo
+========================================================= */
+function buildCardEl(slide){
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  if(slide.type === 'news'){
+    card.innerHTML = `<h2>${slide.label || 'Avisos'}</h2>`;
+    const ul = document.createElement('ul');
+    ul.innerHTML = (slide.items || []).map(t => `<li>${t}</li>`).join('') || '<li class="card-empty">Sem avisos no momento</li>';
+    card.appendChild(ul);
+  } else if(slide.type === 'social'){
+    card.innerHTML = `<h2>${slide.title || 'Redes sociais'}</h2>`;
+    (slide.items || []).forEach(raw => {
+      const { icon, handle } = parseSocialItem(raw);
+      const row = document.createElement('div');
+      row.className = 'card-social-row';
+      row.innerHTML = `<span>${icon}</span><span>${handle}</span>`;
+      card.appendChild(row);
+    });
+  } else if(slide.type === 'menu'){
+    const now = new Date();
+    const dayNames = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+    const todayMenu = getDayMenu(slide, String(now.getDay()));
+    card.innerHTML = `<h2>${slide.title || 'Cardápio do dia'}</h2><div class="card-sub">${dayNames[now.getDay()]}</div>`;
+    const ul = document.createElement('ul');
+    ul.innerHTML = todayMenu.items.map(t => `<li>${t}</li>`).join('') || '<li class="card-empty">Sem cardápio para hoje</li>';
+    card.appendChild(ul);
+  } else if(slide.type === 'weather'){
+    card.innerHTML = `<h2>${slide.city || 'Clima'}</h2><div class="card-weather-big">⏳</div>`;
+    if(slide.lat && slide.lon){
+      getWeather(slide.lat, slide.lon).then(data => {
+        const code = data.current?.weather_code;
+        const [icon, desc] = WEATHER_CODE_MAP[code] || ['🌡️','—'];
+        const temp = Math.round(data.current?.temperature_2m ?? 0);
+        card.innerHTML = `<h2>${slide.city || 'Clima'}</h2><div class="card-weather-big">${icon} ${temp}°</div><p>${desc}</p>`;
+      }).catch(() => {
+        card.innerHTML = `<h2>${slide.city || 'Clima'}</h2><p class="card-empty">Não foi possível carregar o clima</p>`;
+      });
+    } else {
+      card.innerHTML = `<h2>${slide.city || 'Clima'}</h2><p class="card-empty">⚠️ Configure a cidade no painel admin</p>`;
+    }
+  } else {
+    // Tipo não pensado pra painel, mas configurado assim mesmo — mostra algo genérico
+    card.innerHTML = `<h2>${slide.title || slide.label || slide.type}</h2>`;
+  }
+  return card;
+}
+
+function refreshPanel(){
+  const painelEl = document.getElementById('painel');
+  const now = new Date();
+  const panelSlides = allSlides.filter(s => getZone(s) === 'painel' && isSlideActive(s, now));
+  painelEl.innerHTML = '';
+  if(panelSlides.length === 0){
+    painelEl.innerHTML = '<p class="card-empty" style="padding:10px;">Nenhum conteúdo configurado para o painel</p>';
+    return;
+  }
+  panelSlides.forEach((slide, idx) => {
+    const card = buildCardEl(slide);
+    card.style.animationDelay = (idx * 0.12) + 's';
+    painelEl.appendChild(card);
+  });
+}
+
+/* =========================================================
+   TICKER: texto rolando no rodapé, juntando frases/notícias
+========================================================= */
+async function refreshTicker(){
+  const now = new Date();
+  const tickerSlides = allSlides.filter(s => getZone(s) === 'ticker' && isSlideActive(s, now));
+  const tickerEl = document.getElementById('ticker');
+  if(tickerSlides.length === 0){
+    tickerEl.textContent = 'Bem-vindos!';
+    return;
+  }
+  const parts = [];
+  for(const slide of tickerSlides){
+    if(slide.type === 'motivation'){
+      const { phrase, author } = pickMotivationPhrase(slide, slide.items);
+      if(phrase) parts.push(author ? `${phrase} — ${author}` : phrase);
+    } else if(slide.type === 'rss'){
+      if(slide.feedUrl){
+        try{
+          const items = await getRssItems(slide.feedUrl);
+          const max = slide.maxItems || 5;
+          items.slice(0, max).forEach(t => parts.push(t));
+        }catch(e){ /* ignora esse feed nesta rodada */ }
+      }
+    } else if(slide.type === 'news'){
+      (slide.items || []).forEach(t => parts.push(t));
+    }
+  }
+  tickerEl.textContent = parts.length > 0 ? parts.join('   •   ') : 'Bem-vindos!';
+}
+
+/* =========================================================
+   Relógio do cabeçalho
+========================================================= */
+function updateHeaderClock(){
+  const now = new Date();
+  document.getElementById('hora').textContent = now.toLocaleTimeString('pt-BR');
+  document.getElementById('data').textContent = now.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
+}
+
+/* =========================================================
+   Carregamento da configuração
+========================================================= */
+async function loadConfig(){
+  try{
+    const res = await fetch(cacheBust(CONFIG_URL), { cache:'no-store' });
+    const data = await res.json();
+    allSlides = data.slides || [];
+    if(data.brand) document.getElementById('logo').textContent = data.brand;
+    if(data.accentColor) document.documentElement.style.setProperty('--accent', data.accentColor);
+    applySchedule();
+    refreshPanel();
+    refreshTicker();
+  }catch(e){
+    console.error('Falha ao carregar config.json', e);
+  }
+}
+
+function applySchedule(){
+  const now = new Date();
+  const active = allSlides.filter(s => getZone(s) === 'banner' && isSlideActive(s, now));
+  const changed = JSON.stringify(active) !== JSON.stringify(bannerSlides);
+  bannerSlides = active;
+  if(changed){
+    currentIndex = 0;
+    renderDots();
+  }
 }
 
 async function init(){
   await loadConfig();
   showSlide(0);
-  setInterval(updateRailClock, 1000);
+  updateHeaderClock();
+  setInterval(updateHeaderClock, 1000);
   setInterval(updateBigClock, 1000);
-  updateRailClock();
-
-  // Verifica config.json periodicamente (não interrompe o slide atual)
   setInterval(loadConfig, CONFIG_POLL_SECONDS * 1000);
-
-  // Reavalia agendamento (datas/dias) todo minuto, sem precisar buscar o arquivo de novo
   setInterval(applySchedule, 60 * 1000);
-
-  // Recarrega a página inteira de tempos em tempos (memória/estabilidade da TV box)
+  setInterval(refreshPanel, 5 * 60 * 1000);
+  setInterval(refreshTicker, 5 * 60 * 1000);
   setTimeout(() => location.reload(), HARD_RELOAD_MINUTES * 60 * 1000);
 }
 
