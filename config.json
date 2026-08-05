@@ -10,7 +10,7 @@
     },
     {
       "type": "rss",
-      "label": "NOTÍCIAS ",
+      "label": "NOTÍCIAS - CIÊNCIAS",
       "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
       "maxItems": "4",
       "duration": 15
