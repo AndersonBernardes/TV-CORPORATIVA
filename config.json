@@ -14,7 +14,7 @@
       "caption": "A força da equipe é cada membro; a força de cada membro é a equipe.",
       "captionColor": "#ffffff",
       "captionSize": "medio",
-      "animation": "parallax",
+      "animation": "scale-in",
       "duration": 10
     },
     {
