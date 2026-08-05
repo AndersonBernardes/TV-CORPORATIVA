@@ -2,6 +2,15 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "birthday",
+      "title": "Feliz Aniversário, Flavio!",
+      "message": "Parabéns pelo seu dia! Que a inspiração que você oferece a cada dia retorne em forma de conquistas e alegrias sem fim.",
+      "annualDate": "08-05",
+      "annualWindowDays": 31,
+      "titleAnimation": "slideup",
+      "duration": 10
+    },
+    {
       "type": "text",
       "title": "Bem-vindo(a)!",
       "body": "Estamos felizes em ter você aqui.",
