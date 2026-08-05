@@ -5,8 +5,8 @@
       "type": "image",
       "src": "imagens/trabalho-em-equipe.jpg",
       "caption": "A força da equipe é cada membro; a força de cada membro é a equipe.",
-      "captionColor": "#F2A65A",
-      "captionSize": "pequeno",
+      "captionColor": "#2b2927",
+      "captionSize": "medio",
       "animation": "parallax",
       "duration": 10
     },
