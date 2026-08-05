@@ -2,6 +2,13 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "rss",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
+      "maxItems": "4",
+      "duration": 15
+    },
+    {
       "type": "image",
       "src": "imagens/trabalho-em-equipe.jpg",
       "caption": "A força da equipe é cada membro; a força de cada membro é a equipe.",
