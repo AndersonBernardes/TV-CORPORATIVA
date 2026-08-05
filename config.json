@@ -60,7 +60,9 @@
       "imageAnimation": "pan-left",
       "menu": {
         "0": {
-          "items": [],
+          "items": [
+            ""
+          ],
           "image": ""
         },
         "1": {
@@ -82,7 +84,7 @@
             "Frango grelhado",
             "Arroz, feijão, legumes salteados"
           ],
-          "image": ""
+          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
         },
         "4": {
           "items": [
