@@ -23,10 +23,6 @@
       "duration": 10
     },
     {
-      "type": "clock",
-      "duration": 8
-    },
-    {
       "type": "birthday",
       "title": "Feliz Aniversário!",
       "message": "Que venham muitas conquistas!",
