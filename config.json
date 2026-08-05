@@ -3,7 +3,14 @@
   "slides": [
     {
       "type": "rss",
-      "label": "NOTÍCIAS REGIONAIS",
+      "label": "ACONTECEU - MUNDO",
+      "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
+      "maxItems": "6",
+      "duration": 12
+    },
+    {
+      "type": "rss",
+      "label": "NOTÍCIAS ",
       "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
       "maxItems": "4",
       "duration": 15
@@ -30,6 +37,13 @@
       "lat": -23.5475,
       "lon": -46.63611,
       "duration": 10
+    },
+    {
+      "type": "rss",
+      "label": "NOTÍCIAS - ESPORTES",
+      "feedUrl": "https://feeds.folha.uol.com.br/esporte/rss091.xml",
+      "maxItems": 5,
+      "duration": 12
     },
     {
       "type": "birthday",
