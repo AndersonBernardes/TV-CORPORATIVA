@@ -24,7 +24,9 @@
     {
       "type": "motivation",
       "items": [
-        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+        "A motivação faz você começar, o hábito faz você continuar",
+        "O futuro depende do que você faz hoje"
       ],
       "titleAnimation": "slideup",
       "duration": 9
@@ -32,36 +34,46 @@
     {
       "type": "menu",
       "title": "Cardápio do Refeitório",
-      "imageAnimation": "parallax",
+      "imageAnimation": "fade-in",
       "menu": {
         "0": {
           "items": [],
           "image": ""
         },
         "1": {
-          "items": [],
+          "items": [
+            "Virado à paulista (arroz, feijão batido com farinha, bisteca de porco, ovo frito, couve e linguiça"
+          ],
           "image": "imagens/prato-segunda.jpg"
         },
         "2": {
           "items": [
             "Peixe ao molho"
           ],
-          "image": "videos/peixe.jpg"
+          "image": "Bife a rolê com purê de batatas, arroz e feijão"
         },
         "3": {
-          "items": [],
+          "items": [
+            "Feijoada completa com arroz, couve, farofa e laranja"
+          ],
           "image": "imagens/prato-quarta.jpg"
         },
         "4": {
-          "items": [],
+          "items": [
+            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco"
+          ],
           "image": "imagens/prato-quinta.jpg"
         },
         "5": {
-          "items": [],
+          "items": [
+            "Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes"
+          ],
           "image": "imagens/prato-sexta.jpg"
         },
         "6": {
-          "items": [],
+          "items": [
+            " Feijoada tradicional ou Frango com catupiry acompanhado de arroz, batata frita e salada"
+          ],
           "image": ""
         }
       },
