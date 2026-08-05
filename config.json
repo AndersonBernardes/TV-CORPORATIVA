@@ -76,37 +76,37 @@
           "items": [
             "Virado à paulista (arroz, feijão batido com farinha, bisteca de porco, ovo frito, couve e linguiça"
           ],
-          "image": "imagens/prato-segunda.jpg"
+          "image": "imagens/Virado à paulista (arroz, feijão batido com farinha, bisteca de porco, ovo frito, couve e linguiça.jpg"
         },
         "2": {
           "items": [
-            "Peixe ao molho"
+            "Bife a rolê com purê de batatas, arroz e feijão"
           ],
-          "image": "Bife a rolê com purê de batatas, arroz e feijão"
+          "image": "imagens/Bife a rolê com purê de batatas, arroz e feijão.jpg"
         },
         "3": {
           "items": [
             "Feijoada completa com arroz, couve, farofa e laranja"
           ],
-          "image": "imagens/prato-quarta.jpg"
+          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
         },
         "4": {
           "items": [
             "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco"
           ],
-          "image": "imagens/prato-quinta.jpg"
+          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
         },
         "5": {
           "items": [
             "Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes"
           ],
-          "image": "imagens/prato-sexta.jpg"
+          "image": "imagens/Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes.jpg"
         },
         "6": {
           "items": [
             " Feijoada tradicional ou Frango com catupiry acompanhado de arroz, batata frita e salada"
           ],
-          "image": ""
+          "image": "imagens/Feijoada tradicional ou Frango com catupiry acompanhado de arroz, batata frita e salada.jpg"
         }
       },
       "duration": 10
