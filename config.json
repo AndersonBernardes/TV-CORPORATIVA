@@ -2,6 +2,13 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "video",
+      "src": "videos/institucional-01.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 20
+    },
+    {
       "type": "weather",
       "city": "São Paulo, São Paulo",
       "lat": -23.5475,
@@ -94,13 +101,6 @@
         }
       },
       "duration": 10
-    },
-    {
-      "type": "video",
-      "src": "videos/Design sem nome.mp4",
-      "muted": true,
-      "loop": false,
-      "duration": 37
     }
   ]
 }
