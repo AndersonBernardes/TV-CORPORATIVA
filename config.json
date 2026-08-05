@@ -1,6 +1,5 @@
 {
   "brand": "Anca Soluções",
-  "accentColor": "#C0392B",
   "slides": [
     {
       "type": "text",
@@ -43,7 +42,8 @@
         "Reunião geral sexta-feira às 9h",
         "Nova política de reembolso já disponível",
         "Parabéns aos aniversariantes do mês!"
-      ]
+      ],
+      "duration": 8
     },
     {
       "type": "social",
@@ -51,13 +51,18 @@
       "items": [
         "instagram:@ancasolucoes",
         "whatsapp:(11) 99999-9999"
-      ]
+      ],
+      "duration": 8
     },
     {
       "type": "menu",
       "title": "Cardápio do Refeitório",
       "imageAnimation": "pan-left",
       "menu": {
+        "0": {
+          "items": [],
+          "image": ""
+        },
         "1": {
           "items": [
             "Bife acebolado",
@@ -92,14 +97,20 @@
             "Arroz, feijão, salada verde"
           ],
           "image": ""
+        },
+        "6": {
+          "items": [],
+          "image": ""
         }
-      }
+      },
+      "duration": 8
     },
     {
       "type": "weather",
       "city": "São Paulo, São Paulo",
       "lat": -23.5475,
-      "lon": -46.6361
+      "lon": -46.6361,
+      "duration": 8
     },
     {
       "type": "motivation",
@@ -108,12 +119,14 @@
         "Grandes equipes constroem grandes resultados.|Anca Soluções",
         "Foco no progresso, não na perfeição."
       ],
-      "titleAnimation": "kinetic"
+      "titleAnimation": "kinetic",
+      "duration": 8
     },
     {
       "type": "rss",
       "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
-      "maxItems": 5
+      "maxItems": 5,
+      "duration": 8
     }
   ]
 }
