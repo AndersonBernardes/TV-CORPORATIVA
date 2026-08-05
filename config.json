@@ -1,156 +1,119 @@
 {
   "brand": "Anca Soluções",
+  "accentColor": "#C0392B",
   "slides": [
-    {
-      "type": "image",
-      "src": "imagens/manicure-e-pedicure.jpg",
-      "caption": "Agende o seu horário!",
-      "captionColor": "#e972d3",
-      "captionSize": "grande",
-      "animation": "zoom",
-      "duration": 10
-    },
-    {
-      "type": "rss",
-      "label": "ACONTECEU - MUNDO",
-      "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
-      "maxItems": "6",
-      "duration": 12
-    },
-    {
-      "type": "image",
-      "src": "imagens/trabalho-em-equipe.jpg",
-      "caption": "A força da equipe é cada membro; a força de cada membro é a equipe.",
-      "captionColor": "#ffffff",
-      "captionSize": "medio",
-      "animation": "scale-in",
-      "duration": 10
-    },
-    {
-      "type": "news",
-      "label": "AVISOS",
-      "items": [
-        "Vaga aberta: Mecanico Junior. Tel: 95125-2598",
-        "Segurança: \"Dias sem acidentes com afastamento: 245 dias. Continue seguro!",
-        "Saúde: \"Campanha de Vacinação contra a Gripe: Terça-feira, das 9h às 15h, na sala de reuniões B.",
-        "Dicas Rápidas: \"Lembre-se de fazer pausas de 5 minutos para descanso visual."
-      ],
-      "duration": 15
-    },
-    {
-      "type": "video",
-      "src": "videos/Fazendo bolo.mp4",
-      "muted": true,
-      "loop": false,
-      "duration": 12
-    },
-    {
-      "type": "rss",
-      "label": "NOTÍCIAS - CIÊNCIAS",
-      "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
-      "maxItems": "4",
-      "duration": 15
-    },
-    {
-      "type": "weather",
-      "city": "São Paulo, São Paulo",
-      "lat": -23.5475,
-      "lon": -46.63611,
-      "duration": 10
-    },
-    {
-      "type": "rss",
-      "label": "NOTÍCIAS - ESPORTES",
-      "feedUrl": "https://feeds.folha.uol.com.br/esporte/rss091.xml",
-      "maxItems": 5,
-      "duration": 12
-    },
-    {
-      "type": "birthday",
-      "title": "Feliz Aniversário, Flavio!",
-      "message": "Parabéns pelo seu dia! Que a inspiração que você oferece a cada dia retorne em forma de conquistas e alegrias sem fim.",
-      "annualDate": "08-05",
-      "annualWindowDays": 31,
-      "titleAnimation": "slideup",
-      "duration": 10
-    },
     {
       "type": "text",
       "title": "Bem-vindo(a)!",
-      "body": "Estamos felizes em ter você aqui.",
-      "color": "#4FD1C5",
-      "fontSize": "enorme",
-      "bodyColor": "#8B92A0",
-      "bodySize": "grande",
+      "body": "Confira as novidades da semana.",
+      "color": "#F2A65A",
+      "fontSize": "grande",
+      "bodyColor": "#9AA0AB",
+      "bodySize": "medio",
       "background": "#15171C",
       "titleAnimation": "glow",
       "duration": 8
     },
     {
-      "type": "ad",
-      "subtitle": "Anuncie aqui",
-      "title": "Este espaço está disponível",
-      "contact": "(11) 951394342",
-      "titleAnimation": "scalepop",
-      "duration": 9
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Promoção do mês",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "zoom",
+      "duration": 10
+    },
+    {
+      "type": "clock",
+      "duration": 8
+    },
+    {
+      "type": "birthday",
+      "title": "Feliz Aniversário!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "",
+      "annualWindowDays": 1,
+      "titleAnimation": "slideup",
+      "duration": 10
+    },
+    {
+      "type": "news",
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Reunião geral sexta-feira às 9h",
+        "Nova política de reembolso já disponível",
+        "Parabéns aos aniversariantes do mês!"
+      ]
+    },
+    {
+      "type": "social",
+      "title": "Redes sociais",
+      "items": [
+        "instagram:@ancasolucoes",
+        "whatsapp:(11) 99999-9999"
+      ]
+    },
+    {
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "imageAnimation": "pan-left",
+      "menu": {
+        "1": {
+          "items": [
+            "Bife acebolado",
+            "Arroz, feijão, purê de batata e salada"
+          ],
+          "image": ""
+        },
+        "2": {
+          "items": [
+            "Almôndegas ao molho",
+            "Arroz, feijão, macarrão e salada"
+          ],
+          "image": ""
+        },
+        "3": {
+          "items": [
+            "Frango grelhado",
+            "Arroz, feijão, legumes salteados"
+          ],
+          "image": ""
+        },
+        "4": {
+          "items": [
+            "Feijoada leve",
+            "Arroz, farofa, couve e laranja"
+          ],
+          "image": ""
+        },
+        "5": {
+          "items": [
+            "Peixe assado",
+            "Arroz, feijão, salada verde"
+          ],
+          "image": ""
+        }
+      }
+    },
+    {
+      "type": "weather",
+      "city": "São Paulo, São Paulo",
+      "lat": -23.5475,
+      "lon": -46.6361
     },
     {
       "type": "motivation",
       "items": [
         "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
-        "A motivação faz você começar, o hábito faz você continuar",
-        "O futuro depende do que você faz hoje"
+        "Grandes equipes constroem grandes resultados.|Anca Soluções",
+        "Foco no progresso, não na perfeição."
       ],
-      "titleAnimation": "slideup",
-      "duration": 9
+      "titleAnimation": "kinetic"
     },
     {
-      "type": "menu",
-      "title": "Cardápio do Refeitório",
-      "imageAnimation": "fade-in",
-      "menu": {
-        "0": {
-          "items": [],
-          "image": ""
-        },
-        "1": {
-          "items": [
-            "Virado à paulista (arroz, feijão batido com farinha, bisteca de porco, ovo frito, couve e linguiça"
-          ],
-          "image": "imagens/Virado à paulista (arroz, feijão batido com farinha, bisteca de porco, ovo frito, couve e linguiça.jpg"
-        },
-        "2": {
-          "items": [
-            "Bife a rolê com purê de batatas, arroz e feijão"
-          ],
-          "image": "imagens/Bife a rolê com purê de batatas, arroz e feijão.jpg"
-        },
-        "3": {
-          "items": [
-            "Feijoada completa com arroz, couve, farofa e laranja"
-          ],
-          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
-        },
-        "4": {
-          "items": [
-            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco"
-          ],
-          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
-        },
-        "5": {
-          "items": [
-            "Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes"
-          ],
-          "image": "imagens/Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes.jpg"
-        },
-        "6": {
-          "items": [
-            " Feijoada tradicional ou Frango com catupiry acompanhado de arroz, batata frita e salada"
-          ],
-          "image": "imagens/Feijoada tradicional ou Frango com catupiry acompanhado de arroz, batata frita e salada.jpg"
-        }
-      },
-      "duration": 10
+      "type": "rss",
+      "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
+      "maxItems": 5
     }
   ]
 }
