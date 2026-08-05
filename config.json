@@ -57,7 +57,7 @@
     {
       "type": "menu",
       "title": "Cardápio do Refeitório",
-      "imageAnimation": "pan-left",
+      "imageAnimation": "zoom",
       "menu": {
         "0": {
           "items": [
@@ -81,8 +81,8 @@
         },
         "3": {
           "items": [
-            "Frango grelhado",
-            "Arroz, feijão, legumes salteados"
+            "Feijoada completa com arroz",
+            " couve, farofa e laranja"
           ],
           "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
         },
@@ -105,7 +105,8 @@
           "image": ""
         }
       },
-      "duration": 8
+      "duration": 8,
+      "zone": "banner"
     },
     {
       "type": "weather",
