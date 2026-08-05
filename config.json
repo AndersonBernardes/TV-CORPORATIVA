@@ -2,6 +2,18 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "text",
+      "title": "Bem-vindo(a)!",
+      "body": "Estamos felizes em ter você aqui.",
+      "color": "#4FD1C5",
+      "fontSize": "enorme",
+      "bodyColor": "#8B92A0",
+      "bodySize": "grande",
+      "background": "#15171C",
+      "titleAnimation": "glow",
+      "duration": 8
+    },
+    {
       "type": "ad",
       "subtitle": "Anuncie aqui",
       "title": "Este espaço está disponível",
