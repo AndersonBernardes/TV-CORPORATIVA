@@ -2,6 +2,15 @@
   "brand": "Anca Soluções",
   "slides": [
     {
+      "type": "image",
+      "src": "videos/Trabalho em equipe.mp4",
+      "caption": "A força da equipe é cada membro; a força de cada membro é a equipe.",
+      "captionColor": "#F2A65A",
+      "captionSize": "pequeno",
+      "animation": "parallax",
+      "duration": 10
+    },
+    {
       "type": "video",
       "src": "videos/Fazendo bolo.mp4",
       "muted": true,
