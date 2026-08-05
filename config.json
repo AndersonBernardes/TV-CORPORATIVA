@@ -2,29 +2,11 @@
   "brand": "Anca Soluções",
   "slides": [
     {
-      "type": "news",
-      "label": "AVISOS INTERNOS",
-      "items": [
-        "Vaga aberta: Mecanico Junior. Tel: 95125-2598",
-        "Segurança: \"Dias sem acidentes com afastamento: 245 dias. Continue seguro!",
-        "Saúde: \"Campanha de Vacinação contra a Gripe: Terça-feira, das 9h às 15h, na sala de reuniões B.",
-        "Dicas Rápidas: \"Lembre-se de fazer pausas de 5 minutos para descanso visual."
-      ],
-      "duration": 15
-    },
-    {
       "type": "rss",
       "label": "ACONTECEU - MUNDO",
       "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
       "maxItems": "6",
       "duration": 12
-    },
-    {
-      "type": "rss",
-      "label": "NOTÍCIAS - CIÊNCIAS",
-      "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
-      "maxItems": "4",
-      "duration": 15
     },
     {
       "type": "image",
@@ -36,11 +18,29 @@
       "duration": 10
     },
     {
+      "type": "news",
+      "label": "AVISOS",
+      "items": [
+        "Vaga aberta: Mecanico Junior. Tel: 95125-2598",
+        "Segurança: \"Dias sem acidentes com afastamento: 245 dias. Continue seguro!",
+        "Saúde: \"Campanha de Vacinação contra a Gripe: Terça-feira, das 9h às 15h, na sala de reuniões B.",
+        "Dicas Rápidas: \"Lembre-se de fazer pausas de 5 minutos para descanso visual."
+      ],
+      "duration": 15
+    },
+    {
       "type": "video",
       "src": "videos/Fazendo bolo.mp4",
       "muted": true,
       "loop": false,
       "duration": 12
+    },
+    {
+      "type": "rss",
+      "label": "NOTÍCIAS - CIÊNCIAS",
+      "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
+      "maxItems": "4",
+      "duration": 15
     },
     {
       "type": "weather",
