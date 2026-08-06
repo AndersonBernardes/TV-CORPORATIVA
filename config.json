@@ -11,7 +11,7 @@
     },
     {
       "type": "rss",
-      "label": "NOTÍCIAS REGIONAIS",
+      "label": "NOTÍCIAS REGIO",
       "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
       "maxItems": "1",
       "duration": 12,
