@@ -3,6 +3,13 @@
   "accentColor": "#2b44bf",
   "slides": [
     {
+      "type": "video",
+      "src": "videos/Tv Corporativa.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 20
+    },
+    {
       "type": "image",
       "src": "imagens/Balanciamento e alinhamento.jpg",
       "caption": "",
