@@ -24,7 +24,8 @@
         "Nova política de reembolso já disponível",
         "Parabéns aos aniversariantes do mês!"
       ],
-      "duration": 8
+      "duration": 8,
+      "zone": "banner"
     },
     {
       "type": "social",
