@@ -3,6 +3,14 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "rss",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
+      "maxItems": "3",
+      "duration": 12,
+      "zone": "banner"
+    },
+    {
       "type": "menu",
       "title": "Cardápio do Refeitório",
       "imageAnimation": "pan-left",
@@ -47,14 +55,14 @@
       "src": "videos/Tv Corporativa.mp4",
       "muted": true,
       "loop": false,
-      "duration": 20
+      "duration": 10
     },
     {
       "type": "video",
       "src": "videos/dentista01.mp4.mp4",
       "muted": true,
       "loop": false,
-      "duration": 20
+      "duration": 10
     },
     {
       "type": "news",
@@ -140,8 +148,7 @@
       "items": [
         "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
         "Grandes equipes constroem grandes resultados.|Anca Soluções",
-        "Foco no progresso, não na perfeição.",
-        ""
+        "Foco no progresso, não na perfeição."
       ],
       "titleAnimation": "kinetic",
       "duration": 8,
