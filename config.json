@@ -3,6 +3,16 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "social",
+      "title": "Siga-nos nas redes sociais",
+      "items": [
+        "instagram:@suaempresa",
+        "whatsapp:(11) 99999-9999"
+      ],
+      "duration": 9,
+      "zone": "banner"
+    },
+    {
       "type": "news",
       "label": "AVISOS INTERNOS",
       "items": [
