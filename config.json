@@ -51,9 +51,9 @@
       "title": "Redes sociais",
       "items": [
         "instagram:@ancasolucoes",
-        "whatsapp:(11) 99999-9999"
+        "whatsapp:(11) 95139-4342"
       ],
-      "duration": 8
+      "duration": 10
     },
     {
       "type": "menu",
@@ -66,10 +66,10 @@
         },
         "1": {
           "items": [
-            "Bife acebolado",
-            "Arroz, feijão, purê de batata e salada"
+            "Bife a rolê com purê de batatas, arroz e feijão",
+            "Acompanha Arroz, feijão, purê de batata e salada"
           ],
-          "image": ""
+          "image": "imagens/Bife a rolê com purê de batatas, arroz e feijão.jpg"
         },
         "2": {
           "items": [
@@ -87,10 +87,10 @@
         },
         "4": {
           "items": [
-            "Feijoada leve",
-            "Arroz, farofa, couve e laranja"
+            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco",
+            "Acompanha salada ou fritas"
           ],
-          "image": ""
+          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
         },
         "5": {
           "items": [
