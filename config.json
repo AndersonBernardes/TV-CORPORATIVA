@@ -1,60 +1,119 @@
 {
   "brand": "Anca Soluções",
-  "accentColor": "#2b58bf",
+  "accentColor": "#C0392B",
   "slides": [
     {
-      "type": "image",
-      "src": "imagens/Balanciamento e alinhamento.jpg",
-      "caption": "Promoção de Alinhamento 3D + 4 Balanceamento na Rav Pneus. Rodas de Ferro carro de passeio: R$50,00",
-      "animation": "blur-focus",
+      "type": "text",
+      "title": "Bem-vindo(a)!",
+      "body": "Confira as novidades da semana.",
+      "color": "#F2A65A",
+      "fontSize": "grande",
+      "bodyColor": "#9AA0AB",
+      "bodySize": "medio",
+      "background": "#15171C",
+      "titleAnimation": "glow",
       "duration": 8
     },
     {
       "type": "image",
-      "src": "imagens/manicure-e-pedicure.jpg",
-      "caption": "(Promoção do mês ) Manicure e Pedicure + SPA dos pés 99,00",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Promoção do mês",
       "captionColor": "#F2A65A",
-      "captionSize": "medio",
-      "animation": "scale-in",
-      "duration": 10,
-      "zone": "painel"
+      "captionSize": "grande",
+      "animation": "zoom",
+      "duration": 10
     },
     {
-      "type": "motivation",
+      "type": "clock",
+      "duration": 8
+    },
+    {
+      "type": "birthday",
+      "title": "Feliz Aniversário!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "",
+      "annualWindowDays": 1,
+      "titleAnimation": "slideup",
+      "duration": 10
+    },
+    {
+      "type": "news",
+      "label": "AVISOS INTERNOS",
       "items": [
-        "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
-        ""
-      ],
-      "titleAnimation": "typewriter",
-      "duration": 7,
-      "zone": "banner"
+        "Reunião geral sexta-feira às 9h",
+        "Nova política de reembolso já disponível",
+        "Parabéns aos aniversariantes do mês!"
+      ]
     },
     {
-      "type": "rss",
-      "label": "SAÚDE",
-      "feedUrl": "https://feeds.folha.uol.com.br/equilibrioesaude/rss091.xml",
-      "maxItems": "3",
-      "duration": 12
+      "type": "social",
+      "title": "Redes sociais",
+      "items": [
+        "instagram:@ancasolucoes",
+        "whatsapp:(11) 99999-9999"
+      ]
+    },
+    {
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "imageAnimation": "pan-left",
+      "menu": {
+        "1": {
+          "items": [
+            "Bife acebolado",
+            "Arroz, feijão, purê de batata e salada"
+          ],
+          "image": ""
+        },
+        "2": {
+          "items": [
+            "Almôndegas ao molho",
+            "Arroz, feijão, macarrão e salada"
+          ],
+          "image": ""
+        },
+        "3": {
+          "items": [
+            "Frango grelhado",
+            "Arroz, feijão, legumes salteados"
+          ],
+          "image": ""
+        },
+        "4": {
+          "items": [
+            "Feijoada leve",
+            "Arroz, farofa, couve e laranja"
+          ],
+          "image": ""
+        },
+        "5": {
+          "items": [
+            "Peixe assado",
+            "Arroz, feijão, salada verde"
+          ],
+          "image": ""
+        }
+      }
     },
     {
       "type": "weather",
       "city": "São Paulo, São Paulo",
       "lat": -23.5475,
-      "lon": -46.63611,
-      "duration": 15
+      "lon": -46.6361
     },
     {
-      "type": "text",
-      "title": "Bem-vindos!",
-      "body": "Estamos felizes em ter você aqui.",
-      "color": "#863eac",
-      "fontSize": "enorme",
-      "bodyColor": "#661c14",
-      "bodySize": "grande",
-      "background": "#6e8fe2",
-      "titleAnimation": "glow",
-      "duration": 8,
-      "zone": "banner"
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+        "Grandes equipes constroem grandes resultados.|Anca Soluções",
+        "Foco no progresso, não na perfeição."
+      ],
+      "titleAnimation": "kinetic"
+    },
+    {
+      "type": "rss",
+      "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
+      "maxItems": 5
     }
   ]
 }
