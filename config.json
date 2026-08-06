@@ -130,11 +130,12 @@
       "items": [
         "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
         "Grandes equipes constroem grandes resultados.|Anca Soluções",
-        "Foco no progresso, não na perfeição."
+        "Foco no progresso, não na perfeição.",
+        ""
       ],
       "titleAnimation": "kinetic",
       "duration": 8,
-      "zone": "painel"
+      "zone": "ticker"
     },
     {
       "type": "rss",
