@@ -3,6 +3,16 @@
   "accentColor": "#2b58bf",
   "slides": [
     {
+      "type": "image",
+      "src": "imagens/manicure-e-pedicure.jpg",
+      "caption": "(Promoção do mês ) Manicure e Pedicure + SPA dos pés 99,00",
+      "captionColor": "#F2A65A",
+      "captionSize": "medio",
+      "animation": "scale-in",
+      "duration": 10,
+      "zone": "painel"
+    },
+    {
       "type": "motivation",
       "items": [
         "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
