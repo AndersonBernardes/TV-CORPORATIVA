@@ -4,6 +4,13 @@
   "slides": [
     {
       "type": "image",
+      "src": "imagens/Balanciamento e alinhamento.jpg",
+      "caption": "",
+      "animation": "blur-focus",
+      "duration": 8
+    },
+    {
+      "type": "image",
       "src": "imagens/manicure-e-pedicure.jpg",
       "caption": "(Promoção do mês ) Manicure e Pedicure + SPA dos pés 99,00",
       "captionColor": "#F2A65A",
