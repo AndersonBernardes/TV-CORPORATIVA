@@ -3,11 +3,14 @@
   "accentColor": "#266fa6",
   "slides": [
     {
-      "type": "video",
-      "src": "videos/Fazendo bolo.mp4",
-      "muted": true,
-      "loop": false,
-      "duration": 20
+      "type": "news",
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Reunião geral sexta-feira às 9h",
+        "Parabéns aos aniversariantes do mês!"
+      ],
+      "duration": 12,
+      "zone": "banner"
     }
   ]
 }
