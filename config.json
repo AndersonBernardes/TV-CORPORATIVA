@@ -39,7 +39,8 @@
           "image": ""
         }
       },
-      "duration": 10
+      "duration": 10,
+      "zone": "banner"
     },
     {
       "type": "video",
