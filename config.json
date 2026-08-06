@@ -24,8 +24,11 @@
           "image": "imagens/prato-quarta.jpg"
         },
         "4": {
-          "items": [],
-          "image": "imagens/prato-quinta.jpg"
+          "items": [
+            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg",
+            "Acompanha fritas"
+          ],
+          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
         },
         "5": {
           "items": [],
