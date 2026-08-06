@@ -12,7 +12,8 @@
       "bodySize": "medio",
       "background": "#6e8fe2",
       "titleAnimation": "glow",
-      "duration": 8
+      "duration": 8,
+      "zone": "banner"
     }
   ]
 }
