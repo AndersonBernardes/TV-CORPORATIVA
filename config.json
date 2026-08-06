@@ -3,6 +3,13 @@
   "accentColor": "#2bbf35",
   "slides": [
     {
+      "type": "rss",
+      "label": "SAÚDE",
+      "feedUrl": "https://feeds.folha.uol.com.br/equilibrioesaude/rss091.xml",
+      "maxItems": "3",
+      "duration": 12
+    },
+    {
       "type": "weather",
       "city": "São Paulo, São Paulo",
       "lat": -23.5475,
