@@ -3,6 +3,14 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "ad",
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 99999-9999",
+      "titleAnimation": "scalepop",
+      "duration": 9
+    },
+    {
       "type": "image",
       "src": "imagens/manicure-e-pedicure.jpg",
       "caption": "Confira nossas novidades",
