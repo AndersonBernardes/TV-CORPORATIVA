@@ -3,6 +3,13 @@
   "accentColor": "#2b44bf",
   "slides": [
     {
+      "type": "image",
+      "src": "imagens/Balanciamento e alinhamento.jpg",
+      "caption": "",
+      "animation": "fade-in",
+      "duration": 8
+    },
+    {
       "type": "video",
       "src": "videos/dentista01.mp4.mp4",
       "muted": true,
