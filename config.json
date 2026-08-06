@@ -3,12 +3,22 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+      ],
+      "titleAnimation": "typewriter",
+      "duration": 9,
+      "zone": "banner"
+    },
+    {
       "type": "ad",
       "subtitle": "Anuncie aqui",
       "title": "Este espaço está disponível",
       "contact": "(11) 99999-9999",
       "titleAnimation": "scalepop",
-      "duration": 9
+      "duration": 9,
+      "zone": "painel"
     },
     {
       "type": "image",
