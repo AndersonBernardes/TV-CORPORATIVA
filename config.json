@@ -38,17 +38,14 @@
       "duration": 10
     },
     {
-      "type": "clock",
-      "duration": 8
-    },
-    {
       "type": "birthday",
       "title": "Feliz Aniversário!",
       "message": "Que venham muitas conquistas!",
-      "annualDate": "",
+      "annualDate": "08-06",
       "annualWindowDays": 1,
       "titleAnimation": "slideup",
-      "duration": 10
+      "duration": 10,
+      "zone": "painel"
     },
     {
       "type": "news",
@@ -143,7 +140,8 @@
       "type": "rss",
       "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
       "maxItems": 5,
-      "duration": 8
+      "duration": 8,
+      "zone": "banner"
     }
   ]
 }
