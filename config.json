@@ -5,9 +5,11 @@
     {
       "type": "image",
       "src": "imagens/manicure-e-pedicure.jpg",
-      "caption": "",
-      "animation": "fade-in",
-      "duration": 8
+      "caption": "Confira nossas novidades",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "parallax",
+      "duration": 10
     }
   ]
 }
