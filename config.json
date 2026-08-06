@@ -3,6 +3,16 @@
   "accentColor": "#2b58bf",
   "slides": [
     {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+        ""
+      ],
+      "titleAnimation": "typewriter",
+      "duration": 7,
+      "zone": "banner"
+    },
+    {
       "type": "rss",
       "label": "SAÚDE",
       "feedUrl": "https://feeds.folha.uol.com.br/equilibrioesaude/rss091.xml",
