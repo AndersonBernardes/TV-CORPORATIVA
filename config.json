@@ -3,41 +3,11 @@
   "accentColor": "#266fa6",
   "slides": [
     {
-      "type": "menu",
-      "title": "Cardápio do Refeitório",
-      "imageAnimation": "pan-left",
-      "menu": {
-        "0": {
-          "items": [],
-          "image": ""
-        },
-        "1": {
-          "items": [],
-          "image": "imagens/prato-segunda.jpg"
-        },
-        "2": {
-          "items": [],
-          "image": "imagens/prato-terca.jpg"
-        },
-        "3": {
-          "items": [],
-          "image": "imagens/prato-quarta.jpg"
-        },
-        "4": {
-          "items": [],
-          "image": "imagens/manicure-e-pedicure.jpg"
-        },
-        "5": {
-          "items": [],
-          "image": "imagens/prato-sexta.jpg"
-        },
-        "6": {
-          "items": [],
-          "image": ""
-        }
-      },
-      "duration": 10,
-      "zone": "banner"
+      "type": "video",
+      "src": "videos/Fazendo bolo.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 20
     }
   ]
 }
