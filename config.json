@@ -6,7 +6,7 @@
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
       "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
-      "maxItems": "3",
+      "maxItems": "1",
       "duration": 12,
       "zone": "painel"
     }
