@@ -3,6 +3,13 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "weather",
+      "city": "",
+      "lat": "",
+      "lon": "",
+      "duration": 8
+    },
+    {
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
       "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
