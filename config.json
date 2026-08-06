@@ -1,138 +1,18 @@
 {
   "brand": "Anca Soluções",
+  "accentColor": "#2bbf35",
   "slides": [
     {
-      "type": "video",
-      "src": "videos/Hambúrguer super promoção animado preto laranja post para Instagram.mp4",
-      "muted": true,
-      "loop": false,
-      "duration": 20
-    },
-    {
       "type": "text",
-      "title": "Bem-vindo(a)!",
-      "body": "Confira as novidades da semana.",
-      "color": "#F2A65A",
-      "fontSize": "grande",
-      "bodyColor": "#9AA0AB",
+      "title": "Bem-vindos!",
+      "body": "Estamos felizes em ter você aqui.",
+      "color": "#9ed251",
+      "fontSize": "medio",
+      "bodyColor": "#661c14",
       "bodySize": "medio",
-      "background": "#15171C",
+      "background": "#6e8fe2",
       "titleAnimation": "glow",
       "duration": 8
-    },
-    {
-      "type": "image",
-      "src": "imagens/manicure-e-pedicure.jpg",
-      "caption": "Promoção do mês",
-      "captionColor": "#F2A65A",
-      "captionSize": "grande",
-      "animation": "zoom",
-      "duration": 10
-    },
-    {
-      "type": "birthday",
-      "title": "Feliz Aniversário!",
-      "message": "Que venham muitas conquistas!",
-      "annualDate": "",
-      "annualWindowDays": 1,
-      "titleAnimation": "slideup",
-      "duration": 10
-    },
-    {
-      "type": "news",
-      "label": "AVISOS INTERNOS",
-      "items": [
-        "Reunião geral sexta-feira às 9h",
-        "Nova política de reembolso já disponível",
-        "Parabéns aos aniversariantes do mês!"
-      ],
-      "duration": 8
-    },
-    {
-      "type": "social",
-      "title": "Redes sociais",
-      "items": [
-        "instagram:@ancasolucoes",
-        "whatsapp:(11) 99999-9999"
-      ],
-      "duration": 8
-    },
-    {
-      "type": "menu",
-      "title": "Cardápio do Refeitório",
-      "imageAnimation": "slide-right",
-      "menu": {
-        "0": {
-          "items": [
-            ""
-          ],
-          "image": ""
-        },
-        "1": {
-          "items": [
-            "Bife acebolado",
-            "Arroz, feijão, purê de batata e salada"
-          ],
-          "image": ""
-        },
-        "2": {
-          "items": [
-            "Almôndegas ao molho",
-            "Arroz, feijão, macarrão e salada"
-          ],
-          "image": ""
-        },
-        "3": {
-          "items": [
-            "Feijoada completa com arroz",
-            " couve, farofa e laranja"
-          ],
-          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
-        },
-        "4": {
-          "items": [
-            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco"
-          ],
-          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
-        },
-        "5": {
-          "items": [
-            "Peixe assado",
-            "Arroz, feijão, salada verde"
-          ],
-          "image": ""
-        },
-        "6": {
-          "items": [],
-          "image": ""
-        }
-      },
-      "duration": 8,
-      "zone": "banner"
-    },
-    {
-      "type": "weather",
-      "city": "São Paulo, São Paulo",
-      "lat": -23.5475,
-      "lon": -46.6361,
-      "duration": 8
-    },
-    {
-      "type": "motivation",
-      "items": [
-        "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
-        "Grandes equipes constroem grandes resultados.|Anca Soluções",
-        "Foco no progresso, não na perfeição."
-      ],
-      "titleAnimation": "kinetic",
-      "duration": 8
-    },
-    {
-      "type": "rss",
-      "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
-      "maxItems": "3",
-      "duration": 8,
-      "zone": "painel"
     }
   ]
 }
