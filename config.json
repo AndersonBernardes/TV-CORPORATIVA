@@ -3,6 +3,13 @@
   "accentColor": "#2b44bf",
   "slides": [
     {
+      "type": "video",
+      "src": "videos/dentista01.mp4.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 20
+    },
+    {
       "type": "text",
       "title": "Bem-vindo(a)!",
       "body": "Confira as novidades da semana.",
