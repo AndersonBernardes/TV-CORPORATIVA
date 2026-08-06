@@ -8,7 +8,7 @@
       "feedUrl": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
       "maxItems": "3",
       "duration": 12,
-      "zone": "banner"
+      "zone": "ticker"
     }
   ]
 }
