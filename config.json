@@ -121,7 +121,8 @@
         "Foco no progresso, não na perfeição."
       ],
       "titleAnimation": "kinetic",
-      "duration": 8
+      "duration": 8,
+      "zone": "painel"
     },
     {
       "type": "rss",
