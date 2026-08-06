@@ -4,13 +4,6 @@
   "slides": [
     {
       "type": "video",
-      "src": "videos/Hambúrguer super promoção animado preto laranja post para Instagram.mp4",
-      "muted": true,
-      "loop": false,
-      "duration": 20
-    },
-    {
-      "type": "video",
       "src": "videos/dentista01.mp4.mp4",
       "muted": true,
       "loop": false,
@@ -112,7 +105,7 @@
       "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
       "maxItems": 5,
       "duration": 8,
-      "zone": "banner",
+      "zone": "ticker",
       "label": "Última Hora"
     }
   ]
