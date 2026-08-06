@@ -62,7 +62,7 @@
       "src": "videos/dentista01.mp4.mp4",
       "muted": true,
       "loop": false,
-      "duration": 10
+      "duration": 6
     },
     {
       "type": "news",
@@ -83,58 +83,6 @@
         "whatsapp:(11) 95139-4342"
       ],
       "duration": 10
-    },
-    {
-      "type": "menu",
-      "title": "Cardápio do Refeitório",
-      "imageAnimation": "pan-left",
-      "menu": {
-        "0": {
-          "items": [],
-          "image": ""
-        },
-        "1": {
-          "items": [
-            "Bife a rolê com purê de batatas, arroz e feijão",
-            "Acompanha Arroz, feijão, purê de batata e salada"
-          ],
-          "image": "imagens/Bife a rolê com purê de batatas, arroz e feijão.jpg"
-        },
-        "2": {
-          "items": [
-            "Almôndegas ao molho",
-            "Arroz, feijão, macarrão e salada"
-          ],
-          "image": ""
-        },
-        "3": {
-          "items": [
-            "Frango grelhado",
-            "Arroz, feijão, legumes salteados"
-          ],
-          "image": ""
-        },
-        "4": {
-          "items": [
-            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco",
-            "Acompanha salada ou fritas"
-          ],
-          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
-        },
-        "5": {
-          "items": [
-            "Peixe assado",
-            "Arroz, feijão, salada verde"
-          ],
-          "image": ""
-        },
-        "6": {
-          "items": [],
-          "image": ""
-        }
-      },
-      "duration": 8,
-      "zone": "banner"
     },
     {
       "type": "weather",
