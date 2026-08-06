@@ -5,12 +5,9 @@
     {
       "type": "image",
       "src": "imagens/manicure-e-pedicure.jpg",
-      "caption": "Promoção do mês",
-      "captionColor": "#F2A65A",
-      "captionSize": "pequeno",
-      "animation": "slide-in",
-      "duration": 10,
-      "zone": "painel"
+      "caption": "",
+      "animation": "fade-in",
+      "duration": 8
     }
   ]
 }
