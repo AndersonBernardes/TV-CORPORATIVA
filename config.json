@@ -3,6 +3,15 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+      ],
+      "titleAnimation": "typewriter",
+      "duration": 9,
+      "zone": "banner"
+    },
+    {
       "type": "video",
       "src": "videos/Mecanica.mp4",
       "muted": true,
@@ -14,7 +23,7 @@
       "label": "NOTÍCIAS REGIONAIS",
       "feedUrl": "https://feeds.folha.uol.com.br/opiniao/rss091.xml",
       "maxItems": 5,
-      "duration": 12,
+      "duration": 10,
       "zone": "ticker"
     },
     {
@@ -24,7 +33,7 @@
         "Reunião geral sexta-feira às 9h",
         "Parabéns aos aniversariantes do mês!"
       ],
-      "duration": 12,
+      "duration": 10,
       "zone": "banner"
     },
     {
@@ -32,7 +41,7 @@
       "src": "videos/dentista01.mp4.mp4",
       "muted": true,
       "loop": true,
-      "duration": 20
+      "duration": 10
     },
     {
       "type": "weather",
@@ -107,7 +116,7 @@
       "contact": "(11) 95139-4342",
       "titleAnimation": "scalepop",
       "duration": 9,
-      "zone": "banner"
+      "zone": "painel"
     }
   ]
 }
