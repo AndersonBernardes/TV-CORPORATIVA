@@ -6,7 +6,7 @@
       "type": "rss",
       "label": "Folha de S.Paulo - Blogs - Bom Pra Cachorro",
       "feedUrl": "https://feeds.folha.uol.com.br//blogs/bom-pra-cachorro/rss091.xml",
-      "maxItems": 5,
+      "maxItems": "3",
       "duration": 12,
       "zone": "painel"
     },
@@ -14,7 +14,7 @@
       "type": "rss",
       "label": "Folha de S.Paulo - Blogs - Saúde Mental",
       "feedUrl": "https://feeds.folha.uol.com.br//blogs/saude-mental/rss091.xml",
-      "maxItems": 5,
+      "maxItems": "2",
       "duration": 12,
       "zone": "painel"
     },
