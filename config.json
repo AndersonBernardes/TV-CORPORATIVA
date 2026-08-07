@@ -41,7 +41,7 @@
         "Parabéns aos aniversariantes do mês!"
       ],
       "duration": 10,
-      "zone": "banner"
+      "zone": "painel"
     },
     {
       "type": "video",
