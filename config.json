@@ -26,15 +26,6 @@
       "duration": 10
     },
     {
-      "type": "motivation",
-      "items": [
-        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
-      ],
-      "titleAnimation": "typewriter",
-      "duration": 9,
-      "zone": "banner"
-    },
-    {
       "type": "video",
       "src": "videos/Mecanica.mp4",
       "muted": true,
