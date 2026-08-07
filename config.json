@@ -3,14 +3,16 @@
   "accentColor": "#266fa6",
   "slides": [
     {
-      "type": "social",
-      "title": "Siga-nos nas redes sociais",
-      "items": [
-        "instagram:@suaempresa",
-        "whatsapp:(11) 99999-9999"
-      ],
-      "duration": 9,
-      "zone": "banner"
+      "type": "embed",
+      "url": "",
+      "duration": 20
+    },
+    {
+      "type": "rss",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "",
+      "maxItems": 5,
+      "duration": 12
     },
     {
       "type": "news",
@@ -19,8 +21,132 @@
         "Reunião geral sexta-feira às 9h",
         "Parabéns aos aniversariantes do mês!"
       ],
-      "duration": 12,
-      "zone": "banner"
+      "duration": 12
+    },
+    {
+      "type": "clock",
+      "duration": 8
+    },
+    {
+      "type": "video",
+      "src": "videos/institucional-01.mp4",
+      "muted": true,
+      "loop": false,
+      "duration": 20
+    },
+    {
+      "type": "weather",
+      "city": "",
+      "lat": "",
+      "lon": "",
+      "duration": 8
+    },
+    {
+      "type": "social",
+      "title": "Siga-nos nas redes sociais",
+      "items": [
+        "instagram:@suaempresa",
+        "whatsapp:(11) 99999-9999"
+      ],
+      "duration": 9
+    },
+    {
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "imageAnimation": "pan-left",
+      "menu": {
+        "0": {
+          "items": [],
+          "image": ""
+        },
+        "1": {
+          "items": [],
+          "image": "imagens/prato-segunda.jpg"
+        },
+        "2": {
+          "items": [],
+          "image": "imagens/prato-terca.jpg"
+        },
+        "3": {
+          "items": [],
+          "image": "imagens/prato-quarta.jpg"
+        },
+        "4": {
+          "items": [],
+          "image": "imagens/prato-quinta.jpg"
+        },
+        "5": {
+          "items": [],
+          "image": "imagens/prato-sexta.jpg"
+        },
+        "6": {
+          "items": [],
+          "image": ""
+        }
+      },
+      "duration": 10
+    },
+    {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+      ],
+      "titleAnimation": "typewriter",
+      "duration": 9
+    },
+    {
+      "type": "birthday",
+      "title": "Feliz Aniversário!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "",
+      "annualWindowDays": 1,
+      "titleAnimation": "slideup",
+      "duration": 10
+    },
+    {
+      "type": "ad",
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 99999-9999",
+      "titleAnimation": "scalepop",
+      "duration": 9
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Confira nossas novidades",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "parallax",
+      "duration": 10
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "",
+      "animation": "fade-in",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Promoção do mês",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "zoom",
+      "duration": 10
+    },
+    {
+      "type": "text",
+      "title": "Bem-vindo(a)!",
+      "body": "Estamos felizes em ter você aqui.",
+      "color": "#4FD1C5",
+      "fontSize": "enorme",
+      "bodyColor": "#8B92A0",
+      "bodySize": "medio",
+      "background": "#15171C",
+      "titleAnimation": "glow",
+      "duration": 8
     }
   ]
 }
