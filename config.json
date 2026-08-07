@@ -3,6 +3,17 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "hero",
+      "image": "imagens/imagem-01.jpg",
+      "badge": "DESTAQUE",
+      "title": "Um título que chama atenção",
+      "subtitle": "Complemente com uma frase de apoio aqui.",
+      "textPosition": "bottom",
+      "animation": "fade-scale",
+      "titleAnimation": "slideup",
+      "duration": 10
+    },
+    {
       "type": "rss",
       "label": "Folha de S.Paulo - Esporte",
       "feedUrl": "https://feeds.folha.uol.com.br/esporte/rss091.xml",
