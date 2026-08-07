@@ -3,6 +3,22 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "birthday",
+      "title": "Feliz Aniversário!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "08-07",
+      "annualWindowDays": 30,
+      "titleAnimation": "slideup",
+      "duration": 10
+    },
+    {
+      "type": "video",
+      "src": "videos/Pets, divertido, azul e amarelo, vídeo.mp4",
+      "muted": true,
+      "loop": true,
+      "duration": 10
+    },
+    {
       "type": "rss",
       "label": "Folha de S.Paulo - Blogs - Bom Pra Cachorro",
       "feedUrl": "https://feeds.folha.uol.com.br//blogs/bom-pra-cachorro/rss091.xml",
