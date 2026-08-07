@@ -12,7 +12,8 @@
       "label": "NOTÍCIAS REGIONAIS",
       "feedUrl": "https://feeds.folha.uol.com.br/opiniao/rss091.xml",
       "maxItems": 5,
-      "duration": 12
+      "duration": 12,
+      "zone": "banner"
     },
     {
       "type": "news",
@@ -21,17 +22,14 @@
         "Reunião geral sexta-feira às 9h",
         "Parabéns aos aniversariantes do mês!"
       ],
-      "duration": 12
-    },
-    {
-      "type": "clock",
-      "duration": 8
+      "duration": 12,
+      "zone": "banner"
     },
     {
       "type": "video",
-      "src": "videos/institucional-01.mp4",
+      "src": "videos/dentista01.mp4.mp4",
       "muted": true,
-      "loop": false,
+      "loop": true,
       "duration": 20
     },
     {
@@ -49,7 +47,7 @@
         "whatsapp:(11) 99999-9999"
       ],
       "duration": 9,
-      "zone": "banner"
+      "zone": "painel"
     },
     {
       "type": "menu",
@@ -77,8 +75,11 @@
           "image": "imagens/prato-quinta.jpg"
         },
         "5": {
-          "items": [],
-          "image": "imagens/prato-sexta.jpg"
+          "items": [
+            "Filé de peixe (tilápia ou pescada) frito ou ao molho,",
+            "acompanhado de arroz e pirão ou legumes"
+          ],
+          "image": "imagens/Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes.jpeg"
         },
         "6": {
           "items": [],
@@ -95,7 +96,7 @@
       ],
       "titleAnimation": "typewriter",
       "duration": 9,
-      "zone": "banner"
+      "zone": "painel"
     },
     {
       "type": "birthday",
@@ -112,7 +113,8 @@
       "title": "Este espaço está disponível",
       "contact": "(11) 99999-9999",
       "titleAnimation": "scalepop",
-      "duration": 9
+      "duration": 9,
+      "zone": "painel"
     },
     {
       "type": "text",
