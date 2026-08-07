@@ -3,6 +3,13 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "video",
+      "src": "videos/manicure.mp4",
+      "muted": true,
+      "loop": true,
+      "duration": 10
+    },
+    {
       "type": "motivation",
       "items": [
         "O sucesso é a soma de pequenos esforços repetidos dia após dia."
