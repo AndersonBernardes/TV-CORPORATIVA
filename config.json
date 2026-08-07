@@ -3,6 +3,14 @@
   "accentColor": "#266fa6",
   "slides": [
     {
+      "type": "rss",
+      "label": "Folha de S.Paulo - Esporte",
+      "feedUrl": "https://feeds.folha.uol.com.br/esporte/rss091.xml",
+      "maxItems": "3",
+      "duration": 12,
+      "zone": "banner"
+    },
+    {
       "type": "birthday",
       "title": "Feliz Aniversário!",
       "message": "Que venham muitas conquistas!",
