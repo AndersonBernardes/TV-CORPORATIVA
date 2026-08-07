@@ -109,20 +109,32 @@
           "image": ""
         },
         "1": {
-          "items": [],
-          "image": "imagens/prato-segunda.jpg"
+          "items": [
+            "Bife a rolê com purê de batatas, arroz e feijão",
+            "Acompanha fritas"
+          ],
+          "image": "imagens/Bife a rolê com purê de batatas, arroz e feijão.jpg"
         },
         "2": {
-          "items": [],
-          "image": "imagens/prato-terca.jpg"
+          "items": [
+            "estrogonofe de frango",
+            "Acompanha: Arroz branco soltinho, feijão com caldinho e uma guarnição simples."
+          ],
+          "image": "imagens/estrogonofe de frango.jpg"
         },
         "3": {
-          "items": [],
-          "image": "imagens/prato-quarta.jpg"
+          "items": [
+            "Feijoada completa com arroz, couve, farofa e laranja",
+            "Acompanha fárofa"
+          ],
+          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
         },
         "4": {
-          "items": [],
-          "image": "imagens/prato-quinta.jpg"
+          "items": [
+            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco",
+            "Acompanha salada ou fritas"
+          ],
+          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
         },
         "5": {
           "items": [
@@ -132,8 +144,11 @@
           "image": "imagens/Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes.jpeg"
         },
         "6": {
-          "items": [],
-          "image": ""
+          "items": [
+            "Feijoada completa com arroz, couve, farofa e laranja",
+            "Acompanha fárofa"
+          ],
+          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
         }
       },
       "duration": 10,
