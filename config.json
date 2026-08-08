@@ -40,7 +40,8 @@
       "feedUrl": "https://feeds.folha.uol.com.br/equilibrio/rss091.xml",
       "maxItems": 5,
       "duration": 12,
-      "zone": "painel"
+      "zone": "painel",
+      "hidden": true
     },
     {
       "type": "motivation",
