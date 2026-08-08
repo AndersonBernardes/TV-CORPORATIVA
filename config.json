@@ -1,5 +1,17 @@
 {
   "brand": "Anca Soluções",
   "accentColor": "#352bbf",
-  "slides": []
+  "slides": [
+    {
+      "type": "hero",
+      "image": "imagens/BIFE.jpg",
+      "badge": "DESTAQUE",
+      "title": "Um título que chama atenção",
+      "subtitle": "Complemente com uma frase de apoio aqui.",
+      "textPosition": "bottom",
+      "animation": "fade-scale",
+      "titleAnimation": "slideup",
+      "duration": 10
+    }
+  ]
 }
