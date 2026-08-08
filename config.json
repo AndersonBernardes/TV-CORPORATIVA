@@ -3,6 +3,14 @@
   "accentColor": "#be4b94",
   "slides": [
     {
+      "type": "ad",
+      "subtitle": "Anuncie aqui",
+      "title": "Este espaço está disponível",
+      "contact": "(11) 95139-4342",
+      "titleAnimation": "scalepop",
+      "duration": 9
+    },
+    {
       "type": "image",
       "src": "imagens/esmalte.png",
       "caption": "",
@@ -24,7 +32,8 @@
       "annualWindowDays": 31,
       "titleAnimation": "slideup",
       "duration": 10,
-      "image": "imagens/Aniver Joana.jpg"
+      "image": "imagens/Aniver Joana.jpg",
+      "zone": "painel"
     },
     {
       "type": "rss",
