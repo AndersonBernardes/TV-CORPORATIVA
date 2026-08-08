@@ -10,7 +10,7 @@
         "Parabéns aos aniversariantes do mês!",
         "Racionamento de água após as 18h"
       ],
-      "duration": 12
+      "duration": 5
     },
     {
       "type": "ad",
@@ -39,7 +39,7 @@
       "label": "Folha de S.Paulo - Equilíbrio",
       "feedUrl": "https://feeds.folha.uol.com.br/equilibrio/rss091.xml",
       "maxItems": 5,
-      "duration": 12,
+      "duration": 10,
       "zone": "painel",
       "hidden": true
     },
@@ -106,7 +106,7 @@
       "label": "Folha de S.Paulo - Esporte",
       "feedUrl": "https://feeds.folha.uol.com.br/esporte/rss091.xml",
       "maxItems": "3",
-      "duration": 12,
+      "duration": 15,
       "zone": "painel"
     },
     {
