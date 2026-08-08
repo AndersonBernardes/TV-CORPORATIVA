@@ -3,6 +3,20 @@
   "accentColor": "#be4b94",
   "slides": [
     {
+      "type": "image",
+      "src": "imagens/esmalte.png",
+      "caption": "",
+      "animation": "fade-in",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/oleo.png",
+      "caption": "",
+      "animation": "fade-in",
+      "duration": 8
+    },
+    {
       "type": "birthday",
       "title": "",
       "message": "Feliz Aniversário! Joana,",
