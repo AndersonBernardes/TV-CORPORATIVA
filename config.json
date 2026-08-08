@@ -4,10 +4,10 @@
   "slides": [
     {
       "type": "hero",
-      "image": "imagens/BIFE.jpg",
+      "image": "imagens/manicure-e-pedicure.jpg",
       "badge": "DESTAQUE",
-      "title": "Um título que chama atenção",
-      "subtitle": "Complemente com uma frase de apoio aqui.",
+      "title": "Uma dose de brilho nas pontas dos dedos",
+      "subtitle": "Você merece se sentir bonita todos os dias! É para isso que estamos aqui! ",
       "textPosition": "bottom",
       "animation": "fade-scale",
       "titleAnimation": "slideup",
