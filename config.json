@@ -3,6 +3,42 @@
   "accentColor": "#5134df",
   "slides": [
     {
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "imageAnimation": "pan-left",
+      "menu": {
+        "0": {
+          "items": [],
+          "image": ""
+        },
+        "1": {
+          "items": [],
+          "image": "imagens/prato-segunda.jpg"
+        },
+        "2": {
+          "items": [],
+          "image": "imagens/prato-terca.jpg"
+        },
+        "3": {
+          "items": [],
+          "image": "imagens/prato-quarta.jpg"
+        },
+        "4": {
+          "items": [],
+          "image": "imagens/prato-quinta.jpg"
+        },
+        "5": {
+          "items": [],
+          "image": "imagens/prato-sexta.jpg"
+        },
+        "6": {
+          "items": [],
+          "image": ""
+        }
+      },
+      "duration": 10
+    },
+    {
       "type": "ad",
       "subtitle": "Anuncie aqui",
       "title": "Este espaço está disponível",
@@ -23,17 +59,6 @@
       "caption": "",
       "animation": "fade-in",
       "duration": 8
-    },
-    {
-      "type": "birthday",
-      "title": "",
-      "message": "Feliz Aniversário! Joana,",
-      "annualDate": "08-08",
-      "annualWindowDays": 31,
-      "titleAnimation": "slideup",
-      "duration": 10,
-      "image": "",
-      "zone": "painel"
     },
     {
       "type": "rss",
