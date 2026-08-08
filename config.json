@@ -3,6 +3,21 @@
   "accentColor": "#be4b94",
   "slides": [
     {
+      "type": "rss",
+      "label": "NOTÍCIAS REGIONAIS",
+      "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
+      "maxItems": "3",
+      "duration": 12,
+      "zone": "painel"
+    },
+    {
+      "type": "video",
+      "src": "videos/Tv Corporativa.mp4",
+      "muted": true,
+      "loop": true,
+      "duration": 10
+    },
+    {
       "type": "hero",
       "image": "imagens/manicure-e-pedicure.jpg",
       "badge": "DESTAQUE",
