@@ -3,40 +3,14 @@
   "accentColor": "#5134df",
   "slides": [
     {
-      "type": "menu",
-      "title": "Cardápio do Refeitório",
-      "imageAnimation": "pan-left",
-      "menu": {
-        "0": {
-          "items": [],
-          "image": ""
-        },
-        "1": {
-          "items": [],
-          "image": "imagens/prato-segunda.jpg"
-        },
-        "2": {
-          "items": [],
-          "image": "imagens/prato-terca.jpg"
-        },
-        "3": {
-          "items": [],
-          "image": "imagens/prato-quarta.jpg"
-        },
-        "4": {
-          "items": [],
-          "image": "imagens/prato-quinta.jpg"
-        },
-        "5": {
-          "items": [],
-          "image": "imagens/prato-sexta.jpg"
-        },
-        "6": {
-          "items": [],
-          "image": ""
-        }
-      },
-      "duration": 10
+      "type": "news",
+      "label": "AVISOS INTERNOS",
+      "items": [
+        "Reunião geral sexta-feira às 9h",
+        "Parabéns aos aniversariantes do mês!",
+        "Racionamento de água após as 18h"
+      ],
+      "duration": 12
     },
     {
       "type": "ad",
@@ -65,7 +39,8 @@
       "label": "Folha de S.Paulo - Equilíbrio",
       "feedUrl": "https://feeds.folha.uol.com.br/equilibrio/rss091.xml",
       "maxItems": 5,
-      "duration": 12
+      "duration": 12,
+      "zone": "painel"
     },
     {
       "type": "motivation",
