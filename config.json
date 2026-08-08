@@ -1,7 +1,28 @@
 {
-  "brand": "Viação",
-  "accentColor": "#266fa6",
+  "brand": "Anca Soluções",
+  "accentColor": "#C0392B",
   "slides": [
+    {
+      "type": "text",
+      "title": "Bem-vindo(a)!",
+      "body": "Confira as novidades da semana.",
+      "color": "#F2A65A",
+      "fontSize": "grande",
+      "bodyColor": "#9AA0AB",
+      "bodySize": "medio",
+      "background": "#15171C",
+      "titleAnimation": "glow",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "src": "imagens/imagem-01.jpg",
+      "caption": "Promoção do mês",
+      "captionColor": "#F2A65A",
+      "captionSize": "grande",
+      "animation": "zoom",
+      "duration": 10
+    },
     {
       "type": "hero",
       "image": "imagens/imagem-01.jpg",
@@ -14,174 +35,96 @@
       "duration": 10
     },
     {
-      "type": "rss",
-      "label": "Folha de S.Paulo - Esporte",
-      "feedUrl": "https://feeds.folha.uol.com.br/esporte/rss091.xml",
-      "maxItems": "3",
-      "duration": 12,
-      "zone": "banner"
+      "type": "clock",
+      "duration": 8
     },
     {
       "type": "birthday",
       "title": "Feliz Aniversário!",
       "message": "Que venham muitas conquistas!",
-      "annualDate": "08-07",
-      "annualWindowDays": 30,
+      "annualDate": "",
+      "annualWindowDays": 1,
       "titleAnimation": "slideup",
       "duration": 10
-    },
-    {
-      "type": "video",
-      "src": "videos/Pets, divertido, azul e amarelo, vídeo.mp4",
-      "muted": true,
-      "loop": true,
-      "duration": 10
-    },
-    {
-      "type": "rss",
-      "label": "Folha de S.Paulo - Blogs - Bom Pra Cachorro",
-      "feedUrl": "https://feeds.folha.uol.com.br//blogs/bom-pra-cachorro/rss091.xml",
-      "maxItems": "3",
-      "duration": 12,
-      "zone": "painel"
-    },
-    {
-      "type": "rss",
-      "label": "Folha de S.Paulo - Blogs - Saúde Mental",
-      "feedUrl": "https://feeds.folha.uol.com.br//blogs/saude-mental/rss091.xml",
-      "maxItems": "2",
-      "duration": 12,
-      "zone": "painel"
-    },
-    {
-      "type": "video",
-      "src": "videos/manicure.mp4",
-      "muted": true,
-      "loop": true,
-      "duration": 10
-    },
-    {
-      "type": "video",
-      "src": "videos/Mecanica.mp4",
-      "muted": true,
-      "loop": true,
-      "duration": 10
-    },
-    {
-      "type": "rss",
-      "label": "NOTÍCIAS REGIONAIS",
-      "feedUrl": "https://feeds.folha.uol.com.br/opiniao/rss091.xml",
-      "maxItems": 5,
-      "duration": 10,
-      "zone": "ticker"
     },
     {
       "type": "news",
       "label": "AVISOS INTERNOS",
       "items": [
         "Reunião geral sexta-feira às 9h",
-        "Parabéns aos aniversariantes do mês!",
-        "Racionamento de água após às18h"
-      ],
-      "duration": 10,
-      "zone": "painel"
-    },
-    {
-      "type": "video",
-      "src": "videos/dentista01.mp4.mp4",
-      "muted": true,
-      "loop": true,
-      "duration": 10
-    },
-    {
-      "type": "weather",
-      "city": "São Paulo, São Paulo",
-      "lat": -23.5475,
-      "lon": -46.63611,
-      "duration": 8
+        "Nova política de reembolso já disponível",
+        "Parabéns aos aniversariantes do mês!"
+      ]
     },
     {
       "type": "social",
-      "title": "Siga-nos nas redes sociais",
+      "title": "Redes sociais",
       "items": [
-        "instagram:@suaempresa",
+        "instagram:@ancasolucoes",
         "whatsapp:(11) 99999-9999"
-      ],
-      "duration": 9,
-      "zone": "painel"
+      ]
     },
     {
       "type": "menu",
       "title": "Cardápio do Refeitório",
       "imageAnimation": "pan-left",
       "menu": {
-        "0": {
-          "items": [],
-          "image": ""
-        },
         "1": {
           "items": [
-            "Bife a rolê com purê de batatas, arroz e feijão",
-            "Acompanha fritas"
+            "Bife acebolado",
+            "Arroz, feijão, purê de batata e salada"
           ],
-          "image": "imagens/Bife a rolê com purê de batatas, arroz e feijão.jpg"
+          "image": ""
         },
         "2": {
           "items": [
-            "estrogonofe de frango",
-            "Acompanha: Arroz branco soltinho, feijão com caldinho e uma guarnição simples."
+            "Almôndegas ao molho",
+            "Arroz, feijão, macarrão e salada"
           ],
-          "image": "imagens/estrogonofe de frango.jpg"
+          "image": ""
         },
         "3": {
           "items": [
-            "Feijoada completa com arroz, couve, farofa e laranja",
-            "Acompanha fárofa"
+            "Frango grelhado",
+            "Arroz, feijão, legumes salteados"
           ],
-          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
+          "image": ""
         },
         "4": {
           "items": [
-            "Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco",
-            "Acompanha salada ou fritas"
+            "Feijoada leve",
+            "Arroz, farofa, couve e laranja"
           ],
-          "image": "imagens/Macarrão (espaguete ou penne) à bolonhesa ou ao molho branco.jpg"
+          "image": ""
         },
         "5": {
           "items": [
-            "Filé de peixe (tilápia ou pescada) frito ou ao molho,",
-            "acompanhado de arroz e pirão ou legumes"
+            "Peixe assado",
+            "Arroz, feijão, salada verde"
           ],
-          "image": "imagens/Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes.jpeg"
-        },
-        "6": {
-          "items": [
-            "Feijoada completa com arroz, couve, farofa e laranja",
-            "Acompanha fárofa"
-          ],
-          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
+          "image": ""
         }
-      },
-      "duration": 10,
-      "zone": "banner"
+      }
+    },
+    {
+      "type": "weather",
+      "city": "São Paulo, São Paulo",
+      "lat": -23.5475,
+      "lon": -46.6361
     },
     {
       "type": "motivation",
       "items": [
-        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+        "Grandes equipes constroem grandes resultados.|Anca Soluções",
+        "Foco no progresso, não na perfeição."
       ],
-      "titleAnimation": "typewriter",
-      "duration": 9,
-      "zone": "painel"
+      "titleAnimation": "kinetic"
     },
     {
-      "type": "ad",
-      "subtitle": "Anuncie aqui",
-      "title": "Este espaço está disponível",
-      "contact": "(11) 95139-4342",
-      "titleAnimation": "scalepop",
-      "duration": 9,
-      "zone": "banner"
+      "type": "rss",
+      "feedUrl": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
+      "maxItems": 5
     }
   ]
 }
