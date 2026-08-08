@@ -3,6 +3,13 @@
   "accentColor": "#be4b94",
   "slides": [
     {
+      "type": "weather",
+      "city": "São Paulo, São Paulo",
+      "lat": -23.5475,
+      "lon": -46.63611,
+      "duration": 8
+    },
+    {
       "type": "menu",
       "title": "Cardápio do Refeitório",
       "imageAnimation": "pan-left",
@@ -35,8 +42,11 @@
           "image": "imagens/Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes.jpeg"
         },
         "6": {
-          "items": [],
-          "image": ""
+          "items": [
+            "Feijoada completa com arroz",
+            "Acompanha: couve, farofa e laranja."
+          ],
+          "image": "imagens/Feijoada completa com arroz, couve, farofa e laranja.jpg"
         }
       },
       "duration": 10,
