@@ -3,6 +3,46 @@
   "accentColor": "#be4b94",
   "slides": [
     {
+      "type": "menu",
+      "title": "Cardápio do Refeitório",
+      "imageAnimation": "pan-left",
+      "menu": {
+        "0": {
+          "items": [],
+          "image": ""
+        },
+        "1": {
+          "items": [],
+          "image": "imagens/prato-segunda.jpg"
+        },
+        "2": {
+          "items": [],
+          "image": "imagens/prato-terca.jpg"
+        },
+        "3": {
+          "items": [],
+          "image": "imagens/prato-quarta.jpg"
+        },
+        "4": {
+          "items": [],
+          "image": "imagens/prato-quinta.jpg"
+        },
+        "5": {
+          "items": [
+            "Filé de peixe (tilápia ou pescada) frito ou ao molho",
+            "Acompanhado de arroz e pirão ou legumes."
+          ],
+          "image": "imagens/Filé de peixe (tilápia ou pescada) frito ou ao molho, acompanhado de arroz e pirão ou legumes.jpeg"
+        },
+        "6": {
+          "items": [],
+          "image": ""
+        }
+      },
+      "duration": 10,
+      "zone": "banner"
+    },
+    {
       "type": "rss",
       "label": "NOTÍCIAS REGIONAIS",
       "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
