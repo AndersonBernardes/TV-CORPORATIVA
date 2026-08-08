@@ -191,6 +191,38 @@
   .birthday-slide .bday-emoji{ font-size:clamp(32px,4.5vw,56px); margin-bottom:10px; }
   .birthday-slide .bday-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(28px,4vw,56px); color:var(--accent-3); margin-bottom:10px; }
   .birthday-slide .bday-message{ font-family:'Inter',sans-serif; font-size:clamp(15px,1.8vw,22px); max-width:90%; }
+  .birthday-slide.birthday-with-image{ background:#000; }
+  .birthday-slide .bday-scrim{ position:absolute; inset:0; background:rgba(0,0,0,0.5); }
+
+  /* ---- Destaque moderno: imagem de fundo com texto flutuando por cima ---- */
+  .hero-slide{ padding:0; align-items:stretch; justify-content:flex-end; background:#000; }
+  .hero-slide .hero-scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 72%);
+  }
+  .hero-slide.hero-center .hero-scrim{
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.15) 100%);
+  }
+  .hero-slide .hero-content{
+    position:relative; z-index:2; padding:50px 60px; text-align:left;
+  }
+  .hero-slide.hero-center .hero-content{
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:60px;
+  }
+  .hero-slide .hero-badge{
+    font-family:'JetBrains Mono',monospace; color:var(--accent-2); letter-spacing:3px;
+    font-size:clamp(12px,1.4vw,18px); text-transform:uppercase; margin-bottom:12px;
+  }
+  .hero-slide .hero-title{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; color:#fff;
+    font-size:clamp(30px,4.6vw,68px); line-height:1.08; margin-bottom:10px;
+    text-shadow:0 4px 20px rgba(0,0,0,0.5);
+  }
+  .hero-slide .hero-subtitle{
+    font-family:'Inter',sans-serif; color:rgba(255,255,255,0.85);
+    font-size:clamp(15px,1.9vw,26px); max-width:700px;
+  }
   .embed-slide{ padding:0; }
   .embed-slide iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
   .embed-slide .embed-error{ display:flex; align-items:center; justify-content:center; height:100%; color:var(--muted); font-size:16px; text-align:center; padding:40px; }
@@ -305,7 +337,7 @@ function cacheBust(url){
 
 /* ---------- Zonas: cada slide mora no banner, no painel, ou no ticker ---------- */
 const DEFAULT_ZONE = {
-  image:'banner', video:'banner', ad:'banner', birthday:'banner', embed:'banner', text:'banner', clock:'banner',
+  image:'banner', video:'banner', ad:'banner', birthday:'banner', embed:'banner', text:'banner', clock:'banner', hero:'banner',
   news:'painel', social:'painel', menu:'painel', weather:'painel',
   motivation:'ticker', rss:'ticker',
 };
@@ -525,6 +557,16 @@ function buildSlideEl(slide){
     }
     case 'birthday': {
       el.classList.add('birthday-slide');
+      if(slide.image){
+        el.classList.add('birthday-with-image');
+        const bgImg = document.createElement('img');
+        bgImg.src = cacheBust(slide.image);
+        bgImg.className = 'fit-cover';
+        el.appendChild(bgImg);
+        const scrim = document.createElement('div');
+        scrim.className = 'bday-scrim';
+        el.appendChild(scrim);
+      }
       const confettiEmojis = ['🎉','🎈','🎊','✨'];
       for(let c = 0; c < 12; c++){
         const conf = document.createElement('div');
@@ -545,6 +587,43 @@ function buildSlideEl(slide){
         box.appendChild(msg);
       }
       el.appendChild(box);
+      break;
+    }
+    case 'hero': {
+      el.classList.add('hero-slide');
+      if(slide.textPosition === 'center') el.classList.add('hero-center');
+      if(slide.image){
+        const img = document.createElement('img');
+        img.src = cacheBust(slide.image);
+        img.className = 'fit-cover';
+        el.appendChild(img);
+        if(slide.animation === 'zoom') el.classList.add('zoom');
+        else if(slide.animation && slide.animation !== 'nenhuma') el.classList.add('anim-' + slide.animation);
+      }
+      const scrim = document.createElement('div');
+      scrim.className = 'hero-scrim';
+      el.appendChild(scrim);
+      const content = document.createElement('div');
+      content.className = 'hero-content';
+      if(slide.badge){
+        const badge = document.createElement('div');
+        badge.className = 'hero-badge';
+        badge.textContent = slide.badge;
+        content.appendChild(badge);
+      }
+      if(slide.title){
+        const title = document.createElement('div');
+        title.className = 'hero-title';
+        content.appendChild(title);
+        renderTitle(title, slide.title, slide.titleAnimation);
+      }
+      if(slide.subtitle){
+        const subtitle = document.createElement('div');
+        subtitle.className = 'hero-subtitle';
+        subtitle.textContent = slide.subtitle;
+        content.appendChild(subtitle);
+      }
+      el.appendChild(content);
       break;
     }
     case 'ad': {
