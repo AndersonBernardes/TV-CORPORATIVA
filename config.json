@@ -3,6 +3,16 @@
   "accentColor": "#be4b94",
   "slides": [
     {
+      "type": "birthday",
+      "title": "Feliz Aniversário!",
+      "message": "Que venham muitas conquistas!",
+      "annualDate": "08-08",
+      "annualWindowDays": 31,
+      "titleAnimation": "slideup",
+      "duration": 10,
+      "image": "imagens/Aniver Joana.jpg"
+    },
+    {
       "type": "rss",
       "label": "Folha de S.Paulo - Equilíbrio",
       "feedUrl": "https://feeds.folha.uol.com.br/equilibrio/rss091.xml",
@@ -69,8 +79,8 @@
     },
     {
       "type": "rss",
-      "label": "NOTÍCIAS REGIONAIS",
-      "feedUrl": "https://feeds.folha.uol.com.br/ciencia/rss091.xml",
+      "label": "Folha de S.Paulo - Esporte",
+      "feedUrl": "https://feeds.folha.uol.com.br/esporte/rss091.xml",
       "maxItems": "3",
       "duration": 12,
       "zone": "painel"
