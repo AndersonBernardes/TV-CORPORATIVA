@@ -3,6 +3,21 @@
   "accentColor": "#be4b94",
   "slides": [
     {
+      "type": "rss",
+      "label": "Folha de S.Paulo - Equilíbrio",
+      "feedUrl": "https://feeds.folha.uol.com.br/equilibrio/rss091.xml",
+      "maxItems": 5,
+      "duration": 12
+    },
+    {
+      "type": "motivation",
+      "items": [
+        "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+      ],
+      "titleAnimation": "typewriter",
+      "duration": 9
+    },
+    {
       "type": "weather",
       "city": "São Paulo, São Paulo",
       "lat": -23.5475,
