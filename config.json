@@ -4,8 +4,8 @@
   "slides": [
     {
       "type": "birthday",
-      "title": "Feliz Aniversário!",
-      "message": "Que venham muitas conquistas!",
+      "title": "",
+      "message": "Feliz Aniversário! Joana,",
       "annualDate": "08-08",
       "annualWindowDays": 31,
       "titleAnimation": "slideup",
@@ -98,7 +98,7 @@
       "badge": "DESTAQUE",
       "title": "Uma dose de brilho nas pontas dos dedos",
       "subtitle": "Você merece se sentir bonita todos os dias! É para isso que estamos aqui! ",
-      "textPosition": "bottom",
+      "textPosition": "center",
       "animation": "fade-scale",
       "titleAnimation": "slideup",
       "duration": 10
